@@ -19,8 +19,7 @@ app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev-secret-change-me")
 
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "").strip()
-client = OpenAI() if (OpenAI is not None and OPENAI_API_KEY) else None
-
+client = OpenAI(api_key=OPENAI_API_KEY) if (OpenAI is not None and OPENAI_API_KEY) else None
 # --------------------------
 # Demo users (replace with DB)
 # --------------------------
