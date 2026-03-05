@@ -1,0 +1,3222 @@
+[
+  {
+    "id": "APT-E-01",
+    "topic": "Aptitude",
+    "difficulty": "E",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "If 5 pens cost ₹75, cost of 12 pens (₹) is",
+    "options": [
+      "A: 150",
+      "B: 160",
+      "C: 180",
+      "D: 200"
+    ],
+    "answer": "C",
+    "solution": "Unit cost=75/5=15. Cost=12×15=180."
+  },
+  {
+    "id": "APT-E-02",
+    "topic": "Aptitude",
+    "difficulty": "E",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "Average of 10 and 20 is",
+    "options": [
+      "A: 10",
+      "B: 15",
+      "C: 20",
+      "D: 25"
+    ],
+    "answer": "B",
+    "solution": "(10+20)/2=15."
+  },
+  {
+    "id": "APT-E-03",
+    "topic": "Aptitude",
+    "difficulty": "E",
+    "type": "NAT",
+    "marks": 1,
+    "question": "A shop offers 10% discount on ₹2400. Selling price (2 decimals) = ____",
+    "answer": 2160,
+    "tolerance": 0.01,
+    "decimals": 2,
+    "solution": "SP=2400(1−0.10)=2160.00"
+  },
+  {
+    "id": "APT-E-04",
+    "topic": "Aptitude",
+    "difficulty": "E",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "If \\(x\\) is even, then \\(x^2\\) is",
+    "options": [
+      "A: odd",
+      "B: even",
+      "C: prime",
+      "D: negative"
+    ],
+    "answer": "B",
+    "solution": "Even squared remains even."
+  },
+  {
+    "id": "APT-E-05",
+    "topic": "Aptitude",
+    "difficulty": "E",
+    "type": "NAT",
+    "marks": 1,
+    "question": "A train travels 90 km in 1.5 hours. Speed (km/h, 2 decimals) = ____",
+    "answer": 60,
+    "tolerance": 0.01,
+    "decimals": 2,
+    "solution": "Speed=90/1.5=60.00"
+  },
+  {
+    "id": "APT-E-06",
+    "topic": "Aptitude",
+    "difficulty": "E",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "Choose the correct word: The conclusions were ____ by new evidence.",
+    "options": [
+      "A: affected",
+      "B: effected",
+      "C: accepted",
+      "D: afflicted"
+    ],
+    "answer": "A",
+    "solution": "Affected = influenced."
+  },
+  {
+    "id": "APT-E-07",
+    "topic": "Aptitude",
+    "difficulty": "E",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "If A is mother of B and B is sister of C, A is ____ of C.",
+    "options": [
+      "A: aunt",
+      "B: mother",
+      "C: sister",
+      "D: grandmother"
+    ],
+    "answer": "B",
+    "solution": "A is mother of both siblings."
+  },
+  {
+    "id": "APT-E-08",
+    "topic": "Aptitude",
+    "difficulty": "E",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "Simplify: \\(3\\times 4 + 5\\times 2\\) equals",
+    "options": [
+      "A: 12",
+      "B: 16",
+      "C: 22",
+      "D: 24"
+    ],
+    "answer": "C",
+    "solution": "12+10=22."
+  },
+  {
+    "id": "APT-M-01",
+    "topic": "Aptitude",
+    "difficulty": "M",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "Two pipes fill a tank in 10 h and 15 h. Time to fill together (hours) is closest to",
+    "options": [
+      "A: 5.0",
+      "B: 6.0",
+      "C: 6.5",
+      "D: 7.5"
+    ],
+    "answer": "B",
+    "solution": "Rate=1/10+1/15=1/6. Time=6 h."
+  },
+  {
+    "id": "APT-M-02",
+    "topic": "Aptitude",
+    "difficulty": "M",
+    "type": "NAT",
+    "marks": 2,
+    "question": "If \\(\\log_{10}(x)=1.7\\), then \\(x\\) (2 decimals) = ____",
+    "answer": 50.12,
+    "tolerance": 0.05,
+    "decimals": 2,
+    "solution": "x=10^{1.7}≈50.12"
+  },
+  {
+    "id": "APT-M-03",
+    "topic": "Aptitude",
+    "difficulty": "M",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "A number leaves remainder 5 when divided by 9. Remainder when divided by 3 is",
+    "options": [
+      "A: 0",
+      "B: 1",
+      "C: 2",
+      "D: Cannot be determined"
+    ],
+    "answer": "C",
+    "solution": "n=9k+5 ⇒ n mod 3 = 2."
+  },
+  {
+    "id": "APT-M-04",
+    "topic": "Aptitude",
+    "difficulty": "M",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "In a class, ratio of boys:girls = 3:2. If total students = 50, girls =",
+    "options": [
+      "A: 10",
+      "B: 20",
+      "C: 25",
+      "D: 30"
+    ],
+    "answer": "B",
+    "solution": "Girls=2/5×50=20."
+  },
+  {
+    "id": "APT-M-05",
+    "topic": "Aptitude",
+    "difficulty": "M",
+    "type": "NAT",
+    "marks": 1,
+    "question": "Simple interest on ₹5000 at 8% for 1.5 years (₹, 2 decimals) = ____",
+    "answer": 600,
+    "tolerance": 0.01,
+    "decimals": 2,
+    "solution": "SI=PRT=5000×0.08×1.5=600.00"
+  },
+  {
+    "id": "APT-M-06",
+    "topic": "Aptitude",
+    "difficulty": "M",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "Average of 8 numbers is 12. If one number 20 is replaced by 10, new average is",
+    "options": [
+      "A: 10.75",
+      "B: 11.25",
+      "C: 11.75",
+      "D: 12.00"
+    ],
+    "answer": "A",
+    "solution": "Sum=96. New sum=86. Avg=86/8=10.75"
+  },
+  {
+    "id": "APT-M-07",
+    "topic": "Aptitude",
+    "difficulty": "M",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "If \\(2x-3=7\\), then \\(x\\) equals",
+    "options": [
+      "A: 2",
+      "B: 3",
+      "C: 4",
+      "D: 5"
+    ],
+    "answer": "D",
+    "solution": "2x=10 ⇒ x=5."
+  },
+  {
+    "id": "APT-M-08",
+    "topic": "Aptitude",
+    "difficulty": "M",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "A work is completed by A in 12 days and B in 18 days. Together they finish in (days) closest to",
+    "options": [
+      "A: 6.0",
+      "B: 7.2",
+      "C: 7.5",
+      "D: 8.0"
+    ],
+    "answer": "B",
+    "solution": "Rate=1/12+1/18=5/36. Time=36/5=7.2."
+  },
+  {
+    "id": "APT-H-01",
+    "topic": "Aptitude",
+    "difficulty": "H",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "If \\(x\\) and \\(y\\) are positive and \\(\\frac{1}{x}+\\frac{1}{y}=\\frac{1}{6}\\), then minimum of \\(x+y\\) is",
+    "options": [
+      "A: 12",
+      "B: 18",
+      "C: 24",
+      "D: 36"
+    ],
+    "answer": "C",
+    "solution": "Minimum at x=y=12 ⇒ x+y=24."
+  },
+  {
+    "id": "APT-H-02",
+    "topic": "Aptitude",
+    "difficulty": "H",
+    "type": "NAT",
+    "marks": 2,
+    "question": "Milk:water = 7:3. If 10 L water is added to 40 L mixture, new milk fraction (2 decimals) = ____",
+    "answer": 0.56,
+    "tolerance": 0.01,
+    "decimals": 2,
+    "solution": "Milk=28L, total=50L ⇒ fraction=0.56"
+  },
+  {
+    "id": "APT-H-03",
+    "topic": "Aptitude",
+    "difficulty": "H",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "If \\(n\\) is an integer, \\(n^2\\) mod 4 can be",
+    "options": [
+      "A: 0 only",
+      "B: 1 only",
+      "C: 0 or 1",
+      "D: 2 or 3"
+    ],
+    "answer": "C",
+    "solution": "Even⇒0, odd⇒1 mod 4."
+  },
+  {
+    "id": "APT-H-04",
+    "topic": "Aptitude",
+    "difficulty": "H",
+    "type": "NAT",
+    "marks": 2,
+    "question": "Mean of 5 numbers is 14 and mean of 3 of them is 12. Mean of remaining 2 (2 decimals) = ____",
+    "answer": 17,
+    "tolerance": 0.01,
+    "decimals": 2,
+    "solution": "Remaining sum=34 ⇒ mean=17.00"
+  },
+  {
+    "id": "APT-H-05",
+    "topic": "Aptitude",
+    "difficulty": "H",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "How many integers in [1,100] are divisible by 2 or 5?",
+    "options": [
+      "A: 50",
+      "B: 60",
+      "C: 65",
+      "D: 70"
+    ],
+    "answer": "B",
+    "solution": "50+20−10=60."
+  },
+  {
+    "id": "APT-H-06",
+    "topic": "Aptitude",
+    "difficulty": "H",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Select all statements always true for real \\(a,b\\):",
+    "options": [
+      "A: \\((a+b)^2\\ge 0\\)",
+      "B: \\(a^2+b^2\\ge 2ab\\)",
+      "C: \\(a^2+b^2\\le (a+b)^2\\)",
+      "D: \\(|a+b|\\le |a|+|b|\\)"
+    ],
+    "answer": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "solution": "All true (nonnegativity, inequality, expansion, triangle)."
+  },
+  {
+    "id": "APT-H-07",
+    "topic": "Aptitude",
+    "difficulty": "H",
+    "type": "NAT",
+    "marks": 2,
+    "question": "If success probability is 0.2 per trial, expected successes in 15 trials (2 decimals) = ____",
+    "answer": 3,
+    "tolerance": 0.01,
+    "decimals": 2,
+    "solution": "E=np=15×0.2=3.00"
+  },
+  {
+    "id": "APT-H-08",
+    "topic": "Aptitude",
+    "difficulty": "H",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "If \\(\\sin\\theta=3/5\\) in first quadrant, \\(\\cos\\theta\\) is",
+    "options": [
+      "A: 3/5",
+      "B: 4/5",
+      "C: 5/3",
+      "D: 5/4"
+    ],
+    "answer": "B",
+    "solution": "3-4-5 triangle ⇒ cos=4/5."
+  },
+  {
+    "id": "APT-H-09",
+    "topic": "Aptitude",
+    "difficulty": "H",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "A cube has surface area 150 \\(\\text{cm}^2\\). Volume (\\(\\text{cm}^3\\)) is",
+    "options": [
+      "A: 125",
+      "B: 150",
+      "C: 216",
+      "D: 250"
+    ],
+    "answer": "A",
+    "solution": "6a^2=150 ⇒ a=5 ⇒ V=125."
+  },
+  {
+    "id": "MTH-E-01",
+    "topic": "Engineering Maths",
+    "difficulty": "E",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "If \\(f(x)=x^3\\), then \\(f'(2)\\) equals",
+    "options": [
+      "A: 4",
+      "B: 6",
+      "C: 8",
+      "D: 12"
+    ],
+    "answer": "D",
+    "solution": "f'(x)=3x^2 ⇒ 12"
+  },
+  {
+    "id": "MTH-E-02",
+    "topic": "Engineering Maths",
+    "difficulty": "E",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "Determinant of \\(\\begin{bmatrix}1&2\\\\3&4\\end{bmatrix}\\) is",
+    "options": [
+      "A: -2",
+      "B: 2",
+      "C: -1",
+      "D: 1"
+    ],
+    "answer": "A",
+    "solution": "1·4−2·3=−2"
+  },
+  {
+    "id": "MTH-E-03",
+    "topic": "Engineering Maths",
+    "difficulty": "E",
+    "type": "NAT",
+    "marks": 1,
+    "question": "Compute \\(\\int_0^2 x\\,dx\\) (2 decimals) = ____",
+    "answer": 2,
+    "tolerance": 0.01,
+    "decimals": 2,
+    "solution": "[x^2/2]_0^2=2.00"
+  },
+  {
+    "id": "MTH-E-04",
+    "topic": "Engineering Maths",
+    "difficulty": "E",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "\\(\\mathcal{L}\\{1\\}\\) equals",
+    "options": [
+      "A: 1/s",
+      "B: s",
+      "C: 1/s^2",
+      "D: e^s"
+    ],
+    "answer": "A",
+    "solution": "Integral gives 1/s."
+  },
+  {
+    "id": "MTH-E-05",
+    "topic": "Engineering Maths",
+    "difficulty": "E",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "If A is symmetric, then",
+    "options": [
+      "A: A^T=A",
+      "B: A^T=-A",
+      "C: A^2=I",
+      "D: det(A)=0"
+    ],
+    "answer": "A",
+    "solution": "Definition."
+  },
+  {
+    "id": "MTH-E-06",
+    "topic": "Engineering Maths",
+    "difficulty": "E",
+    "type": "NAT",
+    "marks": 1,
+    "question": "\\(|3+4i|\\) (2 decimals) = ____",
+    "answer": 5,
+    "tolerance": 0.01,
+    "decimals": 2,
+    "solution": "sqrt(9+16)=5.00"
+  },
+  {
+    "id": "MTH-E-07",
+    "topic": "Engineering Maths",
+    "difficulty": "E",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "Solution of \\(x^2-9=0\\) (positive root) is",
+    "options": [
+      "A: 1",
+      "B: 3",
+      "C: -3",
+      "D: 9"
+    ],
+    "answer": "B",
+    "solution": "x=3"
+  },
+  {
+    "id": "MTH-E-08",
+    "topic": "Engineering Maths",
+    "difficulty": "E",
+    "type": "NAT",
+    "marks": 1,
+    "question": "\\(\\lim_{x\\to 0}\\frac{\\sin(2x)}{x}\\) (2 decimals) = ____",
+    "answer": 2,
+    "tolerance": 0.01,
+    "decimals": 2,
+    "solution": "=2.00"
+  },
+  {
+    "id": "MTH-M-01",
+    "topic": "Engineering Maths",
+    "difficulty": "M",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "Eigenvalues of \\(\\begin{bmatrix}2&0\\\\0&5\\end{bmatrix}\\) are",
+    "options": [
+      "A: 2 and 5",
+      "B: 0 and 7",
+      "C: 1 and 6",
+      "D: -2 and -5"
+    ],
+    "answer": "A",
+    "solution": "Diagonal entries."
+  },
+  {
+    "id": "MTH-M-02",
+    "topic": "Engineering Maths",
+    "difficulty": "M",
+    "type": "NAT",
+    "marks": 2,
+    "question": "Compute \\(\\int_0^1 6x(1-x)\\,dx\\) (2 decimals) = ____",
+    "answer": 1,
+    "tolerance": 0.01,
+    "decimals": 2,
+    "solution": "6(1/2−1/3)=1.00"
+  },
+  {
+    "id": "MTH-M-03",
+    "topic": "Engineering Maths",
+    "difficulty": "M",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "For \\(y'+y=e^x\\), integrating factor is",
+    "options": [
+      "A: e^x",
+      "B: e^{-x}",
+      "C: x",
+      "D: 1"
+    ],
+    "answer": "A",
+    "solution": "IF=e^{∫1dx}=e^x"
+  },
+  {
+    "id": "MTH-M-04",
+    "topic": "Engineering Maths",
+    "difficulty": "M",
+    "type": "NAT",
+    "marks": 2,
+    "question": "If \\(\\mathbf{a}\\cdot\\mathbf{b}=12\\), \\(|a|=3\\), \\(|b|=5\\). Angle (deg,2 decimals)=____",
+    "answer": 36.87,
+    "tolerance": 0.2,
+    "decimals": 2,
+    "solution": "cosθ=0.8 ⇒ θ≈36.87°"
+  },
+  {
+    "id": "MTH-M-05",
+    "topic": "Engineering Maths",
+    "difficulty": "M",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "If \\(\\sum a_n\\) converges absolutely, then it converges",
+    "options": [
+      "A: always",
+      "B: never",
+      "C: only if positive",
+      "D: only if monotone"
+    ],
+    "answer": "A",
+    "solution": "Absolute convergence ⇒ convergence."
+  },
+  {
+    "id": "MTH-M-06",
+    "topic": "Engineering Maths",
+    "difficulty": "M",
+    "type": "NAT",
+    "marks": 2,
+    "question": "Solve \\(2x+3y=12\\), \\(x-y=1\\). \\(x\\) (2 decimals)=____",
+    "answer": 3,
+    "tolerance": 0.01,
+    "decimals": 2,
+    "solution": "x=3.00"
+  },
+  {
+    "id": "MTH-M-07",
+    "topic": "Engineering Maths",
+    "difficulty": "M",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "For continuous random variable, \\(P(X=a)\\) equals",
+    "options": [
+      "A: 0",
+      "B: 1",
+      "C: depends on a",
+      "D: infinite"
+    ],
+    "answer": "A",
+    "solution": "Point probability is 0."
+  },
+  {
+    "id": "MTH-M-08",
+    "topic": "Engineering Maths",
+    "difficulty": "M",
+    "type": "NAT",
+    "marks": 2,
+    "question": "\\(\\nabla\\cdot (x\\hat i + y\\hat j + z\\hat k)\\) (2 decimals)=____",
+    "answer": 3,
+    "tolerance": 0.01,
+    "decimals": 2,
+    "solution": "=3.00"
+  },
+  {
+    "id": "MTH-H-01",
+    "topic": "Engineering Maths",
+    "difficulty": "H",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "If \\(A\\) is orthogonal, then \\(A^{-1}\\) equals",
+    "options": [
+      "A: A",
+      "B: A^T",
+      "C: -A",
+      "D: 0"
+    ],
+    "answer": "B",
+    "solution": "Orthogonal ⇒ A^{-1}=A^T"
+  },
+  {
+    "id": "MTH-H-02",
+    "topic": "Engineering Maths",
+    "difficulty": "H",
+    "type": "NAT",
+    "marks": 2,
+    "question": "\\(\\int_0^{\\pi/2}\\sin x\\,dx\\) (2 decimals)=____",
+    "answer": 1,
+    "tolerance": 0.01,
+    "decimals": 2,
+    "solution": "=1.00"
+  },
+  {
+    "id": "MTH-H-03",
+    "topic": "Engineering Maths",
+    "difficulty": "H",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "For \\(y''+4y=0\\), general solution is",
+    "options": [
+      "A: A(e^{2x}+e^{-2x})",
+      "B: A(\\sin 2x + \\cos 2x)",
+      "C: A(\\sin x+\\cos x)",
+      "D: Ae^{4x}"
+    ],
+    "answer": "B",
+    "solution": "r^2+4=0 ⇒ r=±2i"
+  },
+  {
+    "id": "MTH-H-04",
+    "topic": "Engineering Maths",
+    "difficulty": "H",
+    "type": "NAT",
+    "marks": 2,
+    "question": "\\(\\sum_{k=1}^{10} k\\) (2 decimals)=____",
+    "answer": 55,
+    "tolerance": 0.01,
+    "decimals": 2,
+    "solution": "10×11/2=55.00"
+  },
+  {
+    "id": "MTH-H-05",
+    "topic": "Engineering Maths",
+    "difficulty": "H",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "If \\(X\\sim N(0,1)\\), then \\(E[X^2]\\) equals",
+    "options": [
+      "A: 0",
+      "B: 1",
+      "C: 2",
+      "D: \\(\\pi\\)"
+    ],
+    "answer": "B",
+    "solution": "Var=1, mean=0 ⇒ E[X^2]=1"
+  },
+  {
+    "id": "MTH-H-06",
+    "topic": "Engineering Maths",
+    "difficulty": "H",
+    "type": "NAT",
+    "marks": 2,
+    "question": "Rank of \\(\\begin{bmatrix}1&1\\\\1&1\\end{bmatrix}\\) (2 decimals)=____",
+    "answer": 1,
+    "tolerance": 0.01,
+    "decimals": 2,
+    "solution": "Dependent rows ⇒ rank=1.00"
+  },
+  {
+    "id": "MTH-H-07",
+    "topic": "Engineering Maths",
+    "difficulty": "H",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Select all true statements:",
+    "options": [
+      "A: If \\(\\nabla f=0\\), it is stationary point",
+      "B: All stationary points are minima",
+      "C: Minimum can occur at boundary",
+      "D: Hessian positive definite ⇒ local minimum"
+    ],
+    "answer": [
+      "A",
+      "C",
+      "D"
+    ],
+    "solution": "(1),(3),(4) true."
+  },
+  {
+    "id": "MTH-H-08",
+    "topic": "Engineering Maths",
+    "difficulty": "H",
+    "type": "NAT",
+    "marks": 2,
+    "question": "For 2×2 matrix, if det(A)=3, then det(2A) (2 decimals)=____",
+    "answer": 12,
+    "tolerance": 0.01,
+    "decimals": 2,
+    "solution": "det(2A)=2^2 det(A)=12.00"
+  },
+  {
+    "id": "MTH-H-09",
+    "topic": "Engineering Maths",
+    "difficulty": "H",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "If \\(u=e^x\\cos y\\), then \\(u_{xx}\\) equals",
+    "options": [
+      "A: \\(e^x\\cos y\\)",
+      "B: \\(e^x\\sin y\\)",
+      "C: \\(-e^x\\cos y\\)",
+      "D: 0"
+    ],
+    "answer": "A",
+    "solution": "Differentiate twice in x."
+  },
+  {
+    "id": "AERO-E-01",
+    "topic": "Aerodynamics",
+    "difficulty": "E",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "For inviscid incompressible potential flow, vorticity is",
+    "options": [
+      "A: zero",
+      "B: nonzero",
+      "C: equal to pressure",
+      "D: equal to density"
+    ],
+    "answer": "A",
+    "solution": "Potential flow is irrotational ⇒ vorticity 0."
+  },
+  {
+    "id": "AERO-E-02",
+    "topic": "Aerodynamics",
+    "difficulty": "E",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "For inviscid incompressible potential flow, vorticity is",
+    "options": [
+      "A: zero",
+      "B: nonzero",
+      "C: equal to pressure",
+      "D: equal to density"
+    ],
+    "answer": "A",
+    "solution": "Potential flow is irrotational ⇒ vorticity 0."
+  },
+  {
+    "id": "AERO-E-03",
+    "topic": "Aerodynamics",
+    "difficulty": "E",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "For inviscid incompressible potential flow, vorticity is",
+    "options": [
+      "A: zero",
+      "B: nonzero",
+      "C: equal to pressure",
+      "D: equal to density"
+    ],
+    "answer": "A",
+    "solution": "Potential flow is irrotational ⇒ vorticity 0."
+  },
+  {
+    "id": "AERO-E-04",
+    "topic": "Aerodynamics",
+    "difficulty": "E",
+    "type": "MSQ",
+    "marks": 1,
+    "question": "Select all that reduce induced drag for same lift:",
+    "options": [
+      "A: Increase aspect ratio",
+      "B: Decrease aspect ratio",
+      "C: Increase Oswald efficiency",
+      "D: Decrease Oswald efficiency"
+    ],
+    "answer": [
+      "A",
+      "C"
+    ],
+    "solution": "\\(C_{D_i}\\propto 1/(eAR)\\)."
+  },
+  {
+    "id": "AERO-E-05",
+    "topic": "Aerodynamics",
+    "difficulty": "E",
+    "type": "NAT",
+    "marks": 1,
+    "question": "Thin airfoil: \\(C_L\\approx 2\\pi\\alpha\\). For \\(\\alpha=5^\\circ\\), \\(C_L\\) (2 decimals)=____",
+    "answer": 0.55,
+    "tolerance": 0.03,
+    "decimals": 2,
+    "solution": "\\(\\alpha\\) in rad = 5π/180. \\(C_L=2\\pi\\alpha\\)."
+  },
+  {
+    "id": "AERO-E-06",
+    "topic": "Aerodynamics",
+    "difficulty": "E",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "For inviscid incompressible potential flow, vorticity is",
+    "options": [
+      "A: zero",
+      "B: nonzero",
+      "C: equal to pressure",
+      "D: equal to density"
+    ],
+    "answer": "A",
+    "solution": "Potential flow is irrotational ⇒ vorticity 0."
+  },
+  {
+    "id": "AERO-E-07",
+    "topic": "Aerodynamics",
+    "difficulty": "E",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "For inviscid incompressible potential flow, vorticity is",
+    "options": [
+      "A: zero",
+      "B: nonzero",
+      "C: equal to pressure",
+      "D: equal to density"
+    ],
+    "answer": "A",
+    "solution": "Potential flow is irrotational ⇒ vorticity 0."
+  },
+  {
+    "id": "AERO-E-08",
+    "topic": "Aerodynamics",
+    "difficulty": "E",
+    "type": "MSQ",
+    "marks": 1,
+    "question": "Select all that reduce induced drag for same lift:",
+    "options": [
+      "A: Increase aspect ratio",
+      "B: Decrease aspect ratio",
+      "C: Increase Oswald efficiency",
+      "D: Decrease Oswald efficiency"
+    ],
+    "answer": [
+      "A",
+      "C"
+    ],
+    "solution": "\\(C_{D_i}\\propto 1/(eAR)\\)."
+  },
+  {
+    "id": "AERO-M-01",
+    "topic": "Aerodynamics",
+    "difficulty": "M",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "For inviscid incompressible potential flow, vorticity is",
+    "options": [
+      "A: zero",
+      "B: nonzero",
+      "C: equal to pressure",
+      "D: equal to density"
+    ],
+    "answer": "A",
+    "solution": "Potential flow is irrotational ⇒ vorticity 0."
+  },
+  {
+    "id": "AERO-M-02",
+    "topic": "Aerodynamics",
+    "difficulty": "M",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "For inviscid incompressible potential flow, vorticity is",
+    "options": [
+      "A: zero",
+      "B: nonzero",
+      "C: equal to pressure",
+      "D: equal to density"
+    ],
+    "answer": "A",
+    "solution": "Potential flow is irrotational ⇒ vorticity 0."
+  },
+  {
+    "id": "AERO-M-03",
+    "topic": "Aerodynamics",
+    "difficulty": "M",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "For inviscid incompressible potential flow, vorticity is",
+    "options": [
+      "A: zero",
+      "B: nonzero",
+      "C: equal to pressure",
+      "D: equal to density"
+    ],
+    "answer": "A",
+    "solution": "Potential flow is irrotational ⇒ vorticity 0."
+  },
+  {
+    "id": "AERO-M-04",
+    "topic": "Aerodynamics",
+    "difficulty": "M",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Select all that reduce induced drag for same lift:",
+    "options": [
+      "A: Increase aspect ratio",
+      "B: Decrease aspect ratio",
+      "C: Increase Oswald efficiency",
+      "D: Decrease Oswald efficiency"
+    ],
+    "answer": [
+      "A",
+      "C"
+    ],
+    "solution": "\\(C_{D_i}\\propto 1/(eAR)\\)."
+  },
+  {
+    "id": "AERO-M-05",
+    "topic": "Aerodynamics",
+    "difficulty": "M",
+    "type": "NAT",
+    "marks": 2,
+    "question": "Thin airfoil: \\(C_L\\approx 2\\pi\\alpha\\). For \\(\\alpha=5^\\circ\\), \\(C_L\\) (2 decimals)=____",
+    "answer": 0.55,
+    "tolerance": 0.03,
+    "decimals": 2,
+    "solution": "\\(\\alpha\\) in rad = 5π/180. \\(C_L=2\\pi\\alpha\\)."
+  },
+  {
+    "id": "AERO-M-06",
+    "topic": "Aerodynamics",
+    "difficulty": "M",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "For inviscid incompressible potential flow, vorticity is",
+    "options": [
+      "A: zero",
+      "B: nonzero",
+      "C: equal to pressure",
+      "D: equal to density"
+    ],
+    "answer": "A",
+    "solution": "Potential flow is irrotational ⇒ vorticity 0."
+  },
+  {
+    "id": "AERO-M-07",
+    "topic": "Aerodynamics",
+    "difficulty": "M",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "For inviscid incompressible potential flow, vorticity is",
+    "options": [
+      "A: zero",
+      "B: nonzero",
+      "C: equal to pressure",
+      "D: equal to density"
+    ],
+    "answer": "A",
+    "solution": "Potential flow is irrotational ⇒ vorticity 0."
+  },
+  {
+    "id": "AERO-M-08",
+    "topic": "Aerodynamics",
+    "difficulty": "M",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Select all that reduce induced drag for same lift:",
+    "options": [
+      "A: Increase aspect ratio",
+      "B: Decrease aspect ratio",
+      "C: Increase Oswald efficiency",
+      "D: Decrease Oswald efficiency"
+    ],
+    "answer": [
+      "A",
+      "C"
+    ],
+    "solution": "\\(C_{D_i}\\propto 1/(eAR)\\)."
+  },
+  {
+    "id": "AERO-H-01",
+    "topic": "Aerodynamics",
+    "difficulty": "H",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "For inviscid incompressible potential flow, vorticity is",
+    "options": [
+      "A: zero",
+      "B: nonzero",
+      "C: equal to pressure",
+      "D: equal to density"
+    ],
+    "answer": "A",
+    "solution": "Potential flow is irrotational ⇒ vorticity 0."
+  },
+  {
+    "id": "AERO-H-02",
+    "topic": "Aerodynamics",
+    "difficulty": "H",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "For inviscid incompressible potential flow, vorticity is",
+    "options": [
+      "A: zero",
+      "B: nonzero",
+      "C: equal to pressure",
+      "D: equal to density"
+    ],
+    "answer": "A",
+    "solution": "Potential flow is irrotational ⇒ vorticity 0."
+  },
+  {
+    "id": "AERO-H-03",
+    "topic": "Aerodynamics",
+    "difficulty": "H",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "For inviscid incompressible potential flow, vorticity is",
+    "options": [
+      "A: zero",
+      "B: nonzero",
+      "C: equal to pressure",
+      "D: equal to density"
+    ],
+    "answer": "A",
+    "solution": "Potential flow is irrotational ⇒ vorticity 0."
+  },
+  {
+    "id": "AERO-H-04",
+    "topic": "Aerodynamics",
+    "difficulty": "H",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Select all that reduce induced drag for same lift:",
+    "options": [
+      "A: Increase aspect ratio",
+      "B: Decrease aspect ratio",
+      "C: Increase Oswald efficiency",
+      "D: Decrease Oswald efficiency"
+    ],
+    "answer": [
+      "A",
+      "C"
+    ],
+    "solution": "\\(C_{D_i}\\propto 1/(eAR)\\)."
+  },
+  {
+    "id": "AERO-H-05",
+    "topic": "Aerodynamics",
+    "difficulty": "H",
+    "type": "NAT",
+    "marks": 2,
+    "question": "Thin airfoil: \\(C_L\\approx 2\\pi\\alpha\\). For \\(\\alpha=5^\\circ\\), \\(C_L\\) (2 decimals)=____",
+    "answer": 0.55,
+    "tolerance": 0.03,
+    "decimals": 2,
+    "solution": "\\(\\alpha\\) in rad = 5π/180. \\(C_L=2\\pi\\alpha\\)."
+  },
+  {
+    "id": "AERO-H-06",
+    "topic": "Aerodynamics",
+    "difficulty": "H",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "For inviscid incompressible potential flow, vorticity is",
+    "options": [
+      "A: zero",
+      "B: nonzero",
+      "C: equal to pressure",
+      "D: equal to density"
+    ],
+    "answer": "A",
+    "solution": "Potential flow is irrotational ⇒ vorticity 0."
+  },
+  {
+    "id": "AERO-H-07",
+    "topic": "Aerodynamics",
+    "difficulty": "H",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "For inviscid incompressible potential flow, vorticity is",
+    "options": [
+      "A: zero",
+      "B: nonzero",
+      "C: equal to pressure",
+      "D: equal to density"
+    ],
+    "answer": "A",
+    "solution": "Potential flow is irrotational ⇒ vorticity 0."
+  },
+  {
+    "id": "AERO-H-08",
+    "topic": "Aerodynamics",
+    "difficulty": "H",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Select all that reduce induced drag for same lift:",
+    "options": [
+      "A: Increase aspect ratio",
+      "B: Decrease aspect ratio",
+      "C: Increase Oswald efficiency",
+      "D: Decrease Oswald efficiency"
+    ],
+    "answer": [
+      "A",
+      "C"
+    ],
+    "solution": "\\(C_{D_i}\\propto 1/(eAR)\\)."
+  },
+  {
+    "id": "AERO-H-09",
+    "topic": "Aerodynamics",
+    "difficulty": "H",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "For inviscid incompressible potential flow, vorticity is",
+    "options": [
+      "A: zero",
+      "B: nonzero",
+      "C: equal to pressure",
+      "D: equal to density"
+    ],
+    "answer": "A",
+    "solution": "Potential flow is irrotational ⇒ vorticity 0."
+  },
+  {
+    "id": "PROP-E-01",
+    "topic": "Propulsion",
+    "difficulty": "E",
+    "type": "NAT",
+    "marks": 1,
+    "question": "Turbojet thrust (ignore pressure thrust): \\(T=\\dot m(V_e-V_0)\\). If \\(\\dot m=30\\), \\(V_e=650\\), \\(V_0=250\\), T (kN,2 decimals)=____",
+    "answer": 12,
+    "tolerance": 0.05,
+    "decimals": 2,
+    "solution": "T=30×400=12000 N=12.00 kN"
+  },
+  {
+    "id": "PROP-E-02",
+    "topic": "Propulsion",
+    "difficulty": "E",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "Choked flow at nozzle throat occurs at",
+    "options": [
+      "A: M=0",
+      "B: M=0.5",
+      "C: M=1",
+      "D: M>1"
+    ],
+    "answer": "C",
+    "solution": "Choking at M=1 at throat."
+  },
+  {
+    "id": "PROP-E-03",
+    "topic": "Propulsion",
+    "difficulty": "E",
+    "type": "MSQ",
+    "marks": 1,
+    "question": "Select all true for ideal nozzle:",
+    "options": [
+      "A: Isentropic",
+      "B: Can choke",
+      "C: \\(T_0\\) constant (no work)",
+      "D: Always subsonic exit"
+    ],
+    "answer": [
+      "A",
+      "B",
+      "C"
+    ],
+    "solution": "Ideal nozzle: isentropic, may choke, T0 constant; exit may be supersonic in CD nozzle."
+  },
+  {
+    "id": "PROP-E-04",
+    "topic": "Propulsion",
+    "difficulty": "E",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "For perfectly expanded rocket nozzle (\\(p_e=p_a\\)), thrust is",
+    "options": [
+      "A: \\(\\dot mV_e\\)",
+      "B: \\(\\dot m(V_e-V_0)\\)",
+      "C: \\(\\dot mV_0\\)",
+      "D: 0"
+    ],
+    "answer": "A",
+    "solution": "T=ṁVe+(pe−pa)Ae ⇒ ṁVe."
+  },
+  {
+    "id": "PROP-E-05",
+    "topic": "Propulsion",
+    "difficulty": "E",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "For perfectly expanded rocket nozzle (\\(p_e=p_a\\)), thrust is",
+    "options": [
+      "A: \\(\\dot mV_e\\)",
+      "B: \\(\\dot m(V_e-V_0)\\)",
+      "C: \\(\\dot mV_0\\)",
+      "D: 0"
+    ],
+    "answer": "A",
+    "solution": "T=ṁVe+(pe−pa)Ae ⇒ ṁVe."
+  },
+  {
+    "id": "PROP-E-06",
+    "topic": "Propulsion",
+    "difficulty": "E",
+    "type": "NAT",
+    "marks": 1,
+    "question": "Turbojet thrust (ignore pressure thrust): \\(T=\\dot m(V_e-V_0)\\). If \\(\\dot m=30\\), \\(V_e=650\\), \\(V_0=250\\), T (kN,2 decimals)=____",
+    "answer": 12,
+    "tolerance": 0.05,
+    "decimals": 2,
+    "solution": "T=30×400=12000 N=12.00 kN"
+  },
+  {
+    "id": "PROP-E-07",
+    "topic": "Propulsion",
+    "difficulty": "E",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "For perfectly expanded rocket nozzle (\\(p_e=p_a\\)), thrust is",
+    "options": [
+      "A: \\(\\dot mV_e\\)",
+      "B: \\(\\dot m(V_e-V_0)\\)",
+      "C: \\(\\dot mV_0\\)",
+      "D: 0"
+    ],
+    "answer": "A",
+    "solution": "T=ṁVe+(pe−pa)Ae ⇒ ṁVe."
+  },
+  {
+    "id": "PROP-E-08",
+    "topic": "Propulsion",
+    "difficulty": "E",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "For perfectly expanded rocket nozzle (\\(p_e=p_a\\)), thrust is",
+    "options": [
+      "A: \\(\\dot mV_e\\)",
+      "B: \\(\\dot m(V_e-V_0)\\)",
+      "C: \\(\\dot mV_0\\)",
+      "D: 0"
+    ],
+    "answer": "A",
+    "solution": "T=ṁVe+(pe−pa)Ae ⇒ ṁVe."
+  },
+  {
+    "id": "PROP-M-01",
+    "topic": "Propulsion",
+    "difficulty": "M",
+    "type": "NAT",
+    "marks": 2,
+    "question": "Turbojet thrust (ignore pressure thrust): \\(T=\\dot m(V_e-V_0)\\). If \\(\\dot m=30\\), \\(V_e=650\\), \\(V_0=250\\), T (kN,2 decimals)=____",
+    "answer": 12,
+    "tolerance": 0.05,
+    "decimals": 2,
+    "solution": "T=30×400=12000 N=12.00 kN"
+  },
+  {
+    "id": "PROP-M-02",
+    "topic": "Propulsion",
+    "difficulty": "M",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "Choked flow at nozzle throat occurs at",
+    "options": [
+      "A: M=0",
+      "B: M=0.5",
+      "C: M=1",
+      "D: M>1"
+    ],
+    "answer": "C",
+    "solution": "Choking at M=1 at throat."
+  },
+  {
+    "id": "PROP-M-03",
+    "topic": "Propulsion",
+    "difficulty": "M",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Select all true for ideal nozzle:",
+    "options": [
+      "A: Isentropic",
+      "B: Can choke",
+      "C: \\(T_0\\) constant (no work)",
+      "D: Always subsonic exit"
+    ],
+    "answer": [
+      "A",
+      "B",
+      "C"
+    ],
+    "solution": "Ideal nozzle: isentropic, may choke, T0 constant; exit may be supersonic in CD nozzle."
+  },
+  {
+    "id": "PROP-M-04",
+    "topic": "Propulsion",
+    "difficulty": "M",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "For perfectly expanded rocket nozzle (\\(p_e=p_a\\)), thrust is",
+    "options": [
+      "A: \\(\\dot mV_e\\)",
+      "B: \\(\\dot m(V_e-V_0)\\)",
+      "C: \\(\\dot mV_0\\)",
+      "D: 0"
+    ],
+    "answer": "A",
+    "solution": "T=ṁVe+(pe−pa)Ae ⇒ ṁVe."
+  },
+  {
+    "id": "PROP-M-05",
+    "topic": "Propulsion",
+    "difficulty": "M",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "For perfectly expanded rocket nozzle (\\(p_e=p_a\\)), thrust is",
+    "options": [
+      "A: \\(\\dot mV_e\\)",
+      "B: \\(\\dot m(V_e-V_0)\\)",
+      "C: \\(\\dot mV_0\\)",
+      "D: 0"
+    ],
+    "answer": "A",
+    "solution": "T=ṁVe+(pe−pa)Ae ⇒ ṁVe."
+  },
+  {
+    "id": "PROP-M-06",
+    "topic": "Propulsion",
+    "difficulty": "M",
+    "type": "NAT",
+    "marks": 2,
+    "question": "Turbojet thrust (ignore pressure thrust): \\(T=\\dot m(V_e-V_0)\\). If \\(\\dot m=30\\), \\(V_e=650\\), \\(V_0=250\\), T (kN,2 decimals)=____",
+    "answer": 12,
+    "tolerance": 0.05,
+    "decimals": 2,
+    "solution": "T=30×400=12000 N=12.00 kN"
+  },
+  {
+    "id": "PROP-M-07",
+    "topic": "Propulsion",
+    "difficulty": "M",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "For perfectly expanded rocket nozzle (\\(p_e=p_a\\)), thrust is",
+    "options": [
+      "A: \\(\\dot mV_e\\)",
+      "B: \\(\\dot m(V_e-V_0)\\)",
+      "C: \\(\\dot mV_0\\)",
+      "D: 0"
+    ],
+    "answer": "A",
+    "solution": "T=ṁVe+(pe−pa)Ae ⇒ ṁVe."
+  },
+  {
+    "id": "PROP-M-08",
+    "topic": "Propulsion",
+    "difficulty": "M",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "For perfectly expanded rocket nozzle (\\(p_e=p_a\\)), thrust is",
+    "options": [
+      "A: \\(\\dot mV_e\\)",
+      "B: \\(\\dot m(V_e-V_0)\\)",
+      "C: \\(\\dot mV_0\\)",
+      "D: 0"
+    ],
+    "answer": "A",
+    "solution": "T=ṁVe+(pe−pa)Ae ⇒ ṁVe."
+  },
+  {
+    "id": "PROP-H-01",
+    "topic": "Propulsion",
+    "difficulty": "H",
+    "type": "NAT",
+    "marks": 2,
+    "question": "Turbojet thrust (ignore pressure thrust): \\(T=\\dot m(V_e-V_0)\\). If \\(\\dot m=30\\), \\(V_e=650\\), \\(V_0=250\\), T (kN,2 decimals)=____",
+    "answer": 12,
+    "tolerance": 0.05,
+    "decimals": 2,
+    "solution": "T=30×400=12000 N=12.00 kN"
+  },
+  {
+    "id": "PROP-H-02",
+    "topic": "Propulsion",
+    "difficulty": "H",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "Choked flow at nozzle throat occurs at",
+    "options": [
+      "A: M=0",
+      "B: M=0.5",
+      "C: M=1",
+      "D: M>1"
+    ],
+    "answer": "C",
+    "solution": "Choking at M=1 at throat."
+  },
+  {
+    "id": "PROP-H-03",
+    "topic": "Propulsion",
+    "difficulty": "H",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Select all true for ideal nozzle:",
+    "options": [
+      "A: Isentropic",
+      "B: Can choke",
+      "C: \\(T_0\\) constant (no work)",
+      "D: Always subsonic exit"
+    ],
+    "answer": [
+      "A",
+      "B",
+      "C"
+    ],
+    "solution": "Ideal nozzle: isentropic, may choke, T0 constant; exit may be supersonic in CD nozzle."
+  },
+  {
+    "id": "PROP-H-04",
+    "topic": "Propulsion",
+    "difficulty": "H",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "For perfectly expanded rocket nozzle (\\(p_e=p_a\\)), thrust is",
+    "options": [
+      "A: \\(\\dot mV_e\\)",
+      "B: \\(\\dot m(V_e-V_0)\\)",
+      "C: \\(\\dot mV_0\\)",
+      "D: 0"
+    ],
+    "answer": "A",
+    "solution": "T=ṁVe+(pe−pa)Ae ⇒ ṁVe."
+  },
+  {
+    "id": "PROP-H-05",
+    "topic": "Propulsion",
+    "difficulty": "H",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "For perfectly expanded rocket nozzle (\\(p_e=p_a\\)), thrust is",
+    "options": [
+      "A: \\(\\dot mV_e\\)",
+      "B: \\(\\dot m(V_e-V_0)\\)",
+      "C: \\(\\dot mV_0\\)",
+      "D: 0"
+    ],
+    "answer": "A",
+    "solution": "T=ṁVe+(pe−pa)Ae ⇒ ṁVe."
+  },
+  {
+    "id": "PROP-H-06",
+    "topic": "Propulsion",
+    "difficulty": "H",
+    "type": "NAT",
+    "marks": 2,
+    "question": "Turbojet thrust (ignore pressure thrust): \\(T=\\dot m(V_e-V_0)\\). If \\(\\dot m=30\\), \\(V_e=650\\), \\(V_0=250\\), T (kN,2 decimals)=____",
+    "answer": 12,
+    "tolerance": 0.05,
+    "decimals": 2,
+    "solution": "T=30×400=12000 N=12.00 kN"
+  },
+  {
+    "id": "PROP-H-07",
+    "topic": "Propulsion",
+    "difficulty": "H",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "For perfectly expanded rocket nozzle (\\(p_e=p_a\\)), thrust is",
+    "options": [
+      "A: \\(\\dot mV_e\\)",
+      "B: \\(\\dot m(V_e-V_0)\\)",
+      "C: \\(\\dot mV_0\\)",
+      "D: 0"
+    ],
+    "answer": "A",
+    "solution": "T=ṁVe+(pe−pa)Ae ⇒ ṁVe."
+  },
+  {
+    "id": "PROP-H-08",
+    "topic": "Propulsion",
+    "difficulty": "H",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "For perfectly expanded rocket nozzle (\\(p_e=p_a\\)), thrust is",
+    "options": [
+      "A: \\(\\dot mV_e\\)",
+      "B: \\(\\dot m(V_e-V_0)\\)",
+      "C: \\(\\dot mV_0\\)",
+      "D: 0"
+    ],
+    "answer": "A",
+    "solution": "T=ṁVe+(pe−pa)Ae ⇒ ṁVe."
+  },
+  {
+    "id": "PROP-H-09",
+    "topic": "Propulsion",
+    "difficulty": "H",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Select all true for ideal nozzle:",
+    "options": [
+      "A: Isentropic",
+      "B: Can choke",
+      "C: \\(T_0\\) constant (no work)",
+      "D: Always subsonic exit"
+    ],
+    "answer": [
+      "A",
+      "B",
+      "C"
+    ],
+    "solution": "Ideal nozzle: isentropic, may choke, T0 constant; exit may be supersonic in CD nozzle."
+  },
+  {
+    "id": "STR-E-01",
+    "topic": "Structures",
+    "difficulty": "E",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "For thin-walled closed single-cell section, Bredt–Batho gives",
+    "options": [
+      "A: \\(T=2Aq\\)",
+      "B: \\(T=Aq\\)",
+      "C: \\(T=2Atq\\)",
+      "D: \\(T=q/t\\)"
+    ],
+    "answer": "A",
+    "solution": "T=2Aq ⇒ q=T/(2A)."
+  },
+  {
+    "id": "STR-E-02",
+    "topic": "Structures",
+    "difficulty": "E",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "For thin-walled closed single-cell section, Bredt–Batho gives",
+    "options": [
+      "A: \\(T=2Aq\\)",
+      "B: \\(T=Aq\\)",
+      "C: \\(T=2Atq\\)",
+      "D: \\(T=q/t\\)"
+    ],
+    "answer": "A",
+    "solution": "T=2Aq ⇒ q=T/(2A)."
+  },
+  {
+    "id": "STR-E-03",
+    "topic": "Structures",
+    "difficulty": "E",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "For thin-walled closed single-cell section, Bredt–Batho gives",
+    "options": [
+      "A: \\(T=2Aq\\)",
+      "B: \\(T=Aq\\)",
+      "C: \\(T=2Atq\\)",
+      "D: \\(T=q/t\\)"
+    ],
+    "answer": "A",
+    "solution": "T=2Aq ⇒ q=T/(2A)."
+  },
+  {
+    "id": "STR-E-04",
+    "topic": "Structures",
+    "difficulty": "E",
+    "type": "MSQ",
+    "marks": 1,
+    "question": "Euler buckling: \\(P_{cr}=\\pi^2EI/(KL)^2\\). Select all that increase \\(P_{cr}\\):",
+    "options": [
+      "A: Increase E",
+      "B: Increase L",
+      "C: Decrease K",
+      "D: Increase I"
+    ],
+    "answer": [
+      "A",
+      "C",
+      "D"
+    ],
+    "solution": "Pcr increases with E,I and decreases with (KL)^2."
+  },
+  {
+    "id": "STR-E-05",
+    "topic": "Structures",
+    "difficulty": "E",
+    "type": "NAT",
+    "marks": 1,
+    "question": "Simply supported beam: \\(M_{max}=wL^2/8\\). If \\(w=3\\,kN/m\\), \\(L=4\\,m\\). \\(M_{max}\\) (kN·m,2 decimals)=____",
+    "answer": 6,
+    "tolerance": 0.05,
+    "decimals": 2,
+    "solution": "Mmax=3×16/8=6.00"
+  },
+  {
+    "id": "STR-E-06",
+    "topic": "Structures",
+    "difficulty": "E",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "For thin-walled closed single-cell section, Bredt–Batho gives",
+    "options": [
+      "A: \\(T=2Aq\\)",
+      "B: \\(T=Aq\\)",
+      "C: \\(T=2Atq\\)",
+      "D: \\(T=q/t\\)"
+    ],
+    "answer": "A",
+    "solution": "T=2Aq ⇒ q=T/(2A)."
+  },
+  {
+    "id": "STR-E-07",
+    "topic": "Structures",
+    "difficulty": "E",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "For thin-walled closed single-cell section, Bredt–Batho gives",
+    "options": [
+      "A: \\(T=2Aq\\)",
+      "B: \\(T=Aq\\)",
+      "C: \\(T=2Atq\\)",
+      "D: \\(T=q/t\\)"
+    ],
+    "answer": "A",
+    "solution": "T=2Aq ⇒ q=T/(2A)."
+  },
+  {
+    "id": "STR-E-08",
+    "topic": "Structures",
+    "difficulty": "E",
+    "type": "MSQ",
+    "marks": 1,
+    "question": "Euler buckling: \\(P_{cr}=\\pi^2EI/(KL)^2\\). Select all that increase \\(P_{cr}\\):",
+    "options": [
+      "A: Increase E",
+      "B: Increase L",
+      "C: Decrease K",
+      "D: Increase I"
+    ],
+    "answer": [
+      "A",
+      "C",
+      "D"
+    ],
+    "solution": "Pcr increases with E,I and decreases with (KL)^2."
+  },
+  {
+    "id": "STR-M-01",
+    "topic": "Structures",
+    "difficulty": "M",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "For thin-walled closed single-cell section, Bredt–Batho gives",
+    "options": [
+      "A: \\(T=2Aq\\)",
+      "B: \\(T=Aq\\)",
+      "C: \\(T=2Atq\\)",
+      "D: \\(T=q/t\\)"
+    ],
+    "answer": "A",
+    "solution": "T=2Aq ⇒ q=T/(2A)."
+  },
+  {
+    "id": "STR-M-02",
+    "topic": "Structures",
+    "difficulty": "M",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "For thin-walled closed single-cell section, Bredt–Batho gives",
+    "options": [
+      "A: \\(T=2Aq\\)",
+      "B: \\(T=Aq\\)",
+      "C: \\(T=2Atq\\)",
+      "D: \\(T=q/t\\)"
+    ],
+    "answer": "A",
+    "solution": "T=2Aq ⇒ q=T/(2A)."
+  },
+  {
+    "id": "STR-M-03",
+    "topic": "Structures",
+    "difficulty": "M",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "For thin-walled closed single-cell section, Bredt–Batho gives",
+    "options": [
+      "A: \\(T=2Aq\\)",
+      "B: \\(T=Aq\\)",
+      "C: \\(T=2Atq\\)",
+      "D: \\(T=q/t\\)"
+    ],
+    "answer": "A",
+    "solution": "T=2Aq ⇒ q=T/(2A)."
+  },
+  {
+    "id": "STR-M-04",
+    "topic": "Structures",
+    "difficulty": "M",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Euler buckling: \\(P_{cr}=\\pi^2EI/(KL)^2\\). Select all that increase \\(P_{cr}\\):",
+    "options": [
+      "A: Increase E",
+      "B: Increase L",
+      "C: Decrease K",
+      "D: Increase I"
+    ],
+    "answer": [
+      "A",
+      "C",
+      "D"
+    ],
+    "solution": "Pcr increases with E,I and decreases with (KL)^2."
+  },
+  {
+    "id": "STR-M-05",
+    "topic": "Structures",
+    "difficulty": "M",
+    "type": "NAT",
+    "marks": 2,
+    "question": "Simply supported beam: \\(M_{max}=wL^2/8\\). If \\(w=3\\,kN/m\\), \\(L=4\\,m\\). \\(M_{max}\\) (kN·m,2 decimals)=____",
+    "answer": 6,
+    "tolerance": 0.05,
+    "decimals": 2,
+    "solution": "Mmax=3×16/8=6.00"
+  },
+  {
+    "id": "STR-M-06",
+    "topic": "Structures",
+    "difficulty": "M",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "For thin-walled closed single-cell section, Bredt–Batho gives",
+    "options": [
+      "A: \\(T=2Aq\\)",
+      "B: \\(T=Aq\\)",
+      "C: \\(T=2Atq\\)",
+      "D: \\(T=q/t\\)"
+    ],
+    "answer": "A",
+    "solution": "T=2Aq ⇒ q=T/(2A)."
+  },
+  {
+    "id": "STR-M-07",
+    "topic": "Structures",
+    "difficulty": "M",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "For thin-walled closed single-cell section, Bredt–Batho gives",
+    "options": [
+      "A: \\(T=2Aq\\)",
+      "B: \\(T=Aq\\)",
+      "C: \\(T=2Atq\\)",
+      "D: \\(T=q/t\\)"
+    ],
+    "answer": "A",
+    "solution": "T=2Aq ⇒ q=T/(2A)."
+  },
+  {
+    "id": "STR-M-08",
+    "topic": "Structures",
+    "difficulty": "M",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Euler buckling: \\(P_{cr}=\\pi^2EI/(KL)^2\\). Select all that increase \\(P_{cr}\\):",
+    "options": [
+      "A: Increase E",
+      "B: Increase L",
+      "C: Decrease K",
+      "D: Increase I"
+    ],
+    "answer": [
+      "A",
+      "C",
+      "D"
+    ],
+    "solution": "Pcr increases with E,I and decreases with (KL)^2."
+  },
+  {
+    "id": "STR-H-01",
+    "topic": "Structures",
+    "difficulty": "H",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "For thin-walled closed single-cell section, Bredt–Batho gives",
+    "options": [
+      "A: \\(T=2Aq\\)",
+      "B: \\(T=Aq\\)",
+      "C: \\(T=2Atq\\)",
+      "D: \\(T=q/t\\)"
+    ],
+    "answer": "A",
+    "solution": "T=2Aq ⇒ q=T/(2A)."
+  },
+  {
+    "id": "STR-H-02",
+    "topic": "Structures",
+    "difficulty": "H",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "For thin-walled closed single-cell section, Bredt–Batho gives",
+    "options": [
+      "A: \\(T=2Aq\\)",
+      "B: \\(T=Aq\\)",
+      "C: \\(T=2Atq\\)",
+      "D: \\(T=q/t\\)"
+    ],
+    "answer": "A",
+    "solution": "T=2Aq ⇒ q=T/(2A)."
+  },
+  {
+    "id": "STR-H-03",
+    "topic": "Structures",
+    "difficulty": "H",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "For thin-walled closed single-cell section, Bredt–Batho gives",
+    "options": [
+      "A: \\(T=2Aq\\)",
+      "B: \\(T=Aq\\)",
+      "C: \\(T=2Atq\\)",
+      "D: \\(T=q/t\\)"
+    ],
+    "answer": "A",
+    "solution": "T=2Aq ⇒ q=T/(2A)."
+  },
+  {
+    "id": "STR-H-04",
+    "topic": "Structures",
+    "difficulty": "H",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Euler buckling: \\(P_{cr}=\\pi^2EI/(KL)^2\\). Select all that increase \\(P_{cr}\\):",
+    "options": [
+      "A: Increase E",
+      "B: Increase L",
+      "C: Decrease K",
+      "D: Increase I"
+    ],
+    "answer": [
+      "A",
+      "C",
+      "D"
+    ],
+    "solution": "Pcr increases with E,I and decreases with (KL)^2."
+  },
+  {
+    "id": "STR-H-05",
+    "topic": "Structures",
+    "difficulty": "H",
+    "type": "NAT",
+    "marks": 2,
+    "question": "Simply supported beam: \\(M_{max}=wL^2/8\\). If \\(w=3\\,kN/m\\), \\(L=4\\,m\\). \\(M_{max}\\) (kN·m,2 decimals)=____",
+    "answer": 6,
+    "tolerance": 0.05,
+    "decimals": 2,
+    "solution": "Mmax=3×16/8=6.00"
+  },
+  {
+    "id": "STR-H-06",
+    "topic": "Structures",
+    "difficulty": "H",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "For thin-walled closed single-cell section, Bredt–Batho gives",
+    "options": [
+      "A: \\(T=2Aq\\)",
+      "B: \\(T=Aq\\)",
+      "C: \\(T=2Atq\\)",
+      "D: \\(T=q/t\\)"
+    ],
+    "answer": "A",
+    "solution": "T=2Aq ⇒ q=T/(2A)."
+  },
+  {
+    "id": "STR-H-07",
+    "topic": "Structures",
+    "difficulty": "H",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "For thin-walled closed single-cell section, Bredt–Batho gives",
+    "options": [
+      "A: \\(T=2Aq\\)",
+      "B: \\(T=Aq\\)",
+      "C: \\(T=2Atq\\)",
+      "D: \\(T=q/t\\)"
+    ],
+    "answer": "A",
+    "solution": "T=2Aq ⇒ q=T/(2A)."
+  },
+  {
+    "id": "STR-H-08",
+    "topic": "Structures",
+    "difficulty": "H",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Euler buckling: \\(P_{cr}=\\pi^2EI/(KL)^2\\). Select all that increase \\(P_{cr}\\):",
+    "options": [
+      "A: Increase E",
+      "B: Increase L",
+      "C: Decrease K",
+      "D: Increase I"
+    ],
+    "answer": [
+      "A",
+      "C",
+      "D"
+    ],
+    "solution": "Pcr increases with E,I and decreases with (KL)^2."
+  },
+  {
+    "id": "STR-H-09",
+    "topic": "Structures",
+    "difficulty": "H",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "For thin-walled closed single-cell section, Bredt–Batho gives",
+    "options": [
+      "A: \\(T=2Aq\\)",
+      "B: \\(T=Aq\\)",
+      "C: \\(T=2Atq\\)",
+      "D: \\(T=q/t\\)"
+    ],
+    "answer": "A",
+    "solution": "T=2Aq ⇒ q=T/(2A)."
+  },
+  {
+    "id": "GAS-E-01",
+    "topic": "Gas Dynamics",
+    "difficulty": "E",
+    "type": "MSQ",
+    "marks": 1,
+    "question": "Across a normal shock (perfect gas), select all true:",
+    "options": [
+      "A: Mach decreases",
+      "B: Static pressure increases",
+      "C: Stagnation pressure increases",
+      "D: Stagnation temperature ~ constant (adiabatic)"
+    ],
+    "answer": [
+      "A",
+      "B",
+      "D"
+    ],
+    "solution": "p0 decreases; T0 approx constant."
+  },
+  {
+    "id": "GAS-E-02",
+    "topic": "Gas Dynamics",
+    "difficulty": "E",
+    "type": "NAT",
+    "marks": 1,
+    "question": "For \\(\\gamma=1.4\\), compute \\(T_0/T=1+0.2M^2\\) for \\(M=0.8\\). (2 decimals)=____",
+    "answer": 1.13,
+    "tolerance": 0.02,
+    "decimals": 2,
+    "solution": "Use isentropic relation."
+  },
+  {
+    "id": "GAS-E-03",
+    "topic": "Gas Dynamics",
+    "difficulty": "E",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "Speed of sound in ideal gas is",
+    "options": [
+      "A: \\(\\sqrt{RT}\\)",
+      "B: \\(\\sqrt{\\gamma RT}\\)",
+      "C: \\(\\gamma RT\\)",
+      "D: \\(RT/\\gamma\\)"
+    ],
+    "answer": "B",
+    "solution": "a=√(γRT)."
+  },
+  {
+    "id": "GAS-E-04",
+    "topic": "Gas Dynamics",
+    "difficulty": "E",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "Speed of sound in ideal gas is",
+    "options": [
+      "A: \\(\\sqrt{RT}\\)",
+      "B: \\(\\sqrt{\\gamma RT}\\)",
+      "C: \\(\\gamma RT\\)",
+      "D: \\(RT/\\gamma\\)"
+    ],
+    "answer": "B",
+    "solution": "a=√(γRT)."
+  },
+  {
+    "id": "GAS-E-05",
+    "topic": "Gas Dynamics",
+    "difficulty": "E",
+    "type": "MSQ",
+    "marks": 1,
+    "question": "Across a normal shock (perfect gas), select all true:",
+    "options": [
+      "A: Mach decreases",
+      "B: Static pressure increases",
+      "C: Stagnation pressure increases",
+      "D: Stagnation temperature ~ constant (adiabatic)"
+    ],
+    "answer": [
+      "A",
+      "B",
+      "D"
+    ],
+    "solution": "p0 decreases; T0 approx constant."
+  },
+  {
+    "id": "GAS-E-06",
+    "topic": "Gas Dynamics",
+    "difficulty": "E",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "Speed of sound in ideal gas is",
+    "options": [
+      "A: \\(\\sqrt{RT}\\)",
+      "B: \\(\\sqrt{\\gamma RT}\\)",
+      "C: \\(\\gamma RT\\)",
+      "D: \\(RT/\\gamma\\)"
+    ],
+    "answer": "B",
+    "solution": "a=√(γRT)."
+  },
+  {
+    "id": "GAS-E-07",
+    "topic": "Gas Dynamics",
+    "difficulty": "E",
+    "type": "NAT",
+    "marks": 1,
+    "question": "For \\(\\gamma=1.4\\), compute \\(T_0/T=1+0.2M^2\\) for \\(M=0.8\\). (2 decimals)=____",
+    "answer": 1.13,
+    "tolerance": 0.02,
+    "decimals": 2,
+    "solution": "Use isentropic relation."
+  },
+  {
+    "id": "GAS-E-08",
+    "topic": "Gas Dynamics",
+    "difficulty": "E",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "Speed of sound in ideal gas is",
+    "options": [
+      "A: \\(\\sqrt{RT}\\)",
+      "B: \\(\\sqrt{\\gamma RT}\\)",
+      "C: \\(\\gamma RT\\)",
+      "D: \\(RT/\\gamma\\)"
+    ],
+    "answer": "B",
+    "solution": "a=√(γRT)."
+  },
+  {
+    "id": "GAS-M-01",
+    "topic": "Gas Dynamics",
+    "difficulty": "M",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Across a normal shock (perfect gas), select all true:",
+    "options": [
+      "A: Mach decreases",
+      "B: Static pressure increases",
+      "C: Stagnation pressure increases",
+      "D: Stagnation temperature ~ constant (adiabatic)"
+    ],
+    "answer": [
+      "A",
+      "B",
+      "D"
+    ],
+    "solution": "p0 decreases; T0 approx constant."
+  },
+  {
+    "id": "GAS-M-02",
+    "topic": "Gas Dynamics",
+    "difficulty": "M",
+    "type": "NAT",
+    "marks": 2,
+    "question": "For \\(\\gamma=1.4\\), compute \\(T_0/T=1+0.2M^2\\) for \\(M=1.6\\). (2 decimals)=____",
+    "answer": 1.51,
+    "tolerance": 0.02,
+    "decimals": 2,
+    "solution": "Use isentropic relation."
+  },
+  {
+    "id": "GAS-M-03",
+    "topic": "Gas Dynamics",
+    "difficulty": "M",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "Speed of sound in ideal gas is",
+    "options": [
+      "A: \\(\\sqrt{RT}\\)",
+      "B: \\(\\sqrt{\\gamma RT}\\)",
+      "C: \\(\\gamma RT\\)",
+      "D: \\(RT/\\gamma\\)"
+    ],
+    "answer": "B",
+    "solution": "a=√(γRT)."
+  },
+  {
+    "id": "GAS-M-04",
+    "topic": "Gas Dynamics",
+    "difficulty": "M",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "Speed of sound in ideal gas is",
+    "options": [
+      "A: \\(\\sqrt{RT}\\)",
+      "B: \\(\\sqrt{\\gamma RT}\\)",
+      "C: \\(\\gamma RT\\)",
+      "D: \\(RT/\\gamma\\)"
+    ],
+    "answer": "B",
+    "solution": "a=√(γRT)."
+  },
+  {
+    "id": "GAS-M-05",
+    "topic": "Gas Dynamics",
+    "difficulty": "M",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Across a normal shock (perfect gas), select all true:",
+    "options": [
+      "A: Mach decreases",
+      "B: Static pressure increases",
+      "C: Stagnation pressure increases",
+      "D: Stagnation temperature ~ constant (adiabatic)"
+    ],
+    "answer": [
+      "A",
+      "B",
+      "D"
+    ],
+    "solution": "p0 decreases; T0 approx constant."
+  },
+  {
+    "id": "GAS-M-06",
+    "topic": "Gas Dynamics",
+    "difficulty": "M",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "Speed of sound in ideal gas is",
+    "options": [
+      "A: \\(\\sqrt{RT}\\)",
+      "B: \\(\\sqrt{\\gamma RT}\\)",
+      "C: \\(\\gamma RT\\)",
+      "D: \\(RT/\\gamma\\)"
+    ],
+    "answer": "B",
+    "solution": "a=√(γRT)."
+  },
+  {
+    "id": "GAS-M-07",
+    "topic": "Gas Dynamics",
+    "difficulty": "M",
+    "type": "NAT",
+    "marks": 2,
+    "question": "For \\(\\gamma=1.4\\), compute \\(T_0/T=1+0.2M^2\\) for \\(M=1.6\\). (2 decimals)=____",
+    "answer": 1.51,
+    "tolerance": 0.02,
+    "decimals": 2,
+    "solution": "Use isentropic relation."
+  },
+  {
+    "id": "GAS-M-08",
+    "topic": "Gas Dynamics",
+    "difficulty": "M",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "Speed of sound in ideal gas is",
+    "options": [
+      "A: \\(\\sqrt{RT}\\)",
+      "B: \\(\\sqrt{\\gamma RT}\\)",
+      "C: \\(\\gamma RT\\)",
+      "D: \\(RT/\\gamma\\)"
+    ],
+    "answer": "B",
+    "solution": "a=√(γRT)."
+  },
+  {
+    "id": "GAS-H-01",
+    "topic": "Gas Dynamics",
+    "difficulty": "H",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Across a normal shock (perfect gas), select all true:",
+    "options": [
+      "A: Mach decreases",
+      "B: Static pressure increases",
+      "C: Stagnation pressure increases",
+      "D: Stagnation temperature ~ constant (adiabatic)"
+    ],
+    "answer": [
+      "A",
+      "B",
+      "D"
+    ],
+    "solution": "p0 decreases; T0 approx constant."
+  },
+  {
+    "id": "GAS-H-02",
+    "topic": "Gas Dynamics",
+    "difficulty": "H",
+    "type": "NAT",
+    "marks": 2,
+    "question": "For \\(\\gamma=1.4\\), compute \\(T_0/T=1+0.2M^2\\) for \\(M=2\\). (2 decimals)=____",
+    "answer": 1.8,
+    "tolerance": 0.02,
+    "decimals": 2,
+    "solution": "Use isentropic relation."
+  },
+  {
+    "id": "GAS-H-03",
+    "topic": "Gas Dynamics",
+    "difficulty": "H",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "Speed of sound in ideal gas is",
+    "options": [
+      "A: \\(\\sqrt{RT}\\)",
+      "B: \\(\\sqrt{\\gamma RT}\\)",
+      "C: \\(\\gamma RT\\)",
+      "D: \\(RT/\\gamma\\)"
+    ],
+    "answer": "B",
+    "solution": "a=√(γRT)."
+  },
+  {
+    "id": "GAS-H-04",
+    "topic": "Gas Dynamics",
+    "difficulty": "H",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "Speed of sound in ideal gas is",
+    "options": [
+      "A: \\(\\sqrt{RT}\\)",
+      "B: \\(\\sqrt{\\gamma RT}\\)",
+      "C: \\(\\gamma RT\\)",
+      "D: \\(RT/\\gamma\\)"
+    ],
+    "answer": "B",
+    "solution": "a=√(γRT)."
+  },
+  {
+    "id": "GAS-H-05",
+    "topic": "Gas Dynamics",
+    "difficulty": "H",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Across a normal shock (perfect gas), select all true:",
+    "options": [
+      "A: Mach decreases",
+      "B: Static pressure increases",
+      "C: Stagnation pressure increases",
+      "D: Stagnation temperature ~ constant (adiabatic)"
+    ],
+    "answer": [
+      "A",
+      "B",
+      "D"
+    ],
+    "solution": "p0 decreases; T0 approx constant."
+  },
+  {
+    "id": "GAS-H-06",
+    "topic": "Gas Dynamics",
+    "difficulty": "H",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "Speed of sound in ideal gas is",
+    "options": [
+      "A: \\(\\sqrt{RT}\\)",
+      "B: \\(\\sqrt{\\gamma RT}\\)",
+      "C: \\(\\gamma RT\\)",
+      "D: \\(RT/\\gamma\\)"
+    ],
+    "answer": "B",
+    "solution": "a=√(γRT)."
+  },
+  {
+    "id": "GAS-H-07",
+    "topic": "Gas Dynamics",
+    "difficulty": "H",
+    "type": "NAT",
+    "marks": 2,
+    "question": "For \\(\\gamma=1.4\\), compute \\(T_0/T=1+0.2M^2\\) for \\(M=2\\). (2 decimals)=____",
+    "answer": 1.8,
+    "tolerance": 0.02,
+    "decimals": 2,
+    "solution": "Use isentropic relation."
+  },
+  {
+    "id": "GAS-H-08",
+    "topic": "Gas Dynamics",
+    "difficulty": "H",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "Speed of sound in ideal gas is",
+    "options": [
+      "A: \\(\\sqrt{RT}\\)",
+      "B: \\(\\sqrt{\\gamma RT}\\)",
+      "C: \\(\\gamma RT\\)",
+      "D: \\(RT/\\gamma\\)"
+    ],
+    "answer": "B",
+    "solution": "a=√(γRT)."
+  },
+  {
+    "id": "GAS-H-09",
+    "topic": "Gas Dynamics",
+    "difficulty": "H",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Across a normal shock (perfect gas), select all true:",
+    "options": [
+      "A: Mach decreases",
+      "B: Static pressure increases",
+      "C: Stagnation pressure increases",
+      "D: Stagnation temperature ~ constant (adiabatic)"
+    ],
+    "answer": [
+      "A",
+      "B",
+      "D"
+    ],
+    "solution": "p0 decreases; T0 approx constant."
+  },
+  {
+    "id": "TURBO-E-01",
+    "topic": "Turbomachinery",
+    "difficulty": "E",
+    "type": "MSQ",
+    "marks": 1,
+    "question": "Select all true about compressors:",
+    "options": [
+      "A: Increase stagnation pressure",
+      "B: Increase stagnation temperature",
+      "C: Extract shaft work",
+      "D: Can be axial or centrifugal"
+    ],
+    "answer": [
+      "A",
+      "B",
+      "D"
+    ],
+    "solution": "Compressors need shaft work input (so 3 false)."
+  },
+  {
+    "id": "TURBO-E-02",
+    "topic": "Turbomachinery",
+    "difficulty": "E",
+    "type": "MSQ",
+    "marks": 1,
+    "question": "Select all true about compressors:",
+    "options": [
+      "A: Increase stagnation pressure",
+      "B: Increase stagnation temperature",
+      "C: Extract shaft work",
+      "D: Can be axial or centrifugal"
+    ],
+    "answer": [
+      "A",
+      "B",
+      "D"
+    ],
+    "solution": "Compressors need shaft work input (so 3 false)."
+  },
+  {
+    "id": "TURBO-E-03",
+    "topic": "Turbomachinery",
+    "difficulty": "E",
+    "type": "NAT",
+    "marks": 1,
+    "question": "Euler: \\(\\Delta h_0=U\\Delta V_w\\). If U=260 m/s and \\(\\Delta V_w=70\\) m/s, \\(\\Delta h_0\\) (kJ/kg,2 decimals)=____",
+    "answer": 18.2,
+    "tolerance": 0.2,
+    "decimals": 2,
+    "solution": "=18.20 kJ/kg"
+  },
+  {
+    "id": "TURBO-E-04",
+    "topic": "Turbomachinery",
+    "difficulty": "E",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "Degree of reaction 0.5 implies",
+    "options": [
+      "A: all enthalpy drop in stator",
+      "B: all in rotor",
+      "C: equal split in stator and rotor",
+      "D: no enthalpy drop"
+    ],
+    "answer": "C",
+    "solution": "R=0.5 means equal split."
+  },
+  {
+    "id": "TURBO-E-05",
+    "topic": "Turbomachinery",
+    "difficulty": "E",
+    "type": "MSQ",
+    "marks": 1,
+    "question": "Select all true about compressors:",
+    "options": [
+      "A: Increase stagnation pressure",
+      "B: Increase stagnation temperature",
+      "C: Extract shaft work",
+      "D: Can be axial or centrifugal"
+    ],
+    "answer": [
+      "A",
+      "B",
+      "D"
+    ],
+    "solution": "Compressors need shaft work input (so 3 false)."
+  },
+  {
+    "id": "TURBO-E-06",
+    "topic": "Turbomachinery",
+    "difficulty": "E",
+    "type": "MSQ",
+    "marks": 1,
+    "question": "Select all true about compressors:",
+    "options": [
+      "A: Increase stagnation pressure",
+      "B: Increase stagnation temperature",
+      "C: Extract shaft work",
+      "D: Can be axial or centrifugal"
+    ],
+    "answer": [
+      "A",
+      "B",
+      "D"
+    ],
+    "solution": "Compressors need shaft work input (so 3 false)."
+  },
+  {
+    "id": "TURBO-E-07",
+    "topic": "Turbomachinery",
+    "difficulty": "E",
+    "type": "MSQ",
+    "marks": 1,
+    "question": "Select all true about compressors:",
+    "options": [
+      "A: Increase stagnation pressure",
+      "B: Increase stagnation temperature",
+      "C: Extract shaft work",
+      "D: Can be axial or centrifugal"
+    ],
+    "answer": [
+      "A",
+      "B",
+      "D"
+    ],
+    "solution": "Compressors need shaft work input (so 3 false)."
+  },
+  {
+    "id": "TURBO-E-08",
+    "topic": "Turbomachinery",
+    "difficulty": "E",
+    "type": "NAT",
+    "marks": 1,
+    "question": "Euler: \\(\\Delta h_0=U\\Delta V_w\\). If U=260 m/s and \\(\\Delta V_w=70\\) m/s, \\(\\Delta h_0\\) (kJ/kg,2 decimals)=____",
+    "answer": 18.2,
+    "tolerance": 0.2,
+    "decimals": 2,
+    "solution": "=18.20 kJ/kg"
+  },
+  {
+    "id": "TURBO-M-01",
+    "topic": "Turbomachinery",
+    "difficulty": "M",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Select all true about compressors:",
+    "options": [
+      "A: Increase stagnation pressure",
+      "B: Increase stagnation temperature",
+      "C: Extract shaft work",
+      "D: Can be axial or centrifugal"
+    ],
+    "answer": [
+      "A",
+      "B",
+      "D"
+    ],
+    "solution": "Compressors need shaft work input (so 3 false)."
+  },
+  {
+    "id": "TURBO-M-02",
+    "topic": "Turbomachinery",
+    "difficulty": "M",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Select all true about compressors:",
+    "options": [
+      "A: Increase stagnation pressure",
+      "B: Increase stagnation temperature",
+      "C: Extract shaft work",
+      "D: Can be axial or centrifugal"
+    ],
+    "answer": [
+      "A",
+      "B",
+      "D"
+    ],
+    "solution": "Compressors need shaft work input (so 3 false)."
+  },
+  {
+    "id": "TURBO-M-03",
+    "topic": "Turbomachinery",
+    "difficulty": "M",
+    "type": "NAT",
+    "marks": 2,
+    "question": "Euler: \\(\\Delta h_0=U\\Delta V_w\\). If U=260 m/s and \\(\\Delta V_w=70\\) m/s, \\(\\Delta h_0\\) (kJ/kg,2 decimals)=____",
+    "answer": 18.2,
+    "tolerance": 0.2,
+    "decimals": 2,
+    "solution": "=18.20 kJ/kg"
+  },
+  {
+    "id": "TURBO-M-04",
+    "topic": "Turbomachinery",
+    "difficulty": "M",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "Degree of reaction 0.5 implies",
+    "options": [
+      "A: all enthalpy drop in stator",
+      "B: all in rotor",
+      "C: equal split in stator and rotor",
+      "D: no enthalpy drop"
+    ],
+    "answer": "C",
+    "solution": "R=0.5 means equal split."
+  },
+  {
+    "id": "TURBO-M-05",
+    "topic": "Turbomachinery",
+    "difficulty": "M",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Select all true about compressors:",
+    "options": [
+      "A: Increase stagnation pressure",
+      "B: Increase stagnation temperature",
+      "C: Extract shaft work",
+      "D: Can be axial or centrifugal"
+    ],
+    "answer": [
+      "A",
+      "B",
+      "D"
+    ],
+    "solution": "Compressors need shaft work input (so 3 false)."
+  },
+  {
+    "id": "TURBO-M-06",
+    "topic": "Turbomachinery",
+    "difficulty": "M",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Select all true about compressors:",
+    "options": [
+      "A: Increase stagnation pressure",
+      "B: Increase stagnation temperature",
+      "C: Extract shaft work",
+      "D: Can be axial or centrifugal"
+    ],
+    "answer": [
+      "A",
+      "B",
+      "D"
+    ],
+    "solution": "Compressors need shaft work input (so 3 false)."
+  },
+  {
+    "id": "TURBO-M-07",
+    "topic": "Turbomachinery",
+    "difficulty": "M",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Select all true about compressors:",
+    "options": [
+      "A: Increase stagnation pressure",
+      "B: Increase stagnation temperature",
+      "C: Extract shaft work",
+      "D: Can be axial or centrifugal"
+    ],
+    "answer": [
+      "A",
+      "B",
+      "D"
+    ],
+    "solution": "Compressors need shaft work input (so 3 false)."
+  },
+  {
+    "id": "TURBO-M-08",
+    "topic": "Turbomachinery",
+    "difficulty": "M",
+    "type": "NAT",
+    "marks": 2,
+    "question": "Euler: \\(\\Delta h_0=U\\Delta V_w\\). If U=260 m/s and \\(\\Delta V_w=70\\) m/s, \\(\\Delta h_0\\) (kJ/kg,2 decimals)=____",
+    "answer": 18.2,
+    "tolerance": 0.2,
+    "decimals": 2,
+    "solution": "=18.20 kJ/kg"
+  },
+  {
+    "id": "TURBO-H-01",
+    "topic": "Turbomachinery",
+    "difficulty": "H",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Select all true about compressors:",
+    "options": [
+      "A: Increase stagnation pressure",
+      "B: Increase stagnation temperature",
+      "C: Extract shaft work",
+      "D: Can be axial or centrifugal"
+    ],
+    "answer": [
+      "A",
+      "B",
+      "D"
+    ],
+    "solution": "Compressors need shaft work input (so 3 false)."
+  },
+  {
+    "id": "TURBO-H-02",
+    "topic": "Turbomachinery",
+    "difficulty": "H",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Select all true about compressors:",
+    "options": [
+      "A: Increase stagnation pressure",
+      "B: Increase stagnation temperature",
+      "C: Extract shaft work",
+      "D: Can be axial or centrifugal"
+    ],
+    "answer": [
+      "A",
+      "B",
+      "D"
+    ],
+    "solution": "Compressors need shaft work input (so 3 false)."
+  },
+  {
+    "id": "TURBO-H-03",
+    "topic": "Turbomachinery",
+    "difficulty": "H",
+    "type": "NAT",
+    "marks": 2,
+    "question": "Euler: \\(\\Delta h_0=U\\Delta V_w\\). If U=260 m/s and \\(\\Delta V_w=70\\) m/s, \\(\\Delta h_0\\) (kJ/kg,2 decimals)=____",
+    "answer": 18.2,
+    "tolerance": 0.2,
+    "decimals": 2,
+    "solution": "=18.20 kJ/kg"
+  },
+  {
+    "id": "TURBO-H-04",
+    "topic": "Turbomachinery",
+    "difficulty": "H",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "Degree of reaction 0.5 implies",
+    "options": [
+      "A: all enthalpy drop in stator",
+      "B: all in rotor",
+      "C: equal split in stator and rotor",
+      "D: no enthalpy drop"
+    ],
+    "answer": "C",
+    "solution": "R=0.5 means equal split."
+  },
+  {
+    "id": "TURBO-H-05",
+    "topic": "Turbomachinery",
+    "difficulty": "H",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Select all true about compressors:",
+    "options": [
+      "A: Increase stagnation pressure",
+      "B: Increase stagnation temperature",
+      "C: Extract shaft work",
+      "D: Can be axial or centrifugal"
+    ],
+    "answer": [
+      "A",
+      "B",
+      "D"
+    ],
+    "solution": "Compressors need shaft work input (so 3 false)."
+  },
+  {
+    "id": "TURBO-H-06",
+    "topic": "Turbomachinery",
+    "difficulty": "H",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Select all true about compressors:",
+    "options": [
+      "A: Increase stagnation pressure",
+      "B: Increase stagnation temperature",
+      "C: Extract shaft work",
+      "D: Can be axial or centrifugal"
+    ],
+    "answer": [
+      "A",
+      "B",
+      "D"
+    ],
+    "solution": "Compressors need shaft work input (so 3 false)."
+  },
+  {
+    "id": "TURBO-H-07",
+    "topic": "Turbomachinery",
+    "difficulty": "H",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Select all true about compressors:",
+    "options": [
+      "A: Increase stagnation pressure",
+      "B: Increase stagnation temperature",
+      "C: Extract shaft work",
+      "D: Can be axial or centrifugal"
+    ],
+    "answer": [
+      "A",
+      "B",
+      "D"
+    ],
+    "solution": "Compressors need shaft work input (so 3 false)."
+  },
+  {
+    "id": "TURBO-H-08",
+    "topic": "Turbomachinery",
+    "difficulty": "H",
+    "type": "NAT",
+    "marks": 2,
+    "question": "Euler: \\(\\Delta h_0=U\\Delta V_w\\). If U=260 m/s and \\(\\Delta V_w=70\\) m/s, \\(\\Delta h_0\\) (kJ/kg,2 decimals)=____",
+    "answer": 18.2,
+    "tolerance": 0.2,
+    "decimals": 2,
+    "solution": "=18.20 kJ/kg"
+  },
+  {
+    "id": "TURBO-H-09",
+    "topic": "Turbomachinery",
+    "difficulty": "H",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Select all true about compressors:",
+    "options": [
+      "A: Increase stagnation pressure",
+      "B: Increase stagnation temperature",
+      "C: Extract shaft work",
+      "D: Can be axial or centrifugal"
+    ],
+    "answer": [
+      "A",
+      "B",
+      "D"
+    ],
+    "solution": "Compressors need shaft work input (so 3 false)."
+  },
+  {
+    "id": "FM-E-01",
+    "topic": "Flight Mechanics",
+    "difficulty": "E",
+    "type": "MSQ",
+    "marks": 1,
+    "question": "Select all true for steady level flight:",
+    "options": [
+      "A: \\(L=W\\)",
+      "B: \\(T=D\\)",
+      "C: \\(L=D\\)",
+      "D: \\(T=W\\)"
+    ],
+    "answer": [
+      "A",
+      "B"
+    ],
+    "solution": "Force balance gives L=W and T=D."
+  },
+  {
+    "id": "FM-E-02",
+    "topic": "Flight Mechanics",
+    "difficulty": "E",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "Longitudinal static stability requires CG be",
+    "options": [
+      "A: ahead of neutral point",
+      "B: behind neutral point",
+      "C: at neutral point always",
+      "D: at wing tip"
+    ],
+    "answer": "A",
+    "solution": "CG ahead ⇒ positive static margin."
+  },
+  {
+    "id": "FM-E-03",
+    "topic": "Flight Mechanics",
+    "difficulty": "E",
+    "type": "MSQ",
+    "marks": 1,
+    "question": "Select all true for steady level flight:",
+    "options": [
+      "A: \\(L=W\\)",
+      "B: \\(T=D\\)",
+      "C: \\(L=D\\)",
+      "D: \\(T=W\\)"
+    ],
+    "answer": [
+      "A",
+      "B"
+    ],
+    "solution": "Force balance gives L=W and T=D."
+  },
+  {
+    "id": "FM-E-04",
+    "topic": "Flight Mechanics",
+    "difficulty": "E",
+    "type": "NAT",
+    "marks": 1,
+    "question": "Level flight: \\(L=W=\\tfrac12\\rho V^2SC_L\\). For W=50 kN, \\(\\rho=1\\), S=30 m^2, \\(C_L=0.5\\). V (m/s,2 decimals)=____",
+    "answer": 81.65,
+    "tolerance": 0.7,
+    "decimals": 2,
+    "solution": "V=√(2W/(ρSC_L))."
+  },
+  {
+    "id": "FM-E-05",
+    "topic": "Flight Mechanics",
+    "difficulty": "E",
+    "type": "MSQ",
+    "marks": 1,
+    "question": "Select all true for steady level flight:",
+    "options": [
+      "A: \\(L=W\\)",
+      "B: \\(T=D\\)",
+      "C: \\(L=D\\)",
+      "D: \\(T=W\\)"
+    ],
+    "answer": [
+      "A",
+      "B"
+    ],
+    "solution": "Force balance gives L=W and T=D."
+  },
+  {
+    "id": "FM-E-06",
+    "topic": "Flight Mechanics",
+    "difficulty": "E",
+    "type": "MCQ",
+    "marks": 1,
+    "question": "Longitudinal static stability requires CG be",
+    "options": [
+      "A: ahead of neutral point",
+      "B: behind neutral point",
+      "C: at neutral point always",
+      "D: at wing tip"
+    ],
+    "answer": "A",
+    "solution": "CG ahead ⇒ positive static margin."
+  },
+  {
+    "id": "FM-E-07",
+    "topic": "Flight Mechanics",
+    "difficulty": "E",
+    "type": "MSQ",
+    "marks": 1,
+    "question": "Select all true for steady level flight:",
+    "options": [
+      "A: \\(L=W\\)",
+      "B: \\(T=D\\)",
+      "C: \\(L=D\\)",
+      "D: \\(T=W\\)"
+    ],
+    "answer": [
+      "A",
+      "B"
+    ],
+    "solution": "Force balance gives L=W and T=D."
+  },
+  {
+    "id": "FM-E-08",
+    "topic": "Flight Mechanics",
+    "difficulty": "E",
+    "type": "MSQ",
+    "marks": 1,
+    "question": "Select all true for steady level flight:",
+    "options": [
+      "A: \\(L=W\\)",
+      "B: \\(T=D\\)",
+      "C: \\(L=D\\)",
+      "D: \\(T=W\\)"
+    ],
+    "answer": [
+      "A",
+      "B"
+    ],
+    "solution": "Force balance gives L=W and T=D."
+  },
+  {
+    "id": "FM-M-01",
+    "topic": "Flight Mechanics",
+    "difficulty": "M",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Select all true for steady level flight:",
+    "options": [
+      "A: \\(L=W\\)",
+      "B: \\(T=D\\)",
+      "C: \\(L=D\\)",
+      "D: \\(T=W\\)"
+    ],
+    "answer": [
+      "A",
+      "B"
+    ],
+    "solution": "Force balance gives L=W and T=D."
+  },
+  {
+    "id": "FM-M-02",
+    "topic": "Flight Mechanics",
+    "difficulty": "M",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "Longitudinal static stability requires CG be",
+    "options": [
+      "A: ahead of neutral point",
+      "B: behind neutral point",
+      "C: at neutral point always",
+      "D: at wing tip"
+    ],
+    "answer": "A",
+    "solution": "CG ahead ⇒ positive static margin."
+  },
+  {
+    "id": "FM-M-03",
+    "topic": "Flight Mechanics",
+    "difficulty": "M",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Select all true for steady level flight:",
+    "options": [
+      "A: \\(L=W\\)",
+      "B: \\(T=D\\)",
+      "C: \\(L=D\\)",
+      "D: \\(T=W\\)"
+    ],
+    "answer": [
+      "A",
+      "B"
+    ],
+    "solution": "Force balance gives L=W and T=D."
+  },
+  {
+    "id": "FM-M-04",
+    "topic": "Flight Mechanics",
+    "difficulty": "M",
+    "type": "NAT",
+    "marks": 2,
+    "question": "Level flight: \\(L=W=\\tfrac12\\rho V^2SC_L\\). For W=60 kN, \\(\\rho=1\\), S=30 m^2, \\(C_L=0.6\\). V (m/s,2 decimals)=____",
+    "answer": 81.65,
+    "tolerance": 0.7,
+    "decimals": 2,
+    "solution": "V=√(2W/(ρSC_L))."
+  },
+  {
+    "id": "FM-M-05",
+    "topic": "Flight Mechanics",
+    "difficulty": "M",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Select all true for steady level flight:",
+    "options": [
+      "A: \\(L=W\\)",
+      "B: \\(T=D\\)",
+      "C: \\(L=D\\)",
+      "D: \\(T=W\\)"
+    ],
+    "answer": [
+      "A",
+      "B"
+    ],
+    "solution": "Force balance gives L=W and T=D."
+  },
+  {
+    "id": "FM-M-06",
+    "topic": "Flight Mechanics",
+    "difficulty": "M",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "Longitudinal static stability requires CG be",
+    "options": [
+      "A: ahead of neutral point",
+      "B: behind neutral point",
+      "C: at neutral point always",
+      "D: at wing tip"
+    ],
+    "answer": "A",
+    "solution": "CG ahead ⇒ positive static margin."
+  },
+  {
+    "id": "FM-M-07",
+    "topic": "Flight Mechanics",
+    "difficulty": "M",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Select all true for steady level flight:",
+    "options": [
+      "A: \\(L=W\\)",
+      "B: \\(T=D\\)",
+      "C: \\(L=D\\)",
+      "D: \\(T=W\\)"
+    ],
+    "answer": [
+      "A",
+      "B"
+    ],
+    "solution": "Force balance gives L=W and T=D."
+  },
+  {
+    "id": "FM-M-08",
+    "topic": "Flight Mechanics",
+    "difficulty": "M",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Select all true for steady level flight:",
+    "options": [
+      "A: \\(L=W\\)",
+      "B: \\(T=D\\)",
+      "C: \\(L=D\\)",
+      "D: \\(T=W\\)"
+    ],
+    "answer": [
+      "A",
+      "B"
+    ],
+    "solution": "Force balance gives L=W and T=D."
+  },
+  {
+    "id": "FM-H-01",
+    "topic": "Flight Mechanics",
+    "difficulty": "H",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Select all true for steady level flight:",
+    "options": [
+      "A: \\(L=W\\)",
+      "B: \\(T=D\\)",
+      "C: \\(L=D\\)",
+      "D: \\(T=W\\)"
+    ],
+    "answer": [
+      "A",
+      "B"
+    ],
+    "solution": "Force balance gives L=W and T=D."
+  },
+  {
+    "id": "FM-H-02",
+    "topic": "Flight Mechanics",
+    "difficulty": "H",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "Longitudinal static stability requires CG be",
+    "options": [
+      "A: ahead of neutral point",
+      "B: behind neutral point",
+      "C: at neutral point always",
+      "D: at wing tip"
+    ],
+    "answer": "A",
+    "solution": "CG ahead ⇒ positive static margin."
+  },
+  {
+    "id": "FM-H-03",
+    "topic": "Flight Mechanics",
+    "difficulty": "H",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Select all true for steady level flight:",
+    "options": [
+      "A: \\(L=W\\)",
+      "B: \\(T=D\\)",
+      "C: \\(L=D\\)",
+      "D: \\(T=W\\)"
+    ],
+    "answer": [
+      "A",
+      "B"
+    ],
+    "solution": "Force balance gives L=W and T=D."
+  },
+  {
+    "id": "FM-H-04",
+    "topic": "Flight Mechanics",
+    "difficulty": "H",
+    "type": "NAT",
+    "marks": 2,
+    "question": "Level flight: \\(L=W=\\tfrac12\\rho V^2SC_L\\). For W=70 kN, \\(\\rho=0.9\\), S=30 m^2, \\(C_L=0.6\\). V (m/s,2 decimals)=____",
+    "answer": 92.96,
+    "tolerance": 0.7,
+    "decimals": 2,
+    "solution": "V=√(2W/(ρSC_L))."
+  },
+  {
+    "id": "FM-H-05",
+    "topic": "Flight Mechanics",
+    "difficulty": "H",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Select all true for steady level flight:",
+    "options": [
+      "A: \\(L=W\\)",
+      "B: \\(T=D\\)",
+      "C: \\(L=D\\)",
+      "D: \\(T=W\\)"
+    ],
+    "answer": [
+      "A",
+      "B"
+    ],
+    "solution": "Force balance gives L=W and T=D."
+  },
+  {
+    "id": "FM-H-06",
+    "topic": "Flight Mechanics",
+    "difficulty": "H",
+    "type": "MCQ",
+    "marks": 2,
+    "question": "Longitudinal static stability requires CG be",
+    "options": [
+      "A: ahead of neutral point",
+      "B: behind neutral point",
+      "C: at neutral point always",
+      "D: at wing tip"
+    ],
+    "answer": "A",
+    "solution": "CG ahead ⇒ positive static margin."
+  },
+  {
+    "id": "FM-H-07",
+    "topic": "Flight Mechanics",
+    "difficulty": "H",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Select all true for steady level flight:",
+    "options": [
+      "A: \\(L=W\\)",
+      "B: \\(T=D\\)",
+      "C: \\(L=D\\)",
+      "D: \\(T=W\\)"
+    ],
+    "answer": [
+      "A",
+      "B"
+    ],
+    "solution": "Force balance gives L=W and T=D."
+  },
+  {
+    "id": "FM-H-08",
+    "topic": "Flight Mechanics",
+    "difficulty": "H",
+    "type": "MSQ",
+    "marks": 2,
+    "question": "Select all true for steady level flight:",
+    "options": [
+      "A: \\(L=W\\)",
+      "B: \\(T=D\\)",
+      "C: \\(L=D\\)",
+      "D: \\(T=W\\)"
+    ],
+    "answer": [
+      "A",
+      "B"
+    ],
+    "solution": "Force balance gives L=W and T=D."
+  },
+  {
+    "id": "FM-H-09",
+    "topic": "Flight Mechanics",
+    "difficulty": "H",
+    "type": "NAT",
+    "marks": 2,
+    "question": "Level flight: \\(L=W=\\tfrac12\\rho V^2SC_L\\). For W=70 kN, \\(\\rho=0.9\\), S=30 m^2, \\(C_L=0.6\\). V (m/s,2 decimals)=____",
+    "answer": 92.96,
+    "tolerance": 0.7,
+    "decimals": 2,
+    "solution": "V=√(2W/(ρSC_L))."
+  }
+]

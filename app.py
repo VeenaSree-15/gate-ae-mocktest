@@ -2,12 +2,13 @@ import os
 import json
 import time
 import uuid
+import random
 from typing import Any, Dict, List, Optional, Tuple
 
 from flask import Flask, request, jsonify, session, Response
 from dotenv import load_dotenv
 
-# Optional LLM (OpenAI). If no key, variant mode falls back to pool-only.
+# Optional LLM (OpenAI). App runs fine without it; Variant Mode falls back to pool-only.
 try:
     from openai import OpenAI
 except Exception:
@@ -15,13 +16,30 @@ except Exception:
 
 load_dotenv()
 
+# --------------------------
+# Flask app setup
+# --------------------------
 app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev-secret-change-me")
 
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "").strip()
-client = OpenAI(api_key=OPENAI_API_KEY) if (OpenAI is not None and OPENAI_API_KEY) else None
+OPENAI_MODEL = os.environ.get("OPENAI_MODEL", "gpt-4.1-mini").strip()
+
+client = None
+if OpenAI is not None and OPENAI_API_KEY:
+    try:
+        # Pass api_key explicitly
+        client = OpenAI(api_key=OPENAI_API_KEY)
+        print("OPENAI client initialized.")
+    except Exception as e:
+        print("OPENAI CLIENT INIT FAILED:", repr(e))
+        client = None
+else:
+    print("OPENAI client not configured (missing OPENAI_API_KEY or SDK). Variant Mode will be pool-only.")
+
+
 # --------------------------
-# Demo users (replace with DB)
+# Demo users (replace with DB later)
 # --------------------------
 USERS = {
     "student1": {"password": "gate123", "name": "Student 1"},
@@ -42,6 +60,7 @@ BLUEPRINT = {
     "diffCounts": {"E": 20, "M": 35, "H": 10},
 }
 
+# How many variants to generate per paper
 VARIANT_TARGETS = {"count_total": 8, "count_1mark": 4, "count_2mark": 4}
 
 # In-memory attempts (demo). Use DB/Redis in production.
@@ -63,7 +82,6 @@ def require_login() -> Tuple[bool, Optional[Dict[str, Any]]]:
 
 
 def shuffle_list(xs: List[Any]) -> List[Any]:
-    import random
     ys = xs[:]
     random.shuffle(ys)
     return ys
@@ -87,6 +105,7 @@ def is_correct(q: Dict[str, Any], resp_val: Any) -> bool:
         return str(resp_val) == str(q["answer"])
     if qtype == "MSQ":
         return arrays_equal(normalize_msq(resp_val), normalize_msq(q["answer"]))
+    # NAT
     tol = float(q.get("tolerance", 0.01))
     try:
         return abs(float(resp_val) - float(q["answer"])) <= tol
@@ -114,6 +133,7 @@ def calc_score(paper_full: List[Dict[str, Any]], responses: Dict[str, Any]) -> D
             obtained += float(q["marks"])
         else:
             wrong += 1
+            # Negative marking only for MCQ (GATE-like)
             if q["type"] == "MCQ":
                 obtained -= (1.0 / 3.0) if int(q["marks"]) == 1 else (2.0 / 3.0)
 
@@ -131,25 +151,31 @@ def validate_pool(pool: List[Dict[str, Any]]) -> None:
         raise ValueError("LOCAL_POOL must be an array with at least 200 questions.")
 
     required = {"id", "topic", "difficulty", "type", "marks", "question", "answer"}
-    for i, q in enumerate(pool[:80]):
+    for i, q in enumerate(pool[:200]):
         missing = required - set(q.keys())
         if missing:
             raise ValueError(f"Pool question missing fields at index {i}: {sorted(list(missing))}")
+
         if q["type"] in ("MCQ", "MSQ"):
             if not isinstance(q.get("options", None), list) or len(q["options"]) != 4:
                 raise ValueError(f"MCQ/MSQ must have exactly 4 options (index {i})")
+
         if q["type"] == "NAT":
             q.setdefault("tolerance", 0.01)
             q.setdefault("decimals", 2)
 
 
 def make_targets() -> List[Dict[str, Any]]:
-    diff_list = (["E"] * BLUEPRINT["diffCounts"]["E"] +
-                 ["M"] * BLUEPRINT["diffCounts"]["M"] +
-                 ["H"] * BLUEPRINT["diffCounts"]["H"])
-    type_list = (["MCQ"] * BLUEPRINT["typeCounts"]["MCQ"] +
-                 ["MSQ"] * BLUEPRINT["typeCounts"]["MSQ"] +
-                 ["NAT"] * BLUEPRINT["typeCounts"]["NAT"])
+    diff_list = (
+        ["E"] * BLUEPRINT["diffCounts"]["E"]
+        + ["M"] * BLUEPRINT["diffCounts"]["M"]
+        + ["H"] * BLUEPRINT["diffCounts"]["H"]
+    )
+    type_list = (
+        ["MCQ"] * BLUEPRINT["typeCounts"]["MCQ"]
+        + ["MSQ"] * BLUEPRINT["typeCounts"]["MSQ"]
+        + ["NAT"] * BLUEPRINT["typeCounts"]["NAT"]
+    )
     marks_list = ([1] * BLUEPRINT["marks1"] + [2] * BLUEPRINT["marks2"])
 
     targets = []
@@ -159,7 +185,6 @@ def make_targets() -> List[Dict[str, Any]]:
 
 
 def pick_question(pool: List[Dict[str, Any]], used: set, filt) -> Optional[Dict[str, Any]]:
-    import random
     candidates = [q for q in pool if q["id"] not in used and filt(q)]
     return random.choice(candidates) if candidates else None
 
@@ -207,7 +232,7 @@ def strip_answers_for_exam(q: Dict[str, Any]) -> Dict[str, Any]:
 
 
 # ==========================
-# Variant mode (optional)
+# Variant Mode (optional)
 # ==========================
 def choose_variant_candidates(paper: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     one_mark = [q for q in paper if int(q["marks"]) == 1]
@@ -217,82 +242,150 @@ def choose_variant_candidates(paper: List[Dict[str, Any]]) -> List[Dict[str, Any
     return one_pick + two_pick
 
 
+def _extract_text_from_openai_response(resp: Any) -> str:
+    # chat.completions path
+    try:
+        return resp.choices[0].message.content or ""
+    except Exception:
+        return ""
+
+
 def llm_variant_questions(base_questions: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """
+    Generates variants for base_questions using OpenAI if configured.
+    Returns a list of variant dicts with keys:
+      id, baseId, isVariant, question, options?, answer, solution, type, marks, topic, difficulty, tolerance?, decimals?
+    """
     if client is None or not base_questions:
         return []
 
     payload = []
     for q in base_questions:
-        payload.append({
-            "id": q["id"],
-            "topic": q["topic"],
-            "difficulty": q.get("difficulty", "M"),
-            "type": q["type"],
-            "marks": q["marks"],
-            "question": q["question"],
-            "options": q.get("options", None),
-            "answer": q.get("answer", None),
-            "tolerance": q.get("tolerance", 0.01),
-            "decimals": q.get("decimals", 2),
-            "solution": q.get("solution", ""),
-        })
+        payload.append(
+            {
+                "id": q["id"],
+                "topic": q["topic"],
+                "difficulty": q.get("difficulty", "M"),
+                "type": q["type"],
+                "marks": q["marks"],
+                "question": q["question"],
+                "options": q.get("options", None),
+                "answer": q.get("answer", None),
+                "tolerance": q.get("tolerance", 0.01),
+                "decimals": q.get("decimals", 2),
+                "solution": q.get("solution", ""),
+            }
+        )
 
-    prompt = f"""
-You are generating ORIGINAL GATE Aerospace mock-test variants.
-
-You will receive a JSON array BASE. For each base question:
-- Create a VARIANT that keeps: topic, type, marks, difficulty approximately same.
-- Ensure the variant is original (do not copy from any real GATE paper).
-- Make small numeric changes or slight conceptual twists while preserving difficulty.
-- Recompute answer and update solution accordingly.
-- Keep LaTeX MathJax-friendly using \\( \\) or \\[ \\].
-- Keep MCQ/MSQ to exactly 4 options.
-- NAT must be numeric with 2 decimals; include tolerance=0.01 and decimals=2.
-- Output only JSON (no markdown), as an array VARIANTS of the same length and order.
-
-Schema:
-{{
- "id": "VAR-<unique>",
- "baseId": "<original base id>",
- "topic": "...",
- "difficulty": "E|M|H",
- "type": "MCQ|MSQ|NAT",
- "marks": 1|2,
- "question": "string",
- "options": ["A: ...","B: ...","C: ...","D: ..."],   // only for MCQ/MSQ
- "answer": "A" | ["A","C"] | 12.34,
- "tolerance": 0.01,   // NAT only
- "decimals": 2,       // NAT only
- "solution": "string",
- "isVariant": true
-}}
-
-BASE:
-{json.dumps(payload, ensure_ascii=False)}
-"""
-
-    resp = client.responses.create(
-        model="gpt-5",
-        input=prompt,
-        temperature=0.4,
-        max_output_tokens=3500,
+    system_msg = (
+        "You generate ORIGINAL GATE Aerospace mock-test variants.\n"
+        "You will receive BASE questions as JSON.\n"
+        "For each base question, create ONE variant:\n"
+        "- Keep same topic, type, marks, difficulty approximately.\n"
+        "- Make small numeric changes or slight conceptual twists.\n"
+        "- Recompute answer and solution.\n"
+        "- MCQ/MSQ must have EXACTLY 4 options.\n"
+        "- NAT must be numeric with decimals=2 and tolerance=0.01.\n"
+        "- Output ONLY valid JSON array (no markdown, no extra text).\n"
+        "Schema per variant: {baseId, topic, difficulty, type, marks, question, options?, answer, solution, tolerance?, decimals?}"
     )
-    text = resp.output_text
-    data = json.loads(text)
+    user_msg = f"BASE:\n{json.dumps(payload, ensure_ascii=False)}"
+
+    try:
+        resp = client.chat.completions.create(
+            model=OPENAI_MODEL,
+            messages=[
+                {"role": "system", "content": system_msg},
+                {"role": "user", "content": user_msg},
+            ],
+            temperature=0.3,
+        )
+    except Exception as e:
+        print("VARIANT MODE FAILED (chat.completions.create):", repr(e))
+        return []
+
+    text = _extract_text_from_openai_response(resp)
+    if not text:
+        print("VARIANT MODE FAILED: empty response content")
+        return []
+
+    # Parse JSON
+    try:
+        data = json.loads(text)
+    except Exception as e:
+        print("VARIANT MODE FAILED: JSON parse error:", repr(e))
+        print("RAW LLM OUTPUT (first 1000 chars):", text[:1000])
+        return []
 
     if not isinstance(data, list) or len(data) != len(base_questions):
-        raise ValueError("LLM returned invalid variants array.")
+        print("VARIANT MODE FAILED: expected list of same length.")
+        return []
 
-    out = []
-    for v in data:
-        v["id"] = f"VAR-{uuid.uuid4().hex[:10]}"
-        v["isVariant"] = True
-        v["baseId"] = str(v.get("baseId", "")) or "UNKNOWN"
-        if v.get("type") == "NAT":
-            v["decimals"] = 2
-            v["tolerance"] = float(v.get("tolerance", 0.01))
-            v["answer"] = round(float(v["answer"]), 2)
-        out.append(v)
+    # Normalize variants
+    out: List[Dict[str, Any]] = []
+    for i, v in enumerate(data):
+        if not isinstance(v, dict):
+            print("VARIANT MODE FAILED: variant not a dict:", v)
+            return []
+
+        base_id = str(v.get("baseId") or base_questions[i]["id"])
+
+        vv = dict(v)
+        vv["id"] = f"VAR-{uuid.uuid4().hex[:10]}"
+        vv["isVariant"] = True
+        vv["baseId"] = base_id
+
+        # Ensure required fields exist
+        for k in ["topic", "difficulty", "type", "marks", "question", "answer", "solution"]:
+            if k not in vv:
+                print("VARIANT MODE FAILED: missing key", k, "in", vv)
+                return []
+
+        if vv.get("type") in ("MCQ", "MSQ"):
+            opts = vv.get("options", [])
+            if not isinstance(opts, list) or len(opts) != 4:
+                print("VARIANT MODE FAILED: MCQ/MSQ must have 4 options:", vv)
+                return []
+
+            # normalize to A/B/C/D prefix
+            normalized = []
+            for j, ot in enumerate(opts):
+                ot_str = str(ot)
+                if ot_str.strip().startswith(("A:", "B:", "C:", "D:")):
+                    normalized.append(ot_str)
+                else:
+                    normalized.append(f"{['A','B','C','D'][j]}: {ot_str}")
+            vv["options"] = normalized
+
+            if vv["type"] == "MCQ":
+                vv["answer"] = str(vv["answer"]).strip()
+                if vv["answer"] not in ("A", "B", "C", "D"):
+                    # allow "A:" forms
+                    vv["answer"] = vv["answer"].replace(":", "").strip()[:1]
+                if vv["answer"] not in ("A", "B", "C", "D"):
+                    print("VARIANT MODE FAILED: MCQ answer must be one of A/B/C/D:", vv["answer"])
+                    return []
+
+            if vv["type"] == "MSQ":
+                if not isinstance(vv["answer"], list):
+                    print("VARIANT MODE FAILED: MSQ answer must be list:", vv["answer"])
+                    return []
+                vv["answer"] = sorted([str(x).strip()[:1] for x in vv["answer"]])
+                for x in vv["answer"]:
+                    if x not in ("A", "B", "C", "D"):
+                        print("VARIANT MODE FAILED: MSQ answer invalid:", vv["answer"])
+                        return []
+
+        if vv.get("type") == "NAT":
+            vv["decimals"] = 2
+            vv["tolerance"] = float(vv.get("tolerance", 0.01))
+            try:
+                vv["answer"] = round(float(vv["answer"]), 2)
+            except Exception:
+                print("VARIANT MODE FAILED: NAT answer not numeric:", vv["answer"])
+                return []
+
+        out.append(vv)
 
     return out
 
@@ -422,8 +515,8 @@ INDEX_HTML = r"""<!DOCTYPE html>
         <div class="timer-label">Time Left</div>
         <div id="timer" class="timer">03:00:00</div>
       </div>
-      <button id="logoutBtn" class="btn hidden">Logout</button>
-      <button id="submitBtn" class="btn danger hidden">Submit Test</button>
+      <button id="logoutBtn" class="btn hidden" type="button">Logout</button>
+      <button id="submitBtn" class="btn danger hidden" type="button">Submit Test</button>
     </div>
   </header>
 
@@ -435,7 +528,7 @@ INDEX_HTML = r"""<!DOCTYPE html>
         <input id="loginUser" placeholder="e.g., student1" />
         <div class="row" style="margin-top:12px;"><label>Password</label></div>
         <input id="loginPass" type="password" placeholder="e.g., gate123" />
-        <button id="loginBtn" class="btn primary" style="width:100%;margin-top:12px;">Login</button>
+        <button id="loginBtn" class="btn primary" style="width:100%;margin-top:12px;" type="button">Login</button>
         <div class="feedback">
           Demo accounts (server-side):<br>
           <b>student1</b> / gate123<br>
@@ -490,8 +583,8 @@ INDEX_HTML = r"""<!DOCTYPE html>
             <span id="paperInfo" class="pill ghost">65Q | 100</span>
           </div>
           <div class="q-nav">
-            <button id="prevBtn" class="btn">Prev</button>
-            <button id="nextBtn" class="btn">Next</button>
+            <button id="prevBtn" class="btn" type="button">Prev</button>
+            <button id="nextBtn" class="btn" type="button">Next</button>
           </div>
         </div>
 
@@ -499,9 +592,9 @@ INDEX_HTML = r"""<!DOCTYPE html>
         <div id="optionsBox" class="options"></div>
 
         <div class="q-actions">
-          <button id="saveBtn" class="btn primary">Save Answer</button>
-          <button id="clearBtn" class="btn">Clear</button>
-          <button id="reviewBtn" class="btn warn">Mark for Review</button>
+          <button id="saveBtn" class="btn primary" type="button">Save Answer</button>
+          <button id="clearBtn" class="btn" type="button">Clear</button>
+          <button id="reviewBtn" class="btn warn" type="button">Mark for Review</button>
         </div>
 
         <div id="feedback" class="feedback"></div>
@@ -511,7 +604,7 @@ INDEX_HTML = r"""<!DOCTYPE html>
         <h3>Result Summary</h3>
         <div id="resultSummary" class="result-summary"></div>
         <div id="solutionList"></div>
-        <button id="backBtn" class="btn primary" style="margin-top:10px;">Back to Test List</button>
+        <button id="backBtn" class="btn primary" style="margin-top:10px;" type="button">Back to Test List</button>
       </section>
 
       <section id="emptyView">
@@ -603,16 +696,31 @@ INDEX_HTML = r"""<!DOCTYPE html>
       return data;
     }
 
-    function showLogin(){
-      user=null; tests=[];
+    function resetAll(){
       attemptId=null; testMeta=null;
       questions=[]; currentIndex=0;
+      for (const k of Object.keys(status)) delete status[k];
+      for (const k of Object.keys(responses)) delete responses[k];
       clearInterval(timerId); timerId=null;
+      paletteEl.innerHTML="";
+      optionsBoxEl.innerHTML="";
+      questionTextEl.innerHTML="";
+    }
 
-      show(loginView); hide(testListView); hide(paletteView); hide(testView); hide(resultsView);
+    function showLogin(){
+      user=null; tests=[];
+      resetAll();
+
+      show(loginView);
+      hide(testListView);
+      hide(paletteView);
+      hide(testView);
+      hide(resultsView);
       show(emptyView);
 
-      hide(timerBox); hide(submitBtn); hide(logoutBtn);
+      hide(timerBox);
+      hide(submitBtn);
+      hide(logoutBtn);
     }
 
     async function showTestList(){
@@ -620,10 +728,17 @@ INDEX_HTML = r"""<!DOCTYPE html>
       user = data.user;
       tests = data.tests;
 
-      hide(loginView); hide(testView); hide(resultsView); hide(paletteView);
-      show(testListView); show(emptyView);
+      hide(loginView);
+      hide(testView);
+      hide(resultsView);
+      hide(paletteView);
 
-      hide(timerBox); hide(submitBtn); show(logoutBtn);
+      show(testListView);
+      show(emptyView);
+
+      hide(timerBox);
+      hide(submitBtn);
+      show(logoutBtn);
 
       welcomeBox.innerHTML = `Welcome, <b>${user.name}</b> (${user.userId}).`;
 
@@ -641,7 +756,7 @@ INDEX_HTML = r"""<!DOCTYPE html>
               </div>
             </div>
             <div style="display:flex;gap:8px;align-items:center;">
-              <button class="btn primary">Start Attempt</button>
+              <button class="btn primary" type="button">Start Attempt</button>
             </div>
           </div>
         `;
@@ -742,14 +857,14 @@ INDEX_HTML = r"""<!DOCTYPE html>
           radio.type="radio"; radio.name="mcq"; radio.value=letter;
           if(saved===letter) radio.checked=true;
 
-          const badge=document.createElement("div");
-          badge.className="opt-label"; badge.textContent=letter;
+          const b=document.createElement("div");
+          b.className="opt-label"; b.textContent=letter;
 
           const txt=document.createElement("div");
           txt.className="opt-text";
           txt.innerHTML = optText.replace(/^([A-D]:\s*)/, "");
 
-          row.appendChild(radio); row.appendChild(badge); row.appendChild(txt);
+          row.appendChild(radio); row.appendChild(b); row.appendChild(txt);
           optionsBoxEl.appendChild(row);
         });
       } else if(q.type==="MSQ"){
@@ -762,14 +877,14 @@ INDEX_HTML = r"""<!DOCTYPE html>
           chk.type="checkbox"; chk.name="msq"; chk.value=letter;
           if(Array.isArray(saved) && saved.includes(letter)) chk.checked=true;
 
-          const badge=document.createElement("div");
-          badge.className="opt-label"; badge.textContent=letter;
+          const b=document.createElement("div");
+          b.className="opt-label"; b.textContent=letter;
 
           const txt=document.createElement("div");
           txt.className="opt-text";
           txt.innerHTML = optText.replace(/^([A-D]:\s*)/, "");
 
-          row.appendChild(chk); row.appendChild(badge); row.appendChild(txt);
+          row.appendChild(chk); row.appendChild(b); row.appendChild(txt);
           optionsBoxEl.appendChild(row);
         });
       } else {
@@ -865,43 +980,46 @@ INDEX_HTML = r"""<!DOCTYPE html>
     });
 
     async function startAttempt(testId){
-      questions=[]; currentIndex=0;
-      for (const k of Object.keys(status)) delete status[k];
-      for (const k of Object.keys(responses)) delete responses[k];
-      paletteEl.innerHTML=""; optionsBoxEl.innerHTML=""; questionTextEl.innerHTML="";
+  resetAll();
 
-      try{
-        const data = await api("/api/generate-paper","POST",{
-          testId,
-          pool: LOCAL_POOL,
-          variantMode: variantModeChk ? variantModeChk.checked : true
-        });
-
-        attemptId = data.attemptId;
-        testMeta = data.test;
-        questions = data.paper;
-
-        questions.forEach(q=>{
-          status[q.id]={visited:false,answered:false,review:false};
-          responses[q.id]=null;
-        });
-
-        hide(testListView); hide(resultsView); hide(emptyView);
-        show(testView); show(paletteView);
-
-        show(timerBox); show(submitBtn); show(logoutBtn);
-
-        paperInfoEl.textContent = `65Q | 100 • ${testMeta.id} • Variants: ${data.variantsApplied}`;
-
-        renderPalette();
-        renderQuestion();
-        startTimer(testMeta.durationMin);
-
-        setFeedback(`Attempt started. <b>Save</b> locks answers unless you <b>Mark for Review</b>.`);
-      }catch(e){
-        alert(e.message);
-      }
+  try{
+    if (!window.LOCAL_POOL || !Array.isArray(window.LOCAL_POOL) || window.LOCAL_POOL.length < 200) {
+      throw new Error("LOCAL_POOL not loaded properly. Hard refresh (Ctrl+Shift+R) and check /local_pool.js in Network tab.");
     }
+
+    const data = await api("/api/generate-paper","POST",{
+      testId,
+      pool: window.LOCAL_POOL,
+      variantMode: variantModeChk ? variantModeChk.checked : true
+    });
+
+    attemptId = data.attemptId;
+    testMeta = data.test;
+    questions = data.paper;
+
+    questions.forEach(q=>{
+      status[q.id]={visited:false,answered:false,review:false};
+      responses[q.id]=null;
+    });
+
+    hide(testListView); hide(resultsView); hide(emptyView);
+    show(testView); show(paletteView);
+
+    show(timerBox); show(submitBtn); show(logoutBtn);
+
+    paperInfoEl.textContent = `65Q | 100 • ${testMeta.id} • Variants: ${data.variantsApplied}`;
+
+    renderPalette();
+    renderQuestion();
+    startTimer(testMeta.durationMin);
+
+    setFeedback(`Attempt started. <b>Save</b> locks answers unless you <b>Mark for Review</b>.`);
+  }catch(e){
+    console.error(e);
+    alert(e.message);
+  }
+}
+window.startAttempt = startAttempt;
 
     submitBtn.addEventListener("click", ()=>{
       if(confirm("Submit test now? You cannot change answers after submit.")) submitNow(false);
@@ -964,7 +1082,10 @@ INDEX_HTML = r"""<!DOCTYPE html>
 
         typesetMath();
         alert("Result published. You can go back and start another attempt.");
-      }catch(e){ alert(e.message); }
+      }catch(e){
+        console.error(e);
+        alert(e.message);
+      }
     }
 
     backBtn.addEventListener("click", async ()=>{ await showTestList(); });
@@ -982,9 +1103,10 @@ INDEX_HTML = r"""<!DOCTYPE html>
 </html>
 """
 
+
 # ==========================
-# Your uploaded local_pool.js embedded here
-# Source: uploaded file local_pool.js :contentReference[oaicite:1]{index=1}
+# local_pool.js (same as your current bank)
+# NOTE: This is NOT secure because answers are in browser. OK for demo.
 # ==========================
 LOCAL_POOL_JS = r"""/* local_pool.js
    Creates LOCAL_POOL with exactly 200 questions
@@ -1031,11 +1153,10 @@ function buildLocalPool() {
   }
 
   // =========================
-  // APTITUDE (APT)
+  // APTITUDE (APT) 25
   // =========================
   (function(){
     const T="Aptitude", C="APT";
-    // Easy 8
     mcq({id:mkId(C,"E",1),topic:T,difficulty:"E",marks:1,question:"If 5 pens cost ₹75, cost of 12 pens (₹) is",
       opts:["150","160","180","200"],ansIndex:2,solution:"Unit cost=75/5=15. Cost=12×15=180."});
     mcq({id:mkId(C,"E",2),topic:T,difficulty:"E",marks:1,question:"Average of 10 and 20 is",
@@ -1053,7 +1174,6 @@ function buildLocalPool() {
     mcq({id:mkId(C,"E",8),topic:T,difficulty:"E",marks:1,question:"Simplify: \\(3\\times 4 + 5\\times 2\\) equals",
       opts:["12","16","22","24"],ansIndex:2,solution:"12+10=22."});
 
-    // Medium 8
     mcq({id:mkId(C,"M",1),topic:T,difficulty:"M",marks:2,question:"Two pipes fill a tank in 10 h and 15 h. Time to fill together (hours) is closest to",
       opts:["5.0","6.0","6.5","7.5"],ansIndex:1,solution:"Rate=1/10+1/15=1/6. Time=6 h."});
     nat({id:mkId(C,"M",2),topic:T,difficulty:"M",marks:2,question:"If \\(\\log_{10}(x)=1.7\\), then \\(x\\) (2 decimals) = ____",
@@ -1071,7 +1191,6 @@ function buildLocalPool() {
     mcq({id:mkId(C,"M",8),topic:T,difficulty:"M",marks:2,question:"A work is completed by A in 12 days and B in 18 days. Together they finish in (days) closest to",
       opts:["6.0","7.2","7.5","8.0"],ansIndex:1,solution:"Rate=1/12+1/18=5/36. Time=36/5=7.2."});
 
-    // Hard 9
     mcq({id:mkId(C,"H",1),topic:T,difficulty:"H",marks:2,question:"If \\(x\\) and \\(y\\) are positive and \\(\\frac{1}{x}+\\frac{1}{y}=\\frac{1}{6}\\), then minimum of \\(x+y\\) is",
       opts:["12","18","24","36"],ansIndex:2,solution:"Minimum at x=y=12 ⇒ x+y=24."});
     nat({id:mkId(C,"H",2),topic:T,difficulty:"H",marks:2,question:"Milk:water = 7:3. If 10 L water is added to 40 L mixture, new milk fraction (2 decimals) = ____",
@@ -1094,11 +1213,10 @@ function buildLocalPool() {
   })();
 
   // =========================
-  // ENGINEERING MATHS (MTH)
+  // ENGINEERING MATHS (MTH) 25
   // =========================
   (function(){
     const T="Engineering Maths", C="MTH";
-    // Easy 8
     mcq({id:mkId(C,"E",1),topic:T,difficulty:"E",marks:1,question:"If \\(f(x)=x^3\\), then \\(f'(2)\\) equals",
       opts:["4","6","8","12"],ansIndex:3,solution:"f'(x)=3x^2 ⇒ 12"});
     mcq({id:mkId(C,"E",2),topic:T,difficulty:"E",marks:1,question:"Determinant of \\(\\begin{bmatrix}1&2\\\\3&4\\end{bmatrix}\\) is",
@@ -1116,7 +1234,6 @@ function buildLocalPool() {
     nat({id:mkId(C,"E",8),topic:T,difficulty:"E",marks:1,question:"\\(\\lim_{x\\to 0}\\frac{\\sin(2x)}{x}\\) (2 decimals) = ____",
       answer:2,solution:"=2.00"});
 
-    // Medium 8
     mcq({id:mkId(C,"M",1),topic:T,difficulty:"M",marks:2,question:"Eigenvalues of \\(\\begin{bmatrix}2&0\\\\0&5\\end{bmatrix}\\) are",
       opts:["2 and 5","0 and 7","1 and 6","-2 and -5"],ansIndex:0,solution:"Diagonal entries."});
     nat({id:mkId(C,"M",2),topic:T,difficulty:"M",marks:2,question:"Compute \\(\\int_0^1 6x(1-x)\\,dx\\) (2 decimals) = ____",
@@ -1134,7 +1251,6 @@ function buildLocalPool() {
     nat({id:mkId(C,"M",8),topic:T,difficulty:"M",marks:2,question:"\\(\\nabla\\cdot (x\\hat i + y\\hat j + z\\hat k)\\) (2 decimals)=____",
       answer:3,solution:"=3.00"});
 
-    // Hard 9
     mcq({id:mkId(C,"H",1),topic:T,difficulty:"H",marks:2,question:"If \\(A\\) is orthogonal, then \\(A^{-1}\\) equals",
       opts:["A","A^T","-A","0"],ansIndex:1,solution:"Orthogonal ⇒ A^{-1}=A^T"});
     nat({id:mkId(C,"H",2),topic:T,difficulty:"H",marks:2,question:"\\(\\int_0^{\\pi/2}\\sin x\\,dx\\) (2 decimals)=____",
@@ -1158,49 +1274,34 @@ function buildLocalPool() {
   })();
 
   // =========================
-  // The remaining 6 topics are included but kept compact here.
-  // They still generate EXACTLY 200 questions.
+  // Remaining 6 topics (programmatic) 25 each = 150
   // =========================
-
-  // AERODYNAMICS (AERO)
-  // PROPULSION (PROP)
-  // STRUCTURES (STR)
-  // GAS DYNAMICS (GAS)
-  // TURBOMACHINERY (TURBO)
-  // FLIGHT MECHANICS (FM)
-
-  // To keep this response size reasonable, I include fully working minimal banks
-  // for these topics using programmatic patterns (still original + MathJax-ready).
-
   function fillTopic(topic, code, easyCount, medCount, hardCount, maker) {
     for (let i=1;i<=easyCount;i++) maker("E", i);
     for (let i=1;i<=medCount;i++) maker("M", i);
     for (let i=1;i<=hardCount;i++) maker("H", i);
   }
 
-  // ---------- AERO (25) ----------
+  // AERODYNAMICS
   fillTopic("Aerodynamics","AERO",8,8,9,(D,i)=>{
     const id=mkId("AERO",D,i);
-    const marks = (D==="E") ? 1 : 2;
+    const marks=(D==="E")?1:2;
     if (i%5===0) {
-      // NAT
       const alphaDeg = (D==="E") ? (3+i%3) : (4+i%4);
       const ans = 2*Math.PI*(alphaDeg*Math.PI/180);
       nat({id,topic:"Aerodynamics",difficulty:D,marks,question:`Thin airfoil: \\(C_L\\approx 2\\pi\\alpha\\). For \\(\\alpha=${alphaDeg}^\\circ\\), \\(C_L\\) (2 decimals)=____`,
         answer:ans,tolerance:0.03,solution:`\\(\\alpha\\) in rad = ${alphaDeg}π/180. \\(C_L=2\\pi\\alpha\\).`});
     } else if (i%4===0) {
-      // MSQ
       msq({id,topic:"Aerodynamics",difficulty:D,marks,question:"Select all that reduce induced drag for same lift:",
         opts:["Increase aspect ratio","Decrease aspect ratio","Increase Oswald efficiency","Decrease Oswald efficiency"],
         ansIndices:[0,2],solution:"\\(C_{D_i}\\propto 1/(eAR)\\)."});
     } else {
-      // MCQ
-      mcq({id,topic:"Aerodynamics",difficulty:D,marks:marks,question:"For inviscid incompressible potential flow, vorticity is",
+      mcq({id,topic:"Aerodynamics",difficulty:D,marks,question:"For inviscid incompressible potential flow, vorticity is",
         opts:["zero","nonzero","equal to pressure","equal to density"],ansIndex:0,solution:"Potential flow is irrotational ⇒ vorticity 0."});
     }
   });
 
-  // ---------- PROP (25) ----------
+  // PROPULSION
   fillTopic("Propulsion","PROP",8,8,9,(D,i)=>{
     const id=mkId("PROP",D,i);
     const marks=(D==="E")?1:2;
@@ -1220,7 +1321,7 @@ function buildLocalPool() {
     }
   });
 
-  // ---------- STR (25) ----------
+  // STRUCTURES
   fillTopic("Structures","STR",8,8,9,(D,i)=>{
     const id=mkId("STR",D,i);
     const marks=(D==="E")?1:2;
@@ -1236,7 +1337,7 @@ function buildLocalPool() {
     }
   });
 
-  // ---------- GAS (25) ----------
+  // GAS DYNAMICS
   fillTopic("Gas Dynamics","GAS",8,8,9,(D,i)=>{
     const id=mkId("GAS",D,i);
     const marks=(D==="E")?1:2;
@@ -1254,7 +1355,7 @@ function buildLocalPool() {
     }
   });
 
-  // ---------- TURBO (25) ----------
+  // TURBOMACHINERY
   fillTopic("Turbomachinery","TURBO",8,8,9,(D,i)=>{
     const id=mkId("TURBO",D,i);
     const marks=(D==="E")?1:2;
@@ -1272,7 +1373,7 @@ function buildLocalPool() {
     }
   });
 
-  // ---------- FLIGHT MECH (25) ----------
+  // FLIGHT MECHANICS
   fillTopic("Flight Mechanics","FM",8,8,9,(D,i)=>{
     const id=mkId("FM",D,i);
     const marks=(D==="E")?1:2;
@@ -1294,16 +1395,15 @@ function buildLocalPool() {
     }
   });
 
-  // FINAL CHECK
   if (pool.length !== 200) {
     throw new Error(`LOCAL_POOL size is ${pool.length}, expected 200.`);
   }
   return pool;
 }
 
-// Build immediately
-const LOCAL_POOL = buildLocalPool();
+window.LOCAL_POOL = buildLocalPool();
 """
+
 
 # ==========================
 # Routes
@@ -1374,7 +1474,8 @@ def api_generate_paper():
             variants = llm_variant_questions(bases)
             paper = apply_variants(paper, variants)
             variants_applied = len(variants)
-        except Exception:
+        except Exception as e:
+            print("ERROR DURING VARIANT GENERATION:", repr(e))
             variants_applied = 0
 
     attempt_id = f"ATT-{uuid.uuid4().hex}"
@@ -1391,15 +1492,17 @@ def api_generate_paper():
 
     paper_exam = [strip_answers_for_exam(q) for q in paper]
 
-    return jsonify({
-        "ok": True,
-        "attemptId": attempt_id,
-        "test": test,
-        "variantMode": variant_mode,
-        "variantsApplied": variants_applied,
-        "paper": paper_exam,
-        "blueprint": BLUEPRINT,
-    })
+    return jsonify(
+        {
+            "ok": True,
+            "attemptId": attempt_id,
+            "test": test,
+            "variantMode": variant_mode,
+            "variantsApplied": variants_applied,
+            "paper": paper_exam,
+            "blueprint": BLUEPRINT,
+        }
+    )
 
 
 @app.post("/api/submit")
@@ -1443,36 +1546,40 @@ def api_submit():
         else:
             correct_ans = q["answer"]
 
-        solutions.append({
-            "qNo": idx,
-            "id": qid,
-            "baseId": q.get("baseId", None),
-            "isVariant": bool(q.get("isVariant", False)),
-            "topic": q["topic"],
-            "difficulty": q.get("difficulty", "M"),
-            "type": q["type"],
-            "marks": q["marks"],
-            "question": q["question"],
-            "options": q.get("options", None),
-            "yourAnswer": resp,
-            "correctAnswer": correct_ans,
-            "status": ("Unattempted" if not attempted else ("Correct" if ok_ else "Wrong")),
-            "solution": q.get("solution", "—"),
-        })
+        solutions.append(
+            {
+                "qNo": idx,
+                "id": qid,
+                "baseId": q.get("baseId", None),
+                "isVariant": bool(q.get("isVariant", False)),
+                "topic": q["topic"],
+                "difficulty": q.get("difficulty", "M"),
+                "type": q["type"],
+                "marks": q["marks"],
+                "question": q["question"],
+                "options": q.get("options", None),
+                "yourAnswer": resp,
+                "correctAnswer": correct_ans,
+                "status": ("Unattempted" if not attempted else ("Correct" if ok_ else "Wrong")),
+                "solution": q.get("solution", "—"),
+            }
+        )
 
-    return jsonify({
-        "ok": True,
-        "score": score,
-        "solutions": solutions,
-        "meta": {
-            "attemptId": attempt_id,
-            "testId": att["testId"],
-            "startedAt": att["startedAt"],
-            "submittedAt": att["submittedAt"],
-            "variantMode": att.get("variantMode", False),
-            "variantsApplied": att.get("variantsApplied", 0),
+    return jsonify(
+        {
+            "ok": True,
+            "score": score,
+            "solutions": solutions,
+            "meta": {
+                "attemptId": attempt_id,
+                "testId": att["testId"],
+                "startedAt": att["startedAt"],
+                "submittedAt": att["submittedAt"],
+                "variantMode": att.get("variantMode", False),
+                "variantsApplied": att.get("variantsApplied", 0),
+            },
         }
-    })
+    )
 
 
 if __name__ == "__main__":

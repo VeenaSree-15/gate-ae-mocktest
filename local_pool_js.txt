@@ -1,0 +1,704 @@
+function buildLocalPool() {
+  const pool = [];
+  const ABCD = ["A", "B", "C", "D"];
+
+  const r2 = (x) => Math.round(x * 100) / 100;
+  const fmt2 = (x) => Number(r2(x)).toFixed(2);
+
+  function add(q) {
+    pool.push(q);
+  }
+
+  function mkId(topicCode, diff, n) {
+    return `${topicCode}-${diff}-${String(n).padStart(2, "0")}`;
+  }
+
+  // ---------- Helper makers ----------
+  function mcq({ id, topic, difficulty, marks, question, opts, ansIndex, solution }) {
+    add({
+      id, topic, difficulty, type: "MCQ", marks,
+      question,
+      options: opts.map((t, i) => `${ABCD[i]}: ${t}`),
+      answer: ABCD[ansIndex],
+      solution
+    });
+  }
+
+  function msq({ id, topic, difficulty, marks, question, opts, ansIndices, solution }) {
+    add({
+      id, topic, difficulty, type: "MSQ", marks,
+      question,
+      options: opts.map((t, i) => `${ABCD[i]}: ${t}`),
+      answer: ansIndices.map(i => ABCD[i]),
+      solution
+    });
+  }
+
+  function nat({ id, topic, difficulty, marks, question, answer, tolerance = 0.01, solution }) {
+    add({
+      id, topic, difficulty, type: "NAT", marks,
+      question,
+      answer: r2(answer),
+      tolerance,
+      decimals: 2,
+      solution
+    });
+  }
+
+  // ============================================================
+  // TOPIC 1: APTITUDE (APT)  Easy 8, Medium 8, Hard 9
+  // ============================================================
+  (function Aptitude() {
+    const T = "Aptitude", C = "APT";
+    // Easy (8): mostly 1-mark
+    mcq({ id: mkId(C,"E",1), topic:T, difficulty:"E", marks:1,
+      question:"If 5 pens cost ₹75, cost of 12 pens (₹) is",
+      opts:["150","160","180","200"], ansIndex:2,
+      solution:"Unit cost=75/5=15. Cost=12×15=180."
+    });
+    mcq({ id: mkId(C,"E",2), topic:T, difficulty:"E", marks:1,
+      question:"Average of 10 and 20 is",
+      opts:["10","15","20","25"], ansIndex:1,
+      solution:"(10+20)/2=15."
+    });
+    nat({ id: mkId(C,"E",3), topic:T, difficulty:"E", marks:1,
+      question:"A shop offers 10% discount on ₹2400. Selling price (2 decimals) = ____",
+      answer: 2400 * 0.9,
+      solution:"SP=2400(1−0.10)=2160.00"
+    });
+    mcq({ id: mkId(C,"E",4), topic:T, difficulty:"E", marks:1,
+      question:"If \\(x\\) is even, then \\(x^2\\) is",
+      opts:["odd","even","prime","negative"], ansIndex:1,
+      solution:"Even squared remains even."
+    });
+    nat({ id: mkId(C,"E",5), topic:T, difficulty:"E", marks:1,
+      question:"A train travels 90 km in 1.5 hours. Speed (km/h, 2 decimals) = ____",
+      answer: 90/1.5,
+      solution:"Speed=distance/time=90/1.5=60.00"
+    });
+    mcq({ id: mkId(C,"E",6), topic:T, difficulty:"E", marks:1,
+      question:"Choose the correct word: The conclusions were ____ by new evidence.",
+      opts:["affected","effected","accepted","afflicted"], ansIndex:0,
+      solution:"Affected = influenced."
+    });
+    mcq({ id: mkId(C,"E",7), topic:T, difficulty:"E", marks:1,
+      question:"If A is mother of B and B is sister of C, A is ____ of C.",
+      opts:["aunt","mother","sister","grandmother"], ansIndex:1,
+      solution:"If B & C are siblings, A is mother of both."
+    });
+    mcq({ id: mkId(C,"E",8), topic:T, difficulty:"E", marks:1,
+      question:"Simplify: \\(3\\times 4 + 5\\times 2\\) equals",
+      opts:["12","16","22","24"], ansIndex:2,
+      solution:"12+10=22."
+    });
+
+    // Medium (8): mix 1/2 marks
+    mcq({ id: mkId(C,"M",1), topic:T, difficulty:"M", marks:2,
+      question:"Two pipes fill a tank in 10 h and 15 h. Time to fill together (hours) is closest to",
+      opts:["5.0","6.0","6.5","7.5"], ansIndex:2,
+      solution:"Rate=1/10+1/15=1/6. Time=6 h (closest 6.0)."
+    });
+    nat({ id: mkId(C,"M",2), topic:T, difficulty:"M", marks:2,
+      question:"If \\(\\log_{10}(x)=1.7\\), then \\(x\\) (2 decimals) = ____",
+      answer: Math.pow(10,1.7),
+      tolerance:0.05,
+      solution:"x=10^{1.7}=10×10^{0.7}≈10×5.0119=50.12"
+    });
+    mcq({ id: mkId(C,"M",3), topic:T, difficulty:"M", marks:1,
+      question:"A number leaves remainder 5 when divided by 9. Remainder when divided by 3 is",
+      opts:["0","1","2","Cannot be determined"], ansIndex:2,
+      solution:"n=9k+5 ⇒ n mod 3 = 5 mod 3 = 2."
+    });
+    mcq({ id: mkId(C,"M",4), topic:T, difficulty:"M", marks:2,
+      question:"In a class, ratio of boys:girls = 3:2. If total students = 50, girls =",
+      opts:["10","20","25","30"], ansIndex:1,
+      solution:"Parts=5. Girls=2/5×50=20."
+    });
+    nat({ id: mkId(C,"M",5), topic:T, difficulty:"M", marks:1,
+      question:"Simple interest on ₹5000 at 8% for 1.5 years (₹, 2 decimals) = ____",
+      answer: 5000*0.08*1.5,
+      solution:"SI=PRT=5000×0.08×1.5=600.00"
+    });
+    mcq({ id: mkId(C,"M",6), topic:T, difficulty:"M", marks:2,
+      question:"Average of 8 numbers is 12. If one number 20 is replaced by 10, new average is",
+      opts:["10.75","11.25","11.75","12.00"], ansIndex:1,
+      solution:"Sum=8×12=96. New sum=96−20+10=86. Avg=86/8=10.75 (Oops) → correct is 10.75 (Option A)."
+    });
+    // Fix above: correct option A
+    pool[pool.length-1].answer = "A";
+    pool[pool.length-1].solution = "Sum=8×12=96. New sum=96−20+10=86. Avg=86/8=10.75.";
+
+    mcq({ id: mkId(C,"M",7), topic:T, difficulty:"M", marks:1,
+      question:"If \\(2x-3=7\\), then \\(x\\) equals",
+      opts:["2","3","4","5"], ansIndex:2,
+      solution:"2x=10 ⇒ x=5 (Oops) → correct option D."
+    });
+    pool[pool.length-1].answer = "D";
+    pool[pool.length-1].solution = "2x−3=7 ⇒ 2x=10 ⇒ x=5.";
+
+    mcq({ id: mkId(C,"M",8), topic:T, difficulty:"M", marks:2,
+      question:"A work is completed by A in 12 days and B in 18 days. Together they finish in (days) closest to",
+      opts:["6.0","7.2","7.5","8.0"], ansIndex:1,
+      solution:"Rate=1/12+1/18=5/36. Time=36/5=7.2 days."
+    });
+
+    // Hard (9): mostly 2-mark
+    mcq({ id: mkId(C,"H",1), topic:T, difficulty:"H", marks:2,
+      question:"If \\(x\\) and \\(y\\) are positive and \\(\\frac{1}{x}+\\frac{1}{y}=\\frac{1}{6}\\), then minimum of \\(x+y\\) is",
+      opts:["12","18","24","36"], ansIndex:2,
+      solution:"For fixed harmonic sum, minimum x+y when x=y=12 ⇒ x+y=24."
+    });
+    nat({ id: mkId(C,"H",2), topic:T, difficulty:"H", marks:2,
+      question:"A mixture has milk:water = 7:3. If 10 L of water is added to 40 L mixture, new milk fraction (2 decimals) = ____",
+      answer: (40*(7/10)) / (40+10),
+      solution:"Milk=28 L. Total=50 L. Fraction=28/50=0.56"
+    });
+    mcq({ id: mkId(C,"H",3), topic:T, difficulty:"H", marks:2,
+      question:"If \\(n\\) is an integer, \\(n^2\\) mod 4 can be",
+      opts:["0 only","1 only","0 or 1","2 or 3"], ansIndex:2,
+      solution:"Even n⇒0 mod4, odd n⇒1 mod4."
+    });
+    nat({ id: mkId(C,"H",4), topic:T, difficulty:"H", marks:2,
+      question:"Averages: mean of 5 numbers is 14 and mean of 3 of them is 12. Mean of remaining 2 (2 decimals) = ____",
+      answer: (5*14 - 3*12)/2,
+      solution:"Sum=70, partial sum=36, remaining=34, mean=17.00"
+    });
+    mcq({ id: mkId(C,"H",5), topic:T, difficulty:"H", marks:2,
+      question:"How many integers in [1,100] are divisible by 2 or 5?",
+      opts:["50","60","65","70"], ansIndex:2,
+      solution:"Count(2)=50, Count(5)=20, Count(10)=10. Total=50+20−10=60 (Oops) → option B."
+    });
+    pool[pool.length-1].answer = "B";
+    pool[pool.length-1].solution = "Div by 2:50, by 5:20, overlap by 10:10 ⇒ 50+20−10=60.";
+
+    msq({ id: mkId(C,"H",6), topic:T, difficulty:"H", marks:2,
+      question:"Select all statements that are always true for real numbers \\(a,b\\):",
+      opts:[
+        "\\((a+b)^2\\ge 0\\)",
+        "\\(a^2+b^2\\ge 2ab\\)",
+        "\\(a^2+b^2\\le (a+b)^2\\)",
+        "\\(|a+b|\\le |a|+|b|\\)"
+      ],
+      ansIndices:[0,1,2,3],
+      solution:"All are true: nonnegativity, AM-GM form, \\((a+b)^2=a^2+b^2+2ab\\ge a^2+b^2\\), triangle inequality."
+    });
+    nat({ id: mkId(C,"H",7), topic:T, difficulty:"H", marks:2,
+      question:"If probability of success is 0.2 in each trial, expected successes in 15 trials (2 decimals) = ____",
+      answer: 15*0.2,
+      solution:"E=np=15×0.2=3.00"
+    });
+    mcq({ id: mkId(C,"H",8), topic:T, difficulty:"H", marks:2,
+      question:"If \\(\\sin\\theta=3/5\\) in first quadrant, \\(\\cos\\theta\\) is",
+      opts:["3/5","4/5","5/3","5/4"], ansIndex:1,
+      solution:"3-4-5 triangle ⇒ cos=4/5."
+    });
+    mcq({ id: mkId(C,"H",9), topic:T, difficulty:"H", marks:2,
+      question:"A cube has surface area 150 \\(\\text{cm}^2\\). Volume (\\(\\text{cm}^3\\)) is",
+      opts:["125","150","216","250"], ansIndex:0,
+      solution:"6a^2=150 ⇒ a^2=25 ⇒ a=5 ⇒ V=125."
+    });
+  })();
+
+  // ============================================================
+  // TOPIC 2: ENGINEERING MATHEMATICS (MTH)
+  // ============================================================
+  (function Maths() {
+    const T="Engineering Maths", C="MTH";
+
+    // Easy 8
+    mcq({ id: mkId(C,"E",1), topic:T, difficulty:"E", marks:1,
+      question:"If \\(f(x)=x^3\\), then \\(f'(2)\\) equals",
+      opts:["4","6","8","12"], ansIndex:3,
+      solution:"f'(x)=3x^2 ⇒ f'(2)=12."
+    });
+    mcq({ id: mkId(C,"E",2), topic:T, difficulty:"E", marks:1,
+      question:"Determinant of \\(\\begin{bmatrix}1&2\\\\3&4\\end{bmatrix}\\) is",
+      opts:["-2","2","-1","1"], ansIndex:0,
+      solution:"det=1·4−2·3=−2."
+    });
+    nat({ id: mkId(C,"E",3), topic:T, difficulty:"E", marks:1,
+      question:"Compute \\(\\int_0^2 x\\,dx\\) (2 decimals) = ____",
+      answer: 2,
+      solution:"Integral=[x^2/2]_0^2=2.00"
+    });
+    mcq({ id: mkId(C,"E",4), topic:T, difficulty:"E", marks:1,
+      question:"\\(\\mathcal{L}\\{1\\}\\) equals",
+      opts:["1/s","s","1/s^2","e^s"], ansIndex:0,
+      solution:"\\(\\int_0^\\infty e^{-st}dt=1/s\\)."
+    });
+    mcq({ id: mkId(C,"E",5), topic:T, difficulty:"E", marks:1,
+      question:"If A is symmetric, then",
+      opts:["A^T=A","A^T=-A","A^2=I","det(A)=0"], ansIndex:0,
+      solution:"Definition of symmetric matrix."
+    });
+    nat({ id: mkId(C,"E",6), topic:T, difficulty:"E", marks:1,
+      question:"If \\(|3+4i|\\) (2 decimals) = ____",
+      answer: 5,
+      solution:"Magnitude=\\(\\sqrt{3^2+4^2}=5.00\\)."
+    });
+    mcq({ id: mkId(C,"E",7), topic:T, difficulty:"E", marks:1,
+      question:"Solution of \\(x^2-9=0\\) (positive root) is",
+      opts:["1","3","-3","9"], ansIndex:1,
+      solution:"x=3."
+    });
+    nat({ id: mkId(C,"E",8), topic:T, difficulty:"E", marks:1,
+      question:"Compute \\(\\lim_{x\\to 0}\\frac{\\sin(2x)}{x}\\) (2 decimals) = ____",
+      answer: 2,
+      solution:"Limit=2.00"
+    });
+
+    // Medium 8
+    mcq({ id: mkId(C,"M",1), topic:T, difficulty:"M", marks:2,
+      question:"Eigenvalues of \\(\\begin{bmatrix}2&0\\\\0&5\\end{bmatrix}\\) are",
+      opts:["2 and 5","0 and 7","1 and 6","-2 and -5"], ansIndex:0,
+      solution:"Diagonal entries are eigenvalues."
+    });
+    nat({ id: mkId(C,"M",2), topic:T, difficulty:"M", marks:2,
+      question:"If \\(\\int_0^1 6x(1-x)\\,dx\\) (2 decimals) = ____",
+      answer: 1,
+      solution:"Compute: 6∫(x−x^2)dx=6(1/2−1/3)=1.00"
+    });
+    mcq({ id: mkId(C,"M",3), topic:T, difficulty:"M", marks:2,
+      question:"For \\(y'+y=e^x\\), integrating factor is",
+      opts:["e^x","e^{-x}","x","1"], ansIndex:0,
+      solution:"IF=\\(e^{\\int 1 dx}=e^x\\)."
+    });
+    nat({ id: mkId(C,"M",4), topic:T, difficulty:"M", marks:2,
+      question:"If \\(\\mathbf{a}\\cdot\\mathbf{b}=12\\), \\(|a|=3\\), \\(|b|=5\\). Angle (degrees, 2 decimals) = ____",
+      answer: (Math.acos(12/(3*5))*180/Math.PI),
+      tolerance:0.2,
+      solution:"cosθ=12/15=0.8 ⇒ θ≈36.87°"
+    });
+    mcq({ id: mkId(C,"M",5), topic:T, difficulty:"M", marks:1,
+      question:"If a series \\(\\sum a_n\\) converges absolutely, then it converges",
+      opts:["always","never","only if positive","only if monotone"], ansIndex:0,
+      solution:"Absolute convergence implies convergence."
+    });
+    nat({ id: mkId(C,"M",6), topic:T, difficulty:"M", marks:2,
+      question:"Solve \\(2x+3y=12\\) and \\(x-y=1\\). Value of \\(x\\) (2 decimals) = ____",
+      answer: 3,
+      solution:"From x=y+1 ⇒ 2(y+1)+3y=12 ⇒ 5y=10 ⇒ y=2 ⇒ x=3.00"
+    });
+    mcq({ id: mkId(C,"M",7), topic:T, difficulty:"M", marks:2,
+      question:"For a continuous random variable, \\(P(X=a)\\) equals",
+      opts:["0","1","depends on a","infinite"], ansIndex:0,
+      solution:"For continuous RV, point probability is 0."
+    });
+    nat({ id: mkId(C,"M",8), topic:T, difficulty:"M", marks:2,
+      question:"If \\(\\nabla\\cdot (x\\hat i + y\\hat j + z\\hat k)\\) (2 decimals) = ____",
+      answer: 3,
+      solution:"Divergence = 1+1+1 = 3.00"
+    });
+
+    // Hard 9
+    mcq({ id: mkId(C,"H",1), topic:T, difficulty:"H", marks:2,
+      question:"If \\(A\\) is orthogonal, then \\(A^{-1}\\) equals",
+      opts:["A","A^T","-A","0"], ansIndex:1,
+      solution:"Orthogonal: \\(A^T A=I\\Rightarrow A^{-1}=A^T\\)."
+    });
+    nat({ id: mkId(C,"H",2), topic:T, difficulty:"H", marks:2,
+      question:"Compute \\(\\int_0^{\\pi/2} \\sin x\\,dx\\) (2 decimals) = ____",
+      answer: 1,
+      solution:"[-cos x]_0^{π/2}=1.00"
+    });
+    mcq({ id: mkId(C,"H",3), topic:T, difficulty:"H", marks:2,
+      question:"For \\(y''+4y=0\\), general solution is",
+      opts:["A\\(e^{2x}+e^{-2x}\\)","A\\(\\sin 2x + \\cos 2x\\)","A\\(\\sin x + \\cos x\\)","A\\(e^{4x}\\)"], ansIndex:1,
+      solution:"Characteristic r^2+4=0 ⇒ r=±2i."
+    });
+    nat({ id: mkId(C,"H",4), topic:T, difficulty:"H", marks:2,
+      question:"If \\(\\sum_{k=1}^{10} k\\) (2 decimals) = ____",
+      answer: 55,
+      solution:"n(n+1)/2=10×11/2=55.00"
+    });
+    mcq({ id: mkId(C,"H",5), topic:T, difficulty:"H", marks:2,
+      question:"If \\(X\\sim N(0,1)\\), then \\(E[X^2]\\) equals",
+      opts:["0","1","2","\\(\\pi\\)"], ansIndex:1,
+      solution:"Variance=1 and mean=0 ⇒ E[X^2]=Var+mean^2=1."
+    });
+    nat({ id: mkId(C,"H",6), topic:T, difficulty:"H", marks:2,
+      question:"For matrix \\(\\begin{bmatrix}1&1\\\\1&1\\end{bmatrix}\\), rank (2 decimals) = ____",
+      answer: 1,
+      solution:"Rows are dependent ⇒ rank=1.00"
+    });
+    msq({ id: mkId(C,"H",7), topic:T, difficulty:"H", marks:2,
+      question:"Select all true statements:",
+      opts:[
+        "If \\(\\nabla f=0\\) at a point, it is a stationary point",
+        "All stationary points are minima",
+        "A minimum can occur at boundary",
+        "Hessian positive definite implies local minimum"
+      ],
+      ansIndices:[0,2,3],
+      solution:"(1) true, (2) false, (3) true, (4) true."
+    });
+    nat({ id: mkId(C,"H",8), topic:T, difficulty:"H", marks:2,
+      question:"If \\(\\det(A)=3\\), \\(\\det(2A)\\) for 2×2 matrix is (2 decimals) = ____",
+      answer: 12,
+      solution:"det(2A)=2^2 det(A)=4×3=12.00"
+    });
+    mcq({ id: mkId(C,"H",9), topic:T, difficulty:"H", marks:2,
+      question:"If \\(u=e^{x}\\cos y\\), then \\(u_{xx}\\) equals",
+      opts:["\\(e^x\\cos y\\)","\\(e^x\\sin y\\)","\\(-e^x\\cos y\\)","0"], ansIndex:0,
+      solution:"u_x=e^x cos y, u_xx=e^x cos y."
+    });
+  })();
+
+  // ============================================================
+  // The remaining 6 topics:
+  // Aerodynamics, Propulsion, Structures, Gas Dynamics,
+  // Turbomachinery, Flight Mechanics
+  //
+  // To keep this message usable in one paste (and not 100+ pages),
+  // I’m continuing in the SAME style but compactly.
+  // ============================================================
+
+  // ---------- AERODYNAMICS (AERO) ----------
+  (function Aerodynamics(){
+    const T="Aerodynamics", C="AERO";
+
+    // Easy 8
+    mcq({ id: mkId(C,"E",1), topic:T, difficulty:"E", marks:1,
+      question:"In potential flow, vorticity is",
+      opts:["always zero","always nonzero","equal to pressure","equal to density"], ansIndex:0,
+      solution:"Potential flow is irrotational ⇒ vorticity=0."
+    });
+    mcq({ id: mkId(C,"E",2), topic:T, difficulty:"E", marks:1,
+      question:"For small angles (radians), \\(\\sin\\alpha\\approx\\)",
+      opts:["\\(\\alpha\\)","\\(\\alpha^2\\)","\\(1-\\alpha\\)","\\(\\sqrt\\alpha\\)"], ansIndex:0,
+      solution:"Small-angle approximation."
+    });
+    mcq({ id: mkId(C,"E",3), topic:T, difficulty:"E", marks:1,
+      question:"Lift per unit span in Kutta–Joukowski theorem is",
+      opts:["\\(\\rho U \\Gamma\\)","\\(\\rho U^2\\Gamma\\)","\\(\\rho \\Gamma /U\\)","\\(U\\Gamma\\)"], ansIndex:0,
+      solution:"\\(L' = \\rho U\\Gamma\\)."
+    });
+    nat({ id: mkId(C,"E",4), topic:T, difficulty:"E", marks:1,
+      question:"If \\(C_L=2\\pi\\alpha\\) and \\(\\alpha=4^\\circ\\), \\(C_L\\) (2 decimals) = ____",
+      answer: 2*Math.PI*(4*Math.PI/180),
+      tolerance:0.02,
+      solution:"\\(\\alpha=0.0698\\), \\(C_L\\approx 2\\pi\\alpha\\approx0.44\\)."
+    });
+    mcq({ id: mkId(C,"E",5), topic:T, difficulty:"E", marks:1,
+      question:"Boundary layer thickness on flat plate (laminar) scales as",
+      opts:["\\(\\delta\\sim x/\\sqrt{Re_x}\\)","\\(\\delta\\sim x Re_x\\)","\\(\\delta\\sim \\sqrt{Re_x}/x\\)","\\(\\delta\\sim x\\)"], ansIndex:0,
+      solution:"Blasius scaling."
+    });
+    mcq({ id: mkId(C,"E",6), topic:T, difficulty:"E", marks:1,
+      question:"Stagnation point velocity is",
+      opts:["maximum","zero","equal to freestream","supersonic"], ansIndex:1,
+      solution:"At stagnation point, velocity = 0."
+    });
+    nat({ id: mkId(C,"E",7), topic:T, difficulty:"E", marks:1,
+      question:"Dynamic pressure \\(q=\\tfrac12\\rho V^2\\). For \\(\\rho=1.2\\), \\(V=20\\), q (Pa, 2 decimals)=____",
+      answer: 0.5*1.2*20*20,
+      solution:"q=0.6×400=240.00"
+    });
+    mcq({ id: mkId(C,"E",8), topic:T, difficulty:"E", marks:1,
+      question:"Oswald efficiency factor \\(e\\) lies typically in",
+      opts:["(0,1]","[1,2]","[-1,0]","(2,5)"], ansIndex:0,
+      solution:"Typically 0<e≤1."
+    });
+
+    // Medium 8
+    nat({ id: mkId(C,"M",1), topic:T, difficulty:"M", marks:2,
+      question:"Induced drag coefficient \\(C_{D_i}=\\frac{C_L^2}{\\pi e AR}\\). For \\(C_L=0.5\\), \\(AR=10\\), \\(e=0.8\\): \\(C_{D_i}\\) (2 decimals)=____",
+      answer: (0.25)/(Math.PI*0.8*10),
+      tolerance:0.01,
+      solution:"0.25/(25.133)=0.00995≈0.01"
+    });
+    mcq({ id: mkId(C,"M",2), topic:T, difficulty:"M", marks:2,
+      question:"At max \\(L/D\\) for polar \\(C_D=C_{D0}+kC_L^2\\), condition is",
+      opts:["\\(C_{D0}=kC_L^2\\)","\\(C_{D0}=2kC_L^2\\)","\\(C_{D0}=0\\)","\\(C_L=0\\)"], ansIndex:0,
+      solution:"Max L/D when parasite drag = induced drag."
+    });
+    mcq({ id: mkId(C,"M",3), topic:T, difficulty:"M", marks:2,
+      question:"For subsonic compressibility, Prandtl–Glauert factor is",
+      opts:["\\(\\sqrt{1-M^2}\\)","\\(1/\\sqrt{1-M^2}\\)","\\(1-M\\)","\\(1+M\\)"], ansIndex:1,
+      solution:"PG correction: divide by \\(\\sqrt{1-M^2}\\)."
+    });
+    nat({ id: mkId(C,"M",4), topic:T, difficulty:"M", marks:2,
+      question:"For \\(M=0.7\\), PG factor \\(1/\\sqrt{1-M^2}\\) (2 decimals)=____",
+      answer: 1/Math.sqrt(1-0.49),
+      tolerance:0.02,
+      solution:"1/√0.51≈1.40"
+    });
+    msq({ id: mkId(C,"M",5), topic:T, difficulty:"M", marks:2,
+      question:"Select all that reduce induced drag (for same lift):",
+      opts:["Increase aspect ratio","Decrease aspect ratio","Increase Oswald efficiency e","Decrease e"],
+      ansIndices:[0,2],
+      solution:"\\(C_{D_i}\\propto 1/(eAR)\\)."
+    });
+    mcq({ id: mkId(C,"M",6), topic:T, difficulty:"M", marks:1,
+      question:"Skin friction drag primarily depends on",
+      opts:["viscosity","gravity","magnetic field","humidity only"], ansIndex:0,
+      solution:"Viscous shear causes skin friction."
+    });
+    nat({ id: mkId(C,"M",7), topic:T, difficulty:"M", marks:2,
+      question:"If \\(Re=\\rho V L/\\mu\\). For \\(\\rho=1.2\\), \\(V=30\\), \\(L=0.5\\), \\(\\mu=1.8\\times10^{-5}\\): Re (2 decimals)=____",
+      answer: (1.2*30*0.5)/(1.8e-5),
+      tolerance:50,
+      solution:"Re≈1.0×10^6"
+    });
+    mcq({ id: mkId(C,"M",8), topic:T, difficulty:"M", marks:2,
+      question:"Lift coefficient definition is",
+      opts:["\\(C_L=\\frac{L}{qS}\\)","\\(C_L=\\frac{qS}{L}\\)","\\(C_L=LqS\\)","\\(C_L=L/S\\)"], ansIndex:0,
+      solution:"By definition."
+    });
+
+    // Hard 9
+    mcq({ id: mkId(C,"H",1), topic:T, difficulty:"H", marks:2,
+      question:"For thin airfoil, quarter-chord pitching moment coefficient is (in inviscid theory)",
+      opts:["approximately constant with \\(\\alpha\\)","increases linearly with \\(\\alpha\\)","always zero","equals \\(C_L\\)"], ansIndex:0,
+      solution:"Thin airfoil: \\(C_{m,c/4}\\) nearly constant."
+    });
+    nat({ id: mkId(C,"H",2), topic:T, difficulty:"H", marks:2,
+      question:"For a 2D incompressible flow, if \\(C_p=1-(V/V_\\infty)^2\\) and \\(V/V_\\infty=1.5\\), \\(C_p\\) (2 decimals)=____",
+      answer: 1-2.25,
+      tolerance:0.02,
+      solution:"Cp=1−(1.5)^2=−1.25"
+    });
+    mcq({ id: mkId(C,"H",3), topic:T, difficulty:"H", marks:2,
+      question:"A shock cannot occur in",
+      opts:["supersonic flow","transonic flow","subsonic inviscid isentropic flow","hypersonic flow"], ansIndex:2,
+      solution:"Shocks require supersonic region."
+    });
+    msq({ id: mkId(C,"H",4), topic:T, difficulty:"H", marks:2,
+      question:"For incompressible, inviscid flow: select all true",
+      opts:["Bernoulli holds along streamline","Irrotational implies Bernoulli everywhere","Pressure can vary with position","Viscosity causes energy loss"],
+      ansIndices:[0,1,2],
+      solution:"Inviscid: no viscous loss; Bernoulli along streamline; if irrotational, constant everywhere."
+    });
+    nat({ id: mkId(C,"H",5), topic:T, difficulty:"H", marks:2,
+      question:"If \\(C_L=0.8\\), \\(AR=6\\), \\(e=0.75\\), compute \\(C_{D_i}\\) (2 decimals)=____",
+      answer: (0.64)/(Math.PI*0.75*6),
+      tolerance:0.01,
+      solution:"0.64/(14.137)=0.0453≈0.05"
+    });
+    mcq({ id: mkId(C,"H",6), topic:T, difficulty:"H", marks:2,
+      question:"For laminar boundary layer on flat plate, local skin friction coefficient varies as",
+      opts:["\\(Re_x^{-1/2}\\)","\\(Re_x^{-1}\\)","\\(Re_x^{1/2}\\)","constant"], ansIndex:0,
+      solution:"\\(C_{f,x}\\sim 0.664/\\sqrt{Re_x}\\)."
+    });
+    nat({ id: mkId(C,"H",7), topic:T, difficulty:"H", marks:2,
+      question:"If \\(\\Gamma=4\\,m^2/s\\), \\(\\rho=1.0\\), \\(U=50\\), lift per unit span \\(L'\\) (N/m, 2 decimals)=____",
+      answer: 1*50*4,
+      tolerance:0.05,
+      solution:"\\(L'=\\rho U\\Gamma=200.00\\,N/m\\)."
+    });
+    mcq({ id: mkId(C,"H",8), topic:T, difficulty:"H", marks:2,
+      question:"For a symmetric airfoil at small \\(\\alpha\\), lift coefficient is approximately",
+      opts:["0 at all \\(\\alpha\\)","proportional to \\(\\alpha\\)","proportional to \\(\\alpha^2\\)","negative always"], ansIndex:1,
+      solution:"Thin airfoil: \\(C_L\\approx 2\\pi\\alpha\\)."
+    });
+    nat({ id: mkId(C,"H",9), topic:T, difficulty:"H", marks:2,
+      question:"At \\(\\alpha=6^\\circ\\), compute \\(C_L\\approx 2\\pi\\alpha\\) (2 decimals).",
+      answer: 2*Math.PI*(6*Math.PI/180),
+      tolerance:0.02,
+      solution:"\\(\\alpha=0.1047\\Rightarrow C_L\\approx0.66\\)."
+    });
+  })();
+
+  // ============================================================
+  // IMPORTANT
+  // ============================================================
+  // To keep this answer within message limits, I generated:
+  // - Full 200 for APT + MTH + AERO in full detail already (75 questions).
+  // The remaining topics (Propulsion, Structures, Gas Dynamics, Turbomachinery, Flight Mechanics)
+  // follow the same pattern (Easy 8, Medium 8, Hard 9 each), and are appended below in compact form.
+  //
+  // ✅ You can paste this whole function as-is; it returns EXACTLY 200 questions.
+  // ============================================================
+
+  // ---------- PROPULSION (PROP) ----------
+  (function Propulsion(){
+    const T="Propulsion", C="PROP";
+    // Easy 8
+    mcq({ id: mkId(C,"E",1), topic:T, difficulty:"E", marks:1, question:"Choked flow at nozzle throat means", opts:["M=0","M=1","M>1","M<0.3"], ansIndex:1, solution:"Choking at throat: M=1."});
+    mcq({ id: mkId(C,"E",2), topic:T, difficulty:"E", marks:1, question:"Rocket thrust (ideal) with \\(p_e=p_a\\) equals", opts:["\\(\\dot m V_e\\)","\\(\\dot m(V_e-V_0)\\)","\\(\\dot mV_e+(p_e-p_a)A_e\\)","0"], ansIndex:0, solution:"If pe=pa, thrust=ṁVe."});
+    nat({ id: mkId(C,"E",3), topic:T, difficulty:"E", marks:1, question:"If \\(\\dot m=20\\,kg/s\\), \\(V_e=600\\,m/s\\), \\(V_0=200\\,m/s\\), thrust (kN,2 decimals)=____", answer: 20*(600-200)/1000, tolerance:0.05, solution:"T=ṁ(Ve−V0)=20×400=8000 N=8.00 kN"});
+    mcq({ id: mkId(C,"E",4), topic:T, difficulty:"E", marks:1, question:"In Brayton cycle, compressor work is", opts:["negative","positive input","zero","always equal to turbine work"], ansIndex:1, solution:"Compressor requires work input."});
+    mcq({ id: mkId(C,"E",5), topic:T, difficulty:"E", marks:1, question:"Specific impulse \\(I_{sp}\\) units are", opts:["N","s","m/s","kg"], ansIndex:1, solution:"Isp in seconds."});
+    nat({ id: mkId(C,"E",6), topic:T, difficulty:"E", marks:1, question:"If \\(c_p=1000\\) and \\(\\Delta T=40\\,K\\), compressor specific work (kJ/kg,2 decimals)=____", answer: 1000*40/1000, solution:"w=cpΔT=40.00 kJ/kg"});
+    mcq({ id: mkId(C,"E",7), topic:T, difficulty:"E", marks:1, question:"Nozzle converts", opts:["pressure to velocity","velocity to pressure","heat to mass","mass to temperature"], ansIndex:0, solution:"Nozzle accelerates flow."});
+    mcq({ id: mkId(C,"E",8), topic:T, difficulty:"E", marks:1, question:"In turbojet, neglecting pressure thrust, thrust is", opts:["\\(\\dot m(V_e-V_0)\\)","\\(\\dot m(V_0-V_e)\\)","\\(\\dot mV_0\\)","\\(\\dot mV_e\\)"], ansIndex:0, solution:"Momentum thrust."});
+
+    // Medium 8
+    mcq({ id: mkId(C,"M",1), topic:T, difficulty:"M", marks:2, question:"Ideal Brayton efficiency increases with", opts:["decreasing pressure ratio","increasing pressure ratio","decreasing \\(\\gamma\\)","increasing losses"], ansIndex:1, solution:"Ideal Brayton: higher pressure ratio → higher η (idealized)."});
+    nat({ id: mkId(C,"M",2), topic:T, difficulty:"M", marks:2, question:"If \\(T_2/T_1=(p_2/p_1)^{(\\gamma-1)/\\gamma}\\), \\(p_2/p_1=8\\), \\(\\gamma=1.4\\). \\(T_2/T_1\\) (2 decimals)=____", answer: Math.pow(8,0.4/1.4), tolerance:0.02, solution:"Exponent=0.2857. Ratio≈8^{0.2857}≈1.81"});
+    mcq({ id: mkId(C,"M",3), topic:T, difficulty:"M", marks:2, question:"For perfectly expanded nozzle, pressure thrust term is", opts:["zero","maximum","negative","undefined"], ansIndex:0, solution:"pe=pa ⇒ (pe−pa)Ae=0"});
+    nat({ id: mkId(C,"M",4), topic:T, difficulty:"M", marks:2, question:"If \\(I_{sp}=240\\,s\\), effective exhaust velocity (m/s,2 decimals)=____ (take g=9.81)", answer: 240*9.81, tolerance:0.5, solution:"c=Isp·g=2354.40 m/s"});
+    mcq({ id: mkId(C,"M",5), topic:T, difficulty:"M", marks:1, question:"Afterburner primarily increases", opts:["thrust","compressor efficiency","ambient pressure","fuel density"], ansIndex:0, solution:"Adds heat → higher jet velocity → thrust up."});
+    nat({ id: mkId(C,"M",6), topic:T, difficulty:"M", marks:2, question:"If turbine drops \\(\\Delta T=120\\,K\\), \\(c_p=1150\\), turbine specific work (kJ/kg,2 decimals)=____", answer: 1150*120/1000, tolerance:0.2, solution:"w=cpΔT=138.00 kJ/kg"});
+    msq({ id: mkId(C,"M",7), topic:T, difficulty:"M", marks:2, question:"For ideal nozzle, select all true", opts:["Flow is isentropic","Throat can be choked","Exit Mach can be >1 in CD nozzle","Stagnation temperature increases in nozzle"], ansIndices:[0,1,2], solution:"Nozzle ideally isentropic; may choke; CD nozzle gives supersonic; T0 constant."});
+    mcq({ id: mkId(C,"M",8), topic:T, difficulty:"M", marks:2, question:"In a turbojet, increasing flight speed (all else same) generally", opts:["increases thrust","decreases thrust","no change","makes thrust infinite"], ansIndex:1, solution:"Momentum term ṁ(Ve−V0) reduces as V0 rises."});
+
+    // Hard 9
+    nat({ id: mkId(C,"H",1), topic:T, difficulty:"H", marks:2, question:"Rocket equation: \\(\\Delta V = c\\ln(m_0/m_f)\\). If \\(c=2500\\) and \\(m_0/m_f=2\\), \\(\\Delta V\\) (m/s,2 decimals)=____", answer: 2500*Math.log(2), tolerance:1.0, solution:"ΔV=2500 ln2≈1732.87"});
+    mcq({ id: mkId(C,"H",2), topic:T, difficulty:"H", marks:2, question:"For nozzle flow, if back pressure is too high, CD nozzle may show", opts:["overexpansion shocks","no choking","constant supersonic exit always","negative mass flow"], ansIndex:0, solution:"High back pressure can cause shocks/overexpansion."});
+    nat({ id: mkId(C,"H",3), topic:T, difficulty:"H", marks:2, question:"If \\(T=\\dot m(V_e-V_0)\\), \\(T=12\\,kN\\), \\(\\dot m=30\\), \\(V_0=250\\). Find \\(V_e\\) (m/s,2 decimals)=____", answer: (12000/30)+250, tolerance:0.5, solution:"Ve=400+250=650.00"});
+    mcq({ id: mkId(C,"H",4), topic:T, difficulty:"H", marks:2, question:"Increasing compressor pressure ratio too much (real engines) can reduce net output due to", opts:["infinite turbine work","compressor work rise","decrease in cp","increase in gas constant"], ansIndex:1, solution:"Compressor work increases; limits exist."});
+    msq({ id: mkId(C,"H",5), topic:T, difficulty:"H", marks:2, question:"Select all that increase specific thrust of a turbojet (qualitatively)", opts:["Higher turbine inlet temperature","Higher exit velocity","Lower flight speed","Higher pressure thrust"], ansIndices:[0,1,2,3], solution:"All listed tend to raise thrust per mass flow."});
+    nat({ id: mkId(C,"H",6), topic:T, difficulty:"H", marks:2, question:"Nozzle power: if jet kinetic energy per kg changes from \\(V_0=200\\) to \\(V_e=600\\), \\(\\Delta KE\\) (kJ/kg,2 decimals)=____", answer: (600*600-200*200)/2/1000, tolerance:0.5, solution:"ΔKE=(360000−40000)/2=160000 J/kg=160.00 kJ/kg"});
+    mcq({ id: mkId(C,"H",7), topic:T, difficulty:"H", marks:2, question:"For ramjet, compression is mainly due to", opts:["compressor","diffuser/inlet","turbine","afterburner"], ansIndex:1, solution:"Ramjet uses inlet/diffuser compression."});
+    nat({ id: mkId(C,"H",8), topic:T, difficulty:"H", marks:2, question:"If \\(p_e=120\\,kPa\\), \\(p_a=100\\,kPa\\), \\(A_e=0.08\\,m^2\\), pressure thrust (N,2 decimals)=____", answer: (120000-100000)*0.08, tolerance:1, solution:"(20kPa)×0.08=1600.00 N"});
+    mcq({ id: mkId(C,"H",9), topic:T, difficulty:"H", marks:2, question:"Specific fuel consumption decreases when", opts:["thermal efficiency increases","losses increase","exit velocity decreases always","pressure ratio decreases always"], ansIndex:0, solution:"Higher efficiency reduces fuel per thrust."});
+  })();
+
+  // ---------- STRUCTURES (STR) ----------
+  (function Structures(){
+    const T="Structures", C="STR";
+
+    // Easy 8
+    nat({ id: mkId(C,"E",1), topic:T, difficulty:"E", marks:1, question:"Axial stress: \\(A=250\\,mm^2\\), \\(F=20\\,kN\\). Stress (MPa,2 decimals)=____", answer: 20000/(250e-6)/1e6, tolerance:0.1, solution:"σ=F/A=20kN/250mm²=80.00 MPa"});
+    mcq({ id: mkId(C,"E",2), topic:T, difficulty:"E", marks:1, question:"Hooke’s law in 1D is", opts:["\\(\\sigma=E\\epsilon\\)","\\(\\epsilon=E\\sigma\\)","\\(\\sigma=\\epsilon/E\\)","\\(\\sigma=G\\gamma\\)"], ansIndex:0, solution:"Linear elastic: σ=Eε."});
+    mcq({ id: mkId(C,"E",3), topic:T, difficulty:"E", marks:1, question:"Poisson’s ratio \\(\\nu\\) typically lies in", opts:["(0,0.5)","(0.5,1)","(-1,-0.5)","(1,2)"], ansIndex:0, solution:"Stable isotropic: 0<ν<0.5"});
+    mcq({ id: mkId(C,"E",4), topic:T, difficulty:"E", marks:1, question:"For simply supported beam with UDL, maximum moment occurs at", opts:["support","midspan","anywhere","end"], ansIndex:1, solution:"Symmetric UDL ⇒ Mmax at midspan."});
+    nat({ id: mkId(C,"E",5), topic:T, difficulty:"E", marks:1, question:"For solid shaft, if \\(T=100\\,N\\cdot m\\), \\(r=0.02\\,m\\), polar moment \\(J=\\pi r^4/2\\). Max shear \\(\\tau=Tr/J\\) (MPa,2 decimals)=____",
+      answer: (100*0.02)/(Math.PI*Math.pow(0.02,4)/2)/1e6, tolerance:0.5,
+      solution:"Use \\(\\tau=Tr/J\\)."
+    });
+    mcq({ id: mkId(C,"E",6), topic:T, difficulty:"E", marks:1, question:"Euler buckling load varies with length as", opts:["\\(\\propto 1/L\\)","\\(\\propto 1/L^2\\)","\\(\\propto L\\)","independent of L"], ansIndex:1, solution:"\\(P_{cr}=\\pi^2EI/(KL)^2\\)."});
+    nat({ id: mkId(C,"E",7), topic:T, difficulty:"E", marks:1, question:"If \\(E=200\\,GPa\\), \\(\\epsilon=500\\,\\mu\\varepsilon\\), stress (MPa,2 decimals)=____",
+      answer: 200e9*(500e-6)/1e6, tolerance:0.5, solution:"σ=Eε=200e9×500e−6=100 MPa"});
+    mcq({ id: mkId(C,"E",8), topic:T, difficulty:"E", marks:1, question:"Bending stress formula is", opts:["\\(\\sigma=My/I\\)","\\(\\sigma=I/My\\)","\\(\\sigma=MI/y\\)","\\(\\sigma=M/I\\)"], ansIndex:0, solution:"Flexure formula."});
+
+    // Medium 8
+    mcq({ id: mkId(C,"M",1), topic:T, difficulty:"M", marks:2, question:"Simply supported beam span L with central load P: \\(M_{max}\\) equals", opts:["\\(PL/8\\)","\\(PL/4\\)","\\(PL/2\\)","\\(PL\\)"], ansIndex:1, solution:"Central point load: Mmax=PL/4."});
+    nat({ id: mkId(C,"M",2), topic:T, difficulty:"M", marks:2, question:"For UDL \\(w=4\\,kN/m\\), span \\(L=3\\,m\\). \\(M_{max}=wL^2/8\\) (kN·m,2 decimals)=____", answer: 4*9/8, tolerance:0.05, solution:"=4×9/8=4.50"});
+    mcq({ id: mkId(C,"M",3), topic:T, difficulty:"M", marks:2, question:"For thin-walled closed section (single cell), Bredt–Batho gives", opts:["\\(T=2Aq\\)","\\(T=Aq\\)","\\(T=2Atq\\)","\\(T=q/t\\)"], ansIndex:0, solution:"T=2Aq ⇒ q=T/(2A)."});
+    nat({ id: mkId(C,"M",4), topic:T, difficulty:"M", marks:2, question:"For a bar: \\(L=2\\,m\\), \\(A=300\\,mm^2\\), \\(E=70\\,GPa\\), \\(F=21\\,kN\\). Elongation (mm,2 decimals)=____",
+      answer: (21000*2)/(300e-6*70e9)*1000, tolerance:0.02,
+      solution:"\\(\\delta=FL/(AE)\\)."
+    });
+    mcq({ id: mkId(C,"M",5), topic:T, difficulty:"M", marks:1, question:"For isotropic material, \\(E=2G(1+\\nu)\\) implies G equals", opts:["\\(E(1+\\nu)/2\\)","\\(E/\\{2(1+\\nu)\\}\\)","\\(2E(1+\\nu)\\)","\\(E(1-\\nu)\\)"], ansIndex:1, solution:"Rearrange formula."});
+    msq({ id: mkId(C,"M",6), topic:T, difficulty:"M", marks:2, question:"Euler buckling load increases by", opts:["increasing E","increasing L","decreasing K","increasing I"], ansIndices:[0,2,3], solution:"\\(P_{cr}\\propto EI/(KL)^2\\)."});
+    nat({ id: mkId(C,"M",7), topic:T, difficulty:"M", marks:2, question:"Solid shaft: if diameter increases by 10%, torque capacity scales by \\((1.1)^3\\). Factor (2 decimals)=____", answer: Math.pow(1.1,3), tolerance:0.02, solution:"T∝d^3 ⇒ factor=1.33"});
+    mcq({ id: mkId(C,"M",8), topic:T, difficulty:"M", marks:2, question:"Plane stress condition means", opts:["\\(\\sigma_z=0\\)","\\(\\epsilon_z=0\\)","\\(\\tau_{xy}=0\\)","\\(\\sigma_x=0\\)"], ansIndex:0, solution:"Plane stress: out-of-plane stress ≈0."});
+
+    // Hard 9
+    mcq({ id: mkId(C,"H",1), topic:T, difficulty:"H", marks:2, question:"For a cantilever with end load P, maximum moment is", opts:["\\(PL\\)","\\(PL/2\\)","\\(PL/4\\)","\\(PL/8\\)"], ansIndex:0, solution:"Cantilever: Mmax=PL at fixed end."});
+    nat({ id: mkId(C,"H",2), topic:T, difficulty:"H", marks:2, question:"Cantilever \\(L=1.8\\,m\\), end load \\(P=600\\,N\\). Mmax (N·m,2 decimals)=____", answer: 600*1.8, tolerance:0.5, solution:"M=PL=1080.00"});
+    mcq({ id: mkId(C,"H",3), topic:T, difficulty:"H", marks:2, question:"For Mohr’s circle, maximum shear stress equals", opts:["\\((\\sigma_1-\\sigma_2)/2\\)","\\(\\sigma_1+\\sigma_2\\)","\\(\\sigma_1\\sigma_2\\)","\\(\\sigma_1-\\sigma_2\\)"], ansIndex:0, solution:"Radius of Mohr’s circle."});
+    nat({ id: mkId(C,"H",4), topic:T, difficulty:"H", marks:2, question:"If \\(\\sigma_1=120\\,MPa\\), \\(\\sigma_2=40\\,MPa\\), \\(\\tau_{max}\\) (MPa,2 decimals)=____", answer: (120-40)/2, tolerance:0.05, solution:"(120−40)/2=40.00"});
+    msq({ id: mkId(C,"H",5), topic:T, difficulty:"H", marks:2, question:"Select all valid assumptions of Euler–Bernoulli beam theory", opts:["Plane sections remain plane","Shear deformation neglected","Material linear elastic","Large rotations always allowed"], ansIndices:[0,1,2], solution:"EB assumes small strains, plane sections, negligible shear."});
+    nat({ id: mkId(C,"H",6), topic:T, difficulty:"H", marks:2, question:"If \\(q=T/(2A)\\), \\(T=800\\,N\\cdot m\\), \\(A=0.02\\,m^2\\). q (N/m,2 decimals)=____", answer: 800/(2*0.02), tolerance:1, solution:"q=800/0.04=20000.00"});
+    mcq({ id: mkId(C,"H",7), topic:T, difficulty:"H", marks:2, question:"For torsion of circular shaft, angle of twist varies as", opts:["\\(\\propto TL/(GJ)\\)","\\(\\propto TGJ/L\\)","\\(\\propto T/L\\)","\\(\\propto GL\\)"], ansIndex:0, solution:"\\(\\theta=TL/(GJ)\\)."});
+    nat({ id: mkId(C,"H",8), topic:T, difficulty:"H", marks:2, question:"If \\(G=27\\,GPa\\), \\(J=3\\times10^{-6}\\), \\(T=150\\), \\(L=1.2\\). \\(\\theta=TL/(GJ)\\) (rad,2 decimals)=____", answer: (150*1.2)/(27e9*3e-6), tolerance:0.01, solution:"Compute numeric."});
+    mcq({ id: mkId(C,"H",9), topic:T, difficulty:"H", marks:2, question:"If a structure is statically indeterminate, number of unknown reactions is", opts:["less than equilibrium eqns","equal to equilibrium eqns","greater than equilibrium eqns","always zero"], ansIndex:2, solution:"Indeterminate ⇒ unknowns > equilibrium equations."});
+  })();
+
+  // ---------- GAS DYNAMICS (GAS) ----------
+  (function GasDynamics(){
+    const T="Gas Dynamics", C="GAS";
+    // Easy 8
+    mcq({ id: mkId(C,"E",1), topic:T, difficulty:"E", marks:1, question:"Speed of sound in ideal gas is", opts:["\\(\\sqrt{RT}\\)","\\(\\sqrt{\\gamma RT}\\)","\\(RT\\)","\\(\\gamma RT\\)"], ansIndex:1, solution:"a=√(γRT)"});
+    nat({ id: mkId(C,"E",2), topic:T, difficulty:"E", marks:1, question:"For air \\(\\gamma=1.4\\), \\(R=287\\), \\(T=300\\). a (m/s,2 decimals)=____", answer: Math.sqrt(1.4*287*300), tolerance:0.5, solution:"a=√(γRT)"});
+    mcq({ id: mkId(C,"E",3), topic:T, difficulty:"E", marks:1, question:"Mach number is defined as", opts:["V/a","a/V","V×a","V−a"], ansIndex:0, solution:"M=V/a"});
+    mcq({ id: mkId(C,"E",4), topic:T, difficulty:"E", marks:1, question:"Stagnation temperature in adiabatic no-work flow is", opts:["constant","increases always","decreases always","zero"], ansIndex:0, solution:"T0 constant along streamline (ideal)."});
+    mcq({ id: mkId(C,"E",5), topic:T, difficulty:"E", marks:1, question:"Normal shock causes downstream Mach number to be", opts:[">1","<1","=1 always","> upstream"], ansIndex:1, solution:"Normal shock makes flow subsonic."});
+    nat({ id: mkId(C,"E",6), topic:T, difficulty:"E", marks:1, question:"For \\(M=0.5\\), dynamic pressure ratio not asked. Compute \\(T_0/T=1+0.2M^2\\) (2 decimals)=____", answer: 1+0.2*0.25, tolerance:0.01, solution:"=1.05"});
+    mcq({ id: mkId(C,"E",7), topic:T, difficulty:"E", marks:1, question:"Choked flow means", opts:["max mass flow","min mass flow","no mass flow","always subsonic"], ansIndex:0, solution:"Choking gives max mass flow for given upstream."});
+    nat({ id: mkId(C,"E",8), topic:T, difficulty:"E", marks:1, question:"For \\(\\gamma=1.4\\), \\(T^*/T_0=2/(\\gamma+1)\\). Value (2 decimals)=____", answer: 2/2.4, tolerance:0.01, solution:"=0.83"});
+
+    // Medium 8
+    nat({ id: mkId(C,"M",1), topic:T, difficulty:"M", marks:2, question:"For \\(\\gamma=1.4\\), \\(M=2\\). Compute \\(T_0/T=1+0.2M^2\\) (2 decimals)=____", answer: 1+0.2*4, tolerance:0.01, solution:"=1.80"});
+    mcq({ id: mkId(C,"M",2), topic:T, difficulty:"M", marks:2, question:"Across a normal shock (adiabatic), which is true?", opts:["p0 increases","p0 decreases","T0 decreases","Mach increases"], ansIndex:1, solution:"Stagnation pressure drops in shock."});
+    msq({ id: mkId(C,"M",3), topic:T, difficulty:"M", marks:2, question:"Across a normal shock, select all true", opts:["Static pressure increases","Mach number decreases","Stagnation temperature increases","Stagnation pressure decreases"], ansIndices:[0,1,3], solution:"T0 ~ constant; p0 decreases."});
+    nat({ id: mkId(C,"M",4), topic:T, difficulty:"M", marks:2, question:"If \\(a=340\\,m/s\\) and \\(M=0.8\\), velocity V (m/s,2 decimals)=____", answer: 340*0.8, tolerance:0.5, solution:"V=Ma=272.00"});
+    mcq({ id: mkId(C,"M",5), topic:T, difficulty:"M", marks:1, question:"In converging nozzle with low back pressure, exit Mach is", opts:["always subsonic","can be sonic at exit","always supersonic","undefined"], ansIndex:1, solution:"Converging nozzle can reach M=1 at exit if choked."});
+    nat({ id: mkId(C,"M",6), topic:T, difficulty:"M", marks:2, question:"For \\(M=1\\), \\(T_0/T\\) (γ=1.4) (2 decimals)=____", answer: 1+0.2*1, tolerance:0.01, solution:"=1.20"});
+    mcq({ id: mkId(C,"M",7), topic:T, difficulty:"M", marks:2, question:"Supersonic diffuser primarily", opts:["accelerates flow","decelerates and raises pressure","keeps pressure constant","reduces temperature always"], ansIndex:1, solution:"Diffuser decelerates, increasing static pressure."});
+    nat({ id: mkId(C,"M",8), topic:T, difficulty:"M", marks:2, question:"If \\(p=100\\,kPa\\), \\(\\rho=1.2\\), ideal gas: \\(a=\\sqrt{\\gamma p/\\rho}\\) with γ=1.4. a (m/s,2 decimals)=____", answer: Math.sqrt(1.4*100000/1.2), tolerance:0.5, solution:"a=√(γp/ρ)"});
+
+    // Hard 9
+    mcq({ id: mkId(C,"H",1), topic:T, difficulty:"H", marks:2, question:"For isentropic flow, as Mach increases in subsonic regime, static pressure", opts:["increases","decreases","constant","random"], ansIndex:1, solution:"Velocity ↑ ⇒ static pressure ↓ (for isentropic)." });
+    nat({ id: mkId(C,"H",2), topic:T, difficulty:"H", marks:2, question:"For \\(\\gamma=1.4\\), \\(M=1.5\\), compute \\(T_0/T\\) (2 decimals)=____", answer: 1+0.2*(2.25), tolerance:0.02, solution:"=1.45"});
+    nat({ id: mkId(C,"H",3), topic:T, difficulty:"H", marks:2, question:"If \\(T_0=600\\,K\\) and \\(T_0/T=1.80\\), then T (K,2 decimals)=____", answer: 600/1.8, tolerance:0.5, solution:"T=T0/(T0/T)=333.33"});
+    mcq({ id: mkId(C,"H",4), topic:T, difficulty:"H", marks:2, question:"In normal shock, entropy change is", opts:["zero","positive","negative","undefined"], ansIndex:1, solution:"Shock is irreversible ⇒ Δs>0."});
+    msq({ id: mkId(C,"H",5), topic:T, difficulty:"H", marks:2, question:"Select all true about choking", opts:["Mass flow is maximized for given upstream","Throat Mach is 1","Downstream pressure affects mass flow after choking","Choking possible in converging nozzle"], ansIndices:[0,1,3], solution:"After choking, mass flow fixed for given upstream."});
+    nat({ id: mkId(C,"H",6), topic:T, difficulty:"H", marks:2, question:"If V=450 and a=300, Mach number (2 decimals)=____", answer: 450/300, tolerance:0.01, solution:"M=1.50"});
+    mcq({ id: mkId(C,"H",7), topic:T, difficulty:"H", marks:2, question:"A normal shock in duct causes stagnation pressure to", opts:["increase","decrease","remain constant","be zero"], ansIndex:1, solution:"p0 decreases due to irreversibility."});
+    nat({ id: mkId(C,"H",8), topic:T, difficulty:"H", marks:2, question:"For \\(\\gamma=1.4\\), \\(T^*/T_0=0.8333\\). If \\(T_0=480\\,K\\), \\(T^*\\) (K,2 decimals)=____", answer: 0.8333333*480, tolerance:0.5, solution:"T*=0.8333×480≈400.00"});
+    mcq({ id: mkId(C,"H",9), topic:T, difficulty:"H", marks:2, question:"A shock is a", opts:["gradual compression wave","discontinuity with finite thickness","isentropic process","subsonic phenomenon only"], ansIndex:1, solution:"Shock is a thin non-isentropic discontinuity."});
+  })();
+
+  // ---------- TURBOMACHINERY (TURBO) ----------
+  (function Turbomachinery(){
+    const T="Turbomachinery", C="TURBO";
+    // Easy 8
+    mcq({ id: mkId(C,"E",1), topic:T, difficulty:"E", marks:1, question:"Euler turbomachinery equation gives", opts:["\\(\\Delta h_0=U\\Delta V_w\\)","\\(\\Delta h_0=V\\Delta U\\)","\\(\\Delta h_0=\\Delta V\\)","\\(\\Delta h_0=0\\)"], ansIndex:0, solution:"Δh0=U(Vw2−Vw1)."});
+    nat({ id: mkId(C,"E",2), topic:T, difficulty:"E", marks:1, question:"If U=200, \\(\\Delta V_w=50\\), \\(\\Delta h_0\\) (kJ/kg,2 decimals)=____", answer: 200*50/1000, tolerance:0.05, solution:"=10.00"});
+    mcq({ id: mkId(C,"E",3), topic:T, difficulty:"E", marks:1, question:"A compressor stage primarily", opts:["adds work to fluid","extracts work","adds heat only","reduces pressure"], ansIndex:0, solution:"Compressor increases stagnation enthalpy."});
+    mcq({ id: mkId(C,"E",4), topic:T, difficulty:"E", marks:1, question:"A turbine stage primarily", opts:["extracts work","adds work","keeps temperature constant","reduces mass flow"], ansIndex:0, solution:"Turbine extracts work."});
+    nat({ id: mkId(C,"E",5), topic:T, difficulty:"E", marks:1, question:"If \\(\\Delta h_0=20\\,kJ/kg\\), temperature rise \\(\\Delta T\\) with \\(c_p=1000\\) (K,2 decimals)=____", answer: 20000/1000, tolerance:0.05, solution:"ΔT=20 K"});
+    mcq({ id: mkId(C,"E",6), topic:T, difficulty:"E", marks:1, question:"Slip factor in centrifugal compressor is typically", opts:["<1",">1","=2","negative"], ansIndex:0, solution:"Slip reduces ideal whirl → σ<1."});
+    mcq({ id: mkId(C,"E",7), topic:T, difficulty:"E", marks:1, question:"Degree of reaction is fraction of", opts:["stage pressure drop in rotor","work input","mass flow","blade count"], ansIndex:0, solution:"Reaction = rotor enthalpy drop / stage enthalpy drop."});
+    nat({ id: mkId(C,"E",8), topic:T, difficulty:"E", marks:1, question:"If σ=0.9 and U=250, \\(\\sigma U^2\\) (kJ/kg,2 decimals)=____", answer: 0.9*250*250/1000, tolerance:0.2, solution:"=56.25"});
+    // Medium 8
+    mcq({ id: mkId(C,"M",1), topic:T, difficulty:"M", marks:2, question:"Reaction=0.5 implies", opts:["all drop in stator","all drop in rotor","equal drop in stator and rotor","no drop"], ansIndex:2, solution:"R=0.5 means equal split."});
+    nat({ id: mkId(C,"M",2), topic:T, difficulty:"M", marks:2, question:"If U=300 and \\(\\Delta V_w=80\\), \\(\\Delta h_0\\) (kJ/kg,2 decimals)=____", answer: 300*80/1000, tolerance:0.2, solution:"=24.00"});
+    mcq({ id: mkId(C,"M",3), topic:T, difficulty:"M", marks:2, question:"In axial compressor, increase in whirl at rotor exit usually means", opts:["more work input","less work input","no change","negative work"], ansIndex:0, solution:"Δh0=UΔVw."});
+    nat({ id: mkId(C,"M",4), topic:T, difficulty:"M", marks:2, question:"If stage work is 30 kJ/kg, \\(c_p=1005\\). \\(\\Delta T\\) (K,2 decimals)=____", answer: 30000/1005, tolerance:0.2, solution:"≈29.85 K"});
+    msq({ id: mkId(C,"M",5), topic:T, difficulty:"M", marks:2, question:"Select all true about compressors", opts:["Increase stagnation pressure","Increase stagnation temperature","Extract shaft work","Can be axial or centrifugal"], ansIndices:[0,1,3], solution:"Compressors require shaft work input."});
+    mcq({ id: mkId(C,"M",6), topic:T, difficulty:"M", marks:1, question:"For turbines, stage loading coefficient generally increases with", opts:["higher work per stage","lower work per stage","lower blade speed","zero work"], ansIndex:0, solution:"Stage loading relates to Δh/U^2."});
+    nat({ id: mkId(C,"M",7), topic:T, difficulty:"M", marks:2, question:"If \\(\\psi=\\Delta h/U^2\\), with \\(\\Delta h=25\\,kJ/kg\\), U=250. \\(\\psi\\) (2 decimals)=____", answer: (25000)/(250*250), tolerance:0.02, solution:"=0.40"});
+    mcq({ id: mkId(C,"M",8), topic:T, difficulty:"M", marks:2, question:"Centrifugal compressor pressure rise is mainly due to", opts:["diffuser converting KE to pressure","nozzle","combustion","shock only"], ansIndex:0, solution:"Impeller adds KE, diffuser converts to pressure."});
+    // Hard 9
+    nat({ id: mkId(C,"H",1), topic:T, difficulty:"H", marks:2, question:"If \\(\\Delta h_0=U(V_{w2}-V_{w1})\\), U=280, Vw2=120, Vw1=30. \\(\\Delta h_0\\) (kJ/kg,2 decimals)=____", answer: 280*(120-30)/1000, tolerance:0.2, solution:"=25.20"});
+    mcq({ id: mkId(C,"H",2), topic:T, difficulty:"H", marks:2, question:"In a turbine, if exit whirl is large and opposite to rotation, work extracted is", opts:["higher","lower","zero","negative"], ansIndex:0, solution:"Large ΔVw increases Δh0."});
+    msq({ id: mkId(C,"H",3), topic:T, difficulty:"H", marks:2, question:"Select all that increase compressor stage work", opts:["Increase blade speed U","Increase whirl change","Decrease whirl change","Decrease blade speed"], ansIndices:[0,1], solution:"Δh0=UΔVw."});
+    nat({ id: mkId(C,"H",4), topic:T, difficulty:"H", marks:2, question:"If σ=0.85, U=320, \\(\\sigma U^2\\) (kJ/kg,2 decimals)=____", answer: 0.85*320*320/1000, tolerance:0.3, solution:"=87.04"});
+    mcq({ id: mkId(C,"H",5), topic:T, difficulty:"H", marks:2, question:"Surge in compressors is", opts:["stable oscillation of mass flow","always desired","steady operation point","supersonic phenomenon only"], ansIndex:0, solution:"Surge is unstable flow oscillation."});
+    nat({ id: mkId(C,"H",6), topic:T, difficulty:"H", marks:2, question:"If \\(\\phi=V_x/U\\). For \\(V_x=150\\), U=300, \\(\\phi\\) (2 decimals)=____", answer: 150/300, tolerance:0.01, solution:"=0.50"});
+    mcq({ id: mkId(C,"H",7), topic:T, difficulty:"H", marks:2, question:"Turbine efficiency compares", opts:["actual work to isentropic work","actual heat to pressure","mass flow to speed","torque to radius"], ansIndex:0, solution:"η = actual / isentropic (ideal) basis."});
+    nat({ id: mkId(C,"H",8), topic:T, difficulty:"H", marks:2, question:"If turbine isentropic drop 200 kJ/kg and η=0.9, actual drop (kJ/kg,2 decimals)=____", answer: 0.9*200, tolerance:0.2, solution:"=180.00"});
+    mcq({ id: mkId(C,"H",9), topic:T, difficulty:"H", marks:2, question:"For a given Δh, increasing blade speed U generally", opts:["reduces loading coefficient","increases loading coefficient","no effect","makes flow incompressible"], ansIndex:0, solution:"ψ=Δh/U^2 decreases if U increases."});
+  })();
+
+  // ---------- FLIGHT MECHANICS (FM) ----------
+  (function FlightMech(){
+    const T="Flight Mechanics", C="FM";
+    // Easy 8
+    mcq({ id: mkId(C,"E",1), topic:T, difficulty:"E", marks:1, question:"In steady level flight", opts:["L=W","T=W","L=D","T=L"], ansIndex:0, solution:"Force balance: L=W."});
+    mcq({ id: mkId(C,"E",2), topic:T, difficulty:"E", marks:1, question:"In steady level flight, thrust equals", opts:["lift","weight","drag","zero"], ansIndex:2, solution:"T=D in steady level."});
+    nat({ id: mkId(C,"E",3), topic:T, difficulty:"E", marks:1, question:"If W=50 kN, S=25, ρ=1.0, CL=0.5. Speed \\(V\\) (m/s,2 decimals)=____", answer: Math.sqrt((2*50000)/(1.0*25*0.5)), tolerance:0.5, solution:"V=√(2W/(ρSCL))."});
+    mcq({ id: mkId(C,"E",4), topic:T, difficulty:"E", marks:1, question:"Longitudinal static stability requires CG", opts:["ahead of neutral point","behind neutral point","at tail only","at wing tip"], ansIndex:0, solution:"Positive static margin."});
+    nat({ id: mkId(C,"E",5), topic:T, difficulty:"E", marks:1, question:"If ROC=4 m/s and V=100 m/s, climb angle \\(\\gamma\\approx \\sin^{-1}(ROC/V)\\) (deg,2 decimals)=____", answer: Math.asin(0.04)*180/Math.PI, tolerance:0.1, solution:"≈2.29°"});
+    mcq({ id: mkId(C,"E",6), topic:T, difficulty:"E", marks:1, question:"Turn radius decreases when", opts:["speed decreases","speed increases","bank angle decreases","lift decreases"], ansIndex:0, solution:"R≈V^2/(g tanφ)."});
+    mcq({ id: mkId(C,"E",7), topic:T, difficulty:"E", marks:1, question:"In a coordinated level turn, load factor \\(n\\) equals", opts:["\\(1/\\cos\\phi\\)","\\(\\cos\\phi\\)","\\(\\tan\\phi\\)","\\(\\sin\\phi\\)"], ansIndex:0, solution:"n=1/cosφ"});
+    nat({ id: mkId(C,"E",8), topic:T, difficulty:"E", marks:1, question:"If bank angle φ=60°, load factor n (2 decimals)=____", answer: 1/Math.cos(Math.PI/3), tolerance:0.02, solution:"cos60=0.5 ⇒ n=2.00"});
+
+    // Medium 8
+    mcq({ id: mkId(C,"M",1), topic:T, difficulty:"M", marks:2, question:"Glide ratio equals", opts:["L/D","D/L","T/W","W/T"], ansIndex:0, solution:"Glide ratio ~ L/D."});
+    nat({ id: mkId(C,"M",2), topic:T, difficulty:"M", marks:2, question:"If \\(C_D=C_{D0}+kC_L^2\\), with \\(C_{D0}=0.02\\), k=0.05. At max L/D, \\(C_L\\) (2 decimals)=____", answer: Math.sqrt(0.02/0.05), tolerance:0.02, solution:"At max L/D: CD0=kCL^2 ⇒ CL=√(CD0/k)."});
+    mcq({ id: mkId(C,"M",3), topic:T, difficulty:"M", marks:2, question:"At max L/D condition in parabolic polar, induced drag equals", opts:["parasite drag","zero","total drag","lift"], ansIndex:0, solution:"kCL^2=CD0."});
+    nat({ id: mkId(C,"M",4), topic:T, difficulty:"M", marks:2, question:"If n=2, then bank angle φ (deg,2 decimals)=____", answer: Math.acos(1/2)*180/Math.PI, tolerance:0.2, solution:"n=1/cosφ ⇒ cosφ=0.5 ⇒ φ=60°"});
+    msq({ id: mkId(C,"M",5), topic:T, difficulty:"M", marks:2, question:"Select all conditions for steady level flight", opts:["\\(\\dot V=0\\)","\\(\\dot h=0\\)","\\(L=W\\)","\\(T=D\\)"], ansIndices:[0,1,2,3], solution:"Steady level implies constant V and h, and force balance."});
+    nat({ id: mkId(C,"M",6), topic:T, difficulty:"M", marks:2, question:"Turn radius \\(R=V^2/(g\\tan\\phi)\\). If V=80, φ=45°, R (m,2 decimals)=____", answer: (80*80)/(9.81*Math.tan(Math.PI/4)), tolerance:2, solution:"tan45=1 ⇒ R≈652.40"});
+    mcq({ id: mkId(C,"M",7), topic:T, difficulty:"M", marks:2, question:"If drag increases, required thrust in steady level flight", opts:["increases","decreases","unchanged","becomes zero"], ansIndex:0, solution:"T=D."});
+    nat({ id: mkId(C,"M",8), topic:T, difficulty:"M", marks:2, question:"If aircraft weight increases by 21% (same ρ,S,CL), speed changes by factor √1.21. Factor (2 decimals)=____", answer: Math.sqrt(1.21), tolerance:0.01, solution:"V∝√W ⇒ factor=1.10"});
+
+    // Hard 9
+    mcq({ id: mkId(C,"H",1), topic:T, difficulty:"H", marks:2, question:"For small disturbance, static stability requires \\(dC_m/d\\alpha\\)", opts:["<0",">0","=0","undefined"], ansIndex:0, solution:"Stable if pitching moment slope negative."});
+    nat({ id: mkId(C,"H",2), topic:T, difficulty:"H", marks:2, question:"If W=70 kN, S=28, ρ=0.9, CL=0.6. V (m/s,2 decimals)=____", answer: Math.sqrt((2*70000)/(0.9*28*0.6)), tolerance:0.7, solution:"V=√(2W/(ρSCL))"});
+    mcq({ id: mkId(C,"H",3), topic:T, difficulty:"H", marks:2, question:"For a given aircraft, stall speed varies with weight as", opts:["\\(\\sqrt{W}\\)","\\(W\\)","\\(1/\\sqrt{W}\\)","independent"], ansIndex:0, solution:"Vs∝√W for fixed CLmax."});
+    nat({ id: mkId(C,"H",4), topic:T, difficulty:"H", marks:2, question:"If CLmax=1.5, W=60kN, S=30, ρ=1.0, stall speed (m/s,2 decimals)=____", answer: Math.sqrt((2*60000)/(1.0*30*1.5)), tolerance:0.6, solution:"Vs=√(2W/(ρSCLmax))"});
+    msq({ id: mkId(C,"H",5), topic:T, difficulty:"H", marks:2, question:"Select all that increase turn rate (same V)", opts:["Increase bank angle","Decrease bank angle","Increase load factor","Decrease load factor"], ansIndices:[0,2], solution:"Higher bank→higher n→higher turn rate (until limits)."});
+    nat({ id: mkId(C,"H",6), topic:T, difficulty:"H", marks:2, question:"If \\(ROC/V=0.06\\), climb angle (deg,2 decimals)=____", answer: Math.asin(0.06)*180/Math.PI, tolerance:0.1, solution:"γ≈arcsin(0.06)≈3.44°"});
+    mcq({ id: mkId(C,"H",7), topic:T, difficulty:"H", marks:2, question:"Maximum endurance for a propeller aircraft occurs near minimum", opts:["power required","drag","thrust","lift"], ansIndex:0, solution:"Endurance max at minimum power required."});
+    nat({ id: mkId(C,"H",8), topic:T, difficulty:"H", marks:2, question:"If n=1.5, bank angle φ (deg,2 decimals)=____", answer: Math.acos(1/1.5)*180/Math.PI, tolerance:0.2, solution:"cosφ=2/3 ⇒ φ≈48.19°"});
+    mcq({ id: mkId(C,"H",9), topic:T, difficulty:"H", marks:2, question:"For a jet aircraft, maximum range occurs near maximum", opts:["\\(L/D\\)","\\(D/L\\)","\\(T/W\\)","\\(W/S\\)"], ansIndex:0, solution:"Breguet range ~ (L/D)."});
+  })();
+
+  // ============================================================
+  // FINAL CHECK: must be exactly 200
+  // ============================================================
+  if (pool.length !== 200) {
+    throw new Error(`buildLocalPool produced ${pool.length} questions, expected 200. Please regenerate.`);
+  }
+  return pool;
+}
+
+// Usage:
+// const LOCAL_POOL = buildLocalPool();
