@@ -6,36 +6,42 @@ import random
 from typing import Any, Dict, List, Optional, Tuple
 
 from flask import Flask, request, jsonify, session, Response
+from flask import send_file
 from dotenv import load_dotenv
+from openai import OpenAI
 
-# Optional LLM (OpenAI). App runs fine without it; Variant Mode falls back to pool-only.
-try:
-    from openai import OpenAI
-except Exception:
-    OpenAI = None
 
 load_dotenv()
 
+USE_LOCAL_LLM = os.getenv("USE_LOCAL_LLM", "true").lower() == "true"
+LOCAL_LLM_BASE_URL = os.getenv("LOCAL_LLM_BASE_URL", "http://localhost:11434/v1").strip()
+LOCAL_LLM_MODEL = os.getenv("LOCAL_LLM_MODEL", "llama3.1:8b").strip()
+
+USE_LOCAL_LLM = os.getenv("USE_LOCAL_LLM", "false").lower() == "true"
+
+if USE_LOCAL_LLM:
+    LOCAL_LLM_BASE_URL = os.getenv("LOCAL_LLM_BASE_URL", "http://localhost:11434/v1")
+    LOCAL_LLM_MODEL = os.getenv("LOCAL_LLM_MODEL", "llama3.1:8b")
+
+    client = OpenAI(
+        base_url=LOCAL_LLM_BASE_URL,
+        api_key="ollama"
+    )
+
+    ACTIVE_MODEL = LOCAL_LLM_MODEL
+
+else:
+    client = OpenAI(
+        api_key=os.getenv("OPENAI_API_KEY")
+    )
+
+    ACTIVE_MODEL = "gpt-4o-mini"
 # --------------------------
 # Flask app setup
 # --------------------------
 app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev-secret-change-me")
 
-OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "").strip()
-OPENAI_MODEL = os.environ.get("OPENAI_MODEL", "gpt-4.1-mini").strip()
-
-client = None
-if OpenAI is not None and OPENAI_API_KEY:
-    try:
-        # Pass api_key explicitly
-        client = OpenAI(api_key=OPENAI_API_KEY)
-        print("OPENAI client initialized.")
-    except Exception as e:
-        print("OPENAI CLIENT INIT FAILED:", repr(e))
-        client = None
-else:
-    print("OPENAI client not configured (missing OPENAI_API_KEY or SDK). Variant Mode will be pool-only.")
 
 
 # --------------------------
@@ -230,10 +236,68 @@ def strip_answers_for_exam(q: Dict[str, Any]) -> Dict[str, Any]:
         "baseId": q.get("baseId", None),
     }
 
+    return make_json_safe(cleaned)
+
+def compute_simple_feedback(paper_full: List[Dict[str, Any]], responses: Dict[str, Any]) -> Dict[str, float]:
+    positive_marks = 0.0
+    negative_marks = 0.0
+
+    for q in paper_full:
+        qid = q["id"]
+        resp = responses.get(qid, None)
+
+        if resp is None:
+            continue
+
+        if is_correct(q, resp):
+            positive_marks += float(q["marks"])
+        else:
+            if q["type"] == "MCQ":
+                if float(q["marks"]) == 1:
+                    negative_marks += (1.0 / 3.0)
+                elif float(q["marks"]) == 2:
+                    negative_marks += (2.0 / 3.0)
+
+    total_marks = round(positive_marks - negative_marks, 2)
+
+    return {
+        "totalMarks": total_marks,
+        "positiveMarks": round(positive_marks, 2),
+        "negativeMarks": round(negative_marks, 2),
+    }
+
+def compute_simple_feedback(paper_full: List[Dict[str, Any]], responses: Dict[str, Any]) -> Dict[str, float]:
+    positive_marks = 0.0
+    negative_marks = 0.0
+
+    for q in paper_full:
+        qid = q["id"]
+        resp = responses.get(qid, None)
+
+        if resp is None:
+            continue
+
+        if is_correct(q, resp):
+            positive_marks += float(q["marks"])
+        else:
+            if q["type"] == "MCQ":
+                if float(q["marks"]) == 1:
+                    negative_marks += (1.0 / 3.0)
+                elif float(q["marks"]) == 2:
+                    negative_marks += (2.0 / 3.0)
+
+    total_marks = round(positive_marks - negative_marks, 2)
+
+    return {
+        "totalMarks": total_marks,
+        "positiveMarks": round(positive_marks, 2),
+        "negativeMarks": round(negative_marks, 2),
+    }
 
 # ==========================
-# Variant Mode (optional)
+# Variant mode (optional)
 # ==========================
+
 def choose_variant_candidates(paper: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     one_mark = [q for q in paper if int(q["marks"]) == 1]
     two_mark = [q for q in paper if int(q["marks"]) == 2]
@@ -293,7 +357,7 @@ def llm_variant_questions(base_questions: List[Dict[str, Any]]) -> List[Dict[str
 
     try:
         resp = client.chat.completions.create(
-            model=OPENAI_MODEL,
+            model=ACTIVE_MODEL,
             messages=[
                 {"role": "system", "content": system_msg},
                 {"role": "user", "content": user_msg},
@@ -501,6 +565,10 @@ INDEX_HTML = r"""<!DOCTYPE html>
 </head>
 
 <body>
+<!-- SASTRA UNIVERSITY BANNER -->
+<div style="width:100%;text-align:center;background:white;border-bottom:2px solid #ddd;">
+  <img src="/sastra_banner.jpg" style="width:100%;max-height:90px;object-fit:contain;">
+</div>
   <header class="topbar">
     <div class="brand">
       <div class="logo">G</div>
@@ -603,7 +671,19 @@ INDEX_HTML = r"""<!DOCTYPE html>
       <section id="resultsView" class="hidden">
         <h3>Result Summary</h3>
         <div id="resultSummary" class="result-summary"></div>
+        <div id="aiFeedbackBox" class="feedback" style="margin-bottom:12px;"></div>
         <div id="solutionList"></div>
+
+        <div id="doubtAssistantBox" class="feedback" style="margin-top:16px;">
+          <h3 style="margin-top:0;">AI Doubt Assistant</h3>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px;">
+            <input id="doubtQuestionNo" type="number" min="1" placeholder="Question No (e.g. 12)" style="width:180px;">
+            <input id="doubtInput" type="text" placeholder="Ask your doubt here..." style="flex:1;min-width:240px;">
+            <button id="doubtSendBtn" class="btn primary" type="button">Ask AI</button>
+          </div>
+          <div id="doubtChatLog" style="max-height:300px;overflow-y:auto;border:1px solid var(--border);border-radius:12px;padding:10px;background:#fff;"></div>
+        </div>
+
         <button id="backBtn" class="btn primary" style="margin-top:10px;" type="button">Back to Test List</button>
       </section>
 
@@ -657,7 +737,76 @@ INDEX_HTML = r"""<!DOCTYPE html>
 
     const resultSummaryEl = document.getElementById("resultSummary");
     const solutionListEl = document.getElementById("solutionList");
+    const aiFeedbackBox = document.getElementById("aiFeedbackBox");
     const backBtn = document.getElementById("backBtn");
+
+    const doubtQuestionNoEl = document.getElementById("doubtQuestionNo");
+    const doubtInputEl = document.getElementById("doubtInput");
+    const doubtSendBtn = document.getElementById("doubtSendBtn");
+    const doubtChatLog = document.getElementById("doubtChatLog");
+
+    function appendChatMessage(sender, text){
+      const div = document.createElement("div");
+      div.style.marginBottom = "10px";
+      div.style.padding = "10px";
+      div.style.borderRadius = "10px";
+      div.style.background = sender === "You" ? "#eef6ff" : "#f8f8f8";
+      div.innerHTML = `<b>${sender}:</b><div style="white-space:pre-line;margin-top:4px;">${text}</div>`;
+      doubtChatLog.appendChild(div);
+      doubtChatLog.scrollTop = doubtChatLog.scrollHeight;
+      typesetMath();
+    }
+
+    doubtSendBtn.addEventListener("click", async ()=>{
+
+  const message = doubtInputEl.value.trim();
+  const questionNo = doubtQuestionNoEl.value.trim();
+
+  if (!attemptId){
+    alert("No submitted attempt found.");
+    return;
+  }
+
+  if (!message){
+    alert("Please type your doubt.");
+    return;
+  }
+
+  appendChatMessage("You", message);
+  doubtInputEl.value = "";
+
+  try{
+
+    console.log("Sending doubt request...");
+
+    const data = await api("/api/ask-doubt","POST",{
+      attemptId: attemptId,
+      questionNo: questionNo ? Number(questionNo) : null,
+      message: message
+    });
+
+    console.log("AI RESPONSE:", data);
+
+    if (data && data.reply){
+      appendChatMessage("AI Tutor", data.reply);
+    }
+    else{
+      appendChatMessage("AI Tutor", "No reply received from AI.");
+    }
+
+  }
+  catch(e){
+
+    console.error("AI ERROR:", e);
+
+    appendChatMessage(
+      "AI Tutor",
+      e.message || "Sorry, I could not process your doubt right now."
+    );
+
+  }
+
+});
 
     let user = null;
     let tests = [];
@@ -1038,6 +1187,11 @@ window.startAttempt = startAttempt;
         hide(timerBox); hide(submitBtn);
 
         const sc=data.score;
+        const pf = data.performanceFeedback || {
+          totalMarks: sc.obtained,
+          positiveMarks: sc.obtained,
+          negativeMarks: 0
+        };
         const answered = sc.correct + sc.wrong;
         const accuracy = answered ? ((sc.correct/answered)*100).toFixed(1) : "0.0";
 
@@ -1049,6 +1203,19 @@ window.startAttempt = startAttempt;
           <div class="stat"><div class="k">Wrong</div><div class="v">${sc.wrong}</div></div>
           <div class="stat"><div class="k">Unattempted</div><div class="v">${sc.unattempted}</div></div>
         `;
+
+        aiFeedbackBox.innerHTML = `
+          <h3 style="margin-top:0;color:#800020;">Performance Feedback</h3>
+          <div style="line-height:1.8;">
+            <b>Total Marks:</b> ${pf.totalMarks}<br>
+            <b>Total Positive Marks:</b> ${pf.positiveMarks}<br>
+            <b>Total Negative Marks:</b> ${pf.negativeMarks}
+          </div>
+        `;
+
+        doubtChatLog.innerHTML = "";
+        doubtQuestionNoEl.value = "";
+        doubtInputEl.value = "";
 
         solutionListEl.innerHTML="";
         data.solutions.forEach(s=>{
@@ -1064,6 +1231,7 @@ window.startAttempt = startAttempt;
 
           const div=document.createElement("div");
           div.className="solution-item";
+          div.style.cursor = "pointer";
           div.innerHTML=`
             <div class="head">
               <div><b>Q${s.qNo}</b> • ${s.topic} • ${s.type} • ${s.marks}M • Diff ${s.difficulty} ${varBadge}</div>
@@ -1077,6 +1245,10 @@ window.startAttempt = startAttempt;
               <b>Solution:</b> ${s.solution}
             </div>
           `;
+          div.addEventListener("click", ()=>{
+            doubtQuestionNoEl.value = s.qNo;
+            doubtInputEl.focus();
+          });
           solutionListEl.appendChild(div);
         });
 
@@ -1099,6 +1271,18 @@ window.startAttempt = startAttempt;
     // Initial
     showLogin();
   </script>
+  <footer style="
+      margin-top:30px;
+      padding:14px;
+      text-align:center;
+      font-size:14px;
+      color:white;
+      border-top:2px solid #ddd;
+      background:#800020;
+  ">
+      GATE Mock Test Companion <br>
+      Curated by Dr. Veena and Dr. Sreehari VM, SASTRA Deemed University.
+  </footer>
 </body>
 </html>
 """
@@ -1403,11 +1587,25 @@ function buildLocalPool() {
 
 window.LOCAL_POOL = buildLocalPool();
 """
-
-
+def make_json_safe(value):
+    if isinstance(value, dict):
+        return {str(k): make_json_safe(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return [make_json_safe(v) for v in value]
+    if isinstance(value, tuple):
+        return [make_json_safe(v) for v in value]
+    if isinstance(value, set):
+        return [make_json_safe(v) for v in sorted(value)]
+    return value
+def make_json_safe(obj):
+    return json.loads(json.dumps(obj, default=str))
 # ==========================
 # Routes
 # ==========================
+@app.get("/sastra_banner.jpg")
+def sastra_banner():
+        return send_file("sastra_banner.jpg", mimetype="image/jpeg")
+
 @app.get("/")
 def root():
     return Response(INDEX_HTML, mimetype="text/html; charset=utf-8")
@@ -1415,8 +1613,8 @@ def root():
 
 @app.get("/local_pool.js")
 def local_pool():
-    return Response(LOCAL_POOL_JS, mimetype="application/javascript; charset=utf-8")
-
+        return Response(LOCAL_POOL_JS, mimetype="application/javascript; charset=utf-8")
+ 
 
 @app.post("/api/login")
 def api_login():
@@ -1490,8 +1688,7 @@ def api_generate_paper():
         "variantsApplied": variants_applied,
     }
 
-    paper_exam = [strip_answers_for_exam(q) for q in paper]
-
+    paper_exam = make_json_safe([strip_answers_for_exam(q) for q in paper])
     return jsonify(
         {
             "ok": True,
@@ -1526,6 +1723,7 @@ def api_submit():
 
     paper_full = att["paperFull"]
     score = calc_score(paper_full, responses)
+    performance_feedback = compute_simple_feedback(paper_full, responses)
 
     att["submitted"] = True
     att["submittedAt"] = now_ts()
@@ -1537,7 +1735,7 @@ def api_submit():
         qid = q["id"]
         resp = responses.get(qid, None)
         attempted = resp is not None
-        ok_ = attempted and is_correct(q, resp)
+        ok_q = attempted and is_correct(q, resp)
 
         if q["type"] == "NAT":
             correct_ans = round(float(q["answer"]), 2)
@@ -1560,26 +1758,179 @@ def api_submit():
                 "options": q.get("options", None),
                 "yourAnswer": resp,
                 "correctAnswer": correct_ans,
-                "status": ("Unattempted" if not attempted else ("Correct" if ok_ else "Wrong")),
+                "status": ("Unattempted" if not attempted else ("Correct" if ok_q else "Wrong")),
                 "solution": q.get("solution", "—"),
             }
         )
 
-    return jsonify(
-        {
+    return jsonify({
+        "ok": True,
+        "score": score,
+        "solutions": solutions,
+        "performanceFeedback": performance_feedback,
+        "meta": {
+            "attemptId": attempt_id,
+            "testId": att["testId"],
+            "startedAt": att["startedAt"],
+            "submittedAt": att["submittedAt"],
+            "variantMode": att.get("variantMode", False),
+            "variantsApplied": att.get("variantsApplied", 0),
+        },
+    })
+
+
+@app.post("/api/ask-doubt")
+def api_ask_doubt():
+    ok, user = require_login()
+    if not ok:
+        return jsonify({"ok": False, "error": "Not logged in"}), 401
+
+    data = request.get_json(force=True)
+    attempt_id = str(data.get("attemptId", "")).strip()
+    question_no = data.get("questionNo", None)
+    user_message = str(data.get("message", "")).strip()
+
+    if not attempt_id or attempt_id not in ATTEMPTS:
+        return jsonify({"ok": False, "error": "Invalid attemptId"}), 400
+    if not user_message:
+        return jsonify({"ok": False, "error": "Message is empty"}), 400
+
+    att = ATTEMPTS[attempt_id]
+    if att["userId"] != user["userId"]:
+        return jsonify({"ok": False, "error": "Not your attempt"}), 403
+    if not att.get("submitted"):
+        return jsonify({"ok": False, "error": "Submit the test first to use the doubt assistant."}), 400
+
+    paper_full = att["paperFull"]
+    responses = att.get("responses", {})
+
+    selected_q = None
+    q_index = None
+
+    if question_no is not None and str(question_no).strip() != "":
+        try:
+            q_index = int(question_no) - 1
+            if 0 <= q_index < len(paper_full):
+                selected_q = paper_full[q_index]
+        except Exception:
+            selected_q = None
+
+    if selected_q is None:
+        import re
+        m = re.search(r"\bQ(?:uestion)?\s*(\d+)\b", user_message, re.IGNORECASE)
+        if m:
+            try:
+                q_index = int(m.group(1)) - 1
+                if 0 <= q_index < len(paper_full):
+                    selected_q = paper_full[q_index]
+            except Exception:
+                selected_q = None
+
+    if selected_q is None:
+        return jsonify({"ok": False, "error": "Please provide a valid question number, for example: Q12 or Question 12."}), 400
+
+    qid = selected_q["id"]
+    your_answer = responses.get(qid, None)
+
+    if selected_q["type"] == "NAT":
+        correct_answer = round(float(selected_q["answer"]), 2)
+    elif selected_q["type"] == "MSQ":
+        correct_answer = normalize_msq(selected_q["answer"])
+    else:
+        correct_answer = selected_q["answer"]
+
+    context = {
+        "qNo": q_index + 1,
+        "topic": selected_q["topic"],
+        "difficulty": selected_q.get("difficulty", "M"),
+        "type": selected_q["type"],
+        "marks": selected_q["marks"],
+        "question": selected_q["question"],
+        "options": selected_q.get("options", None),
+        "correctAnswer": correct_answer,
+        "yourAnswer": your_answer,
+        "officialSolution": selected_q.get("solution", ""),
+        "isVariant": bool(selected_q.get("isVariant", False)),
+    }
+    print("ASK_DOUBT -> client is None:", client is None, "ACTIVE_MODEL:", ACTIVE_MODEL)
+    if client is None:
+                   return jsonify({
+                            "ok": True,
+                            "reply": (
+                                     f"AI tutor is not available right now.\n\n"
+                                     f"Official Solution:\n{context['officialSolution']}"
+                            )
+                   })
+
+    prompt = f"""
+You are an academic doubt-clearing assistant for a GATE Aerospace mock test platform.
+
+Follow these rules strictly:
+1. Use the provided question context as the PRIMARY source of truth.
+2. You may use your general subject knowledge to explain concepts, formulas, theory, and reasoning behind this question.
+3. Do NOT reveal unrelated hidden questions or the full question bank.
+4. Do NOT invent missing question data.
+5. If the student's answer is wrong, explain why it is wrong.
+6. If useful, explain why the correct answer is correct and why other options are incorrect.
+7. Keep the answer focused on THIS question only.
+8. No web search, no external websites.
+9. Be clear, step-by-step, accurate, and student-friendly.
+10. If the official solution is brief, expand it using general knowledge, but do not contradict the given context.
+
+QUESTION CONTEXT:
+{json.dumps(context, ensure_ascii=False, indent=2)}
+
+STUDENT DOUBT:
+{user_message}
+"""
+
+    try:
+        resp = client.chat.completions.create(
+            model=ACTIVE_MODEL,
+            messages=[
+                {
+                    "role": "system",
+                    "content": (
+                        "You are a careful, accurate, and helpful aerospace exam tutor. "
+                        "Use the provided question context as the main reference. "
+                        "You may use general engineering and mathematics knowledge to explain concepts, "
+                        "but you must stay consistent with the given question context. "
+                        "Do not reveal unrelated hidden questions."
+                    ),
+                },
+                {"role": "user", "content": prompt},
+            ],
+            temperature=0.2,
+        )
+       
+        print("OLLAMA RAW RESPONSE:", resp)
+
+        reply = ""   
+
+        if resp and hasattr(resp, "choices") and len(resp.choices) > 0:
+           msg = resp.choices[0].message
+           if msg and hasattr(msg, "content") and msg.content:
+                                    reply = msg.content.strip()
+        if not reply:
+            reply = "Official Solution:\n" + str(context["officialSolution"])
+ 
+        return jsonify({"ok": True, "reply": reply})
+
+
+        
+    except Exception as e:
+        print("ASK DOUBT FAILED:", repr(e))
+        return jsonify({
             "ok": True,
-            "score": score,
-            "solutions": solutions,
-            "meta": {
-                "attemptId": attempt_id,
-                "testId": att["testId"],
-                "startedAt": att["startedAt"],
-                "submittedAt": att["submittedAt"],
-                "variantMode": att.get("variantMode", False),
-                "variantsApplied": att.get("variantsApplied", 0),
-            },
-        }
-    )
+            "reply": (
+                "AI tutor is temporarily unavailable.\n\n"
+                + "Official Solution:\n"
+                + str(context["officialSolution"])
+                + "\n\nSystem error: "
+                + str(e)
+            )
+        })
+
 
 
 if __name__ == "__main__":
